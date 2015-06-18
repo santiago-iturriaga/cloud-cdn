@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# Parameter is a .out file? 
+#
+
+REQUESTS=`cat $1 | wc -l `
+
+echo Total Requests     = $REQUESTS 
+
+UNIQREQS=`sort -T . -u $1 | wc -l`
+
+echo Unique             = $UNIQREQS
+
+ONETIME=`sort -T . $1 | uniq -u | wc -l`
+
+echo One Timers         = $ONETIME
+
+PCTUNIQ=`expr $UNIQREQS \* 100 / $REQUESTS  `
+OTUNIQ=`expr $ONETIME \* 100 / $UNIQREQS  `
+
+echo Percent Unique     = $PCTUNIQ
+echo Percent One Timers = $OTUNIQ
+

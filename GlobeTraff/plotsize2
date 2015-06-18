@@ -1,0 +1,36 @@
+#!/bin/sh
+# plotsize2
+#
+# Al Fedoruk 
+# CMPT 855 Project, March 2001 
+#
+
+#
+OUTFILE=$4
+MINCACHE=$1
+MAXCACHE=$2
+POLICY=$3
+
+# prepare the files
+#
+
+
+# plot the graphs. 
+
+cat /dev/null > sizepop.eps
+ln -s ${OUTFILE}1.sml data/SZ1.dat
+ln -s ${OUTFILE}4.sml data/SZ2.dat
+ln -s ${OUTFILE}16.sml data/SZ3.dat
+ln -s ${OUTFILE}64.sml data/SZ4.dat
+ln -s ${OUTFILE}256.sml data/SZ5.dat
+ln -s ${OUTFILE}1024.sml data/SZ6.dat
+
+gnuplot sizepop.plt
+
+rm SZ1.dat
+rm SZ2.dat
+rm SZ3.dat
+rm SZ4.dat
+rm SZ5.dat
+rm SZ6.dat
+

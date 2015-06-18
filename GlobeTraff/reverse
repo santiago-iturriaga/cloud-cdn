@@ -1,0 +1,15 @@
+#!/usr/bin/perl 
+
+$fn = shift @ARGV; 
+open(IN, "<$fn"); 
+open(OUT,">$fn.tmp"); 
+
+while ($line = <IN>) { 
+	chomp $line; 
+	($a, $b) = split(/\s+/, $line); 
+	print OUT "$b $a\n"; 
+}
+unlink $fn;
+`mv $fn.tmp $fn`;
+exit 0; 
+

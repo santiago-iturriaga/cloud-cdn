@@ -1,0 +1,95 @@
+This directory contains the simulator for Web proxy caching hierarchies
+developed by Mudashiru Busari as part of his M.Sc. thesis work (June 2000)
+in the Departmnet of Computer Science at the University of Saskatchewan.
+This work was supervised by Professor Carey Williamson.
+
+The two main pieces of Muda's work that are contained in
+this directory are:
+ - a trace-driven simulation engine for evaluating different
+   replacement policies at a SINGLE Web proxy cache.
+   These modules include LRU, LFU, GDSIZE, FIFO, and RAND policies,
+   and are contained in the *driver files along with their
+   requisite components.
+ - a trace-driven simulation engine for evaluating different
+   configurations and management strategies for a TWO-LEVEL
+   hierarchical Web proxy configuration. The particular configuration
+   considered is two independently-operating child proxies, each
+   configured to use the same parent proxy as needed. These files
+   all start with the name herar*
+
+All source code is written in C++, and compiles successfully
+with gcc compiler on Sun/Solaris.
+
+Each simulator reads a gzip'd ASCII two-column trace format,
+where each entry in the trace identifies the document id
+and the size of the document being accessed.
+
+Traces in this format can be constructed from an empirical
+Web proxy or Web server access log, or can be constructed
+with a synthetic Web proxy workload generation tool, such
+as ProWGen (developed by Muda as part of his thesis work).
+The ProWGen tool is accessible from
+   http://www.cs.usask.ca/faculty/carey/software/
+
+Note that if the ProWGen tool is used, it is important to
+remember several of ProWGen's workload assumptions. All Web content
+is considered static (i.e., read-only, never modified at the
+server site). No document modifications (i.e., cache consistency
+issues) are modeled. No notion of file type (e.g., HTML, image)
+are modeled.  No notion of time (i.e., request arrival time)
+is modeled. User-supplied parameters are required at trace
+generation time to control Web proxy workload characteristics
+(e.g., one-timers, Zipf slope, heavy tail, correlation, and
+temporal locality characteristics in document referencing 
+behaviour).
+
+A small sample ProWGen trace (webworkload.dat.gz) is included
+in this directory for the purposes of demonstrating the simulator.
+Much longer traces should be used for real simulation experiments.
+
+To compile the simulator, just type "make".
+
+To run the single-level Web proxy cache simulator, type something like:
+  lrudriver webworkload.dat hr.dat bhr.dat 0 32
+
+This command invokes the simulator for an LRU replacement policy,
+using "webworkload.dat" as the input trace file, and writing results to files
+"hr.dat" for cache document hit ratio, and "bhr.dat" for cache byte hit ratio.
+The two user-supplied command-line integer arguments at the end determine
+the number of requests to use for the warmup period (0 in this example!),
+and the maximum cache size (in Gigabytes) that should be simulated. The simulator
+automatically starts with a cache size of 1 Megabyte, and scales it up by
+a factor of two for each run until the maximum desired cache size is reached.
+The standard output reported by the simulator shows cache size (in MB),
+document hit ratio, and byte hit ratio for each cache size simulated.
+The HR and BHR results for all cache sizes simulated are reported in the result files,
+to facilitate easy graph plotting, using gnuplot for example. 
+
+To run the hierarchical Web proxy caching simulator, type something like:
+  herar1 phr.dat pbhr.dat webworkload.dat c1hr.dat c1bhr.dat c2hr.dat c2bhr.dat 0 32
+
+This command invokes the herar1 (LRU child, LRU parent) simulator,
+using "webworkload.dat" as the input trace file, and writing results to files
+"phr.dat" parent cache document hit ratio, "pbhr.dat" parent cache byte hit ratio, 
+"c1hr.dat" client cache1 document hit ratio, "c1bhr.dat" client cache1 byte hit ratio, 
+"c2hr.dat" client cache2 document hit ratio, "c2bhr.dat" client cache2 byte hit ratio.
+The two user-supplied command-line integer arguments at the end determine
+the number of requests to use for the warmup period (0 in this example!),
+and the maximum cache size (in Gigabytes) that should be simulated. The simulator
+automatically starts with a cache size of 1 Megabyte, and scales it up by
+a factor of two for each run until the maximum desired cache size is reached.
+The HR and BHR results for all cache sizes simulated are reported in the result files,
+to facilitate easy graph plotting, using gnuplot for example. 
+Note that in normal operation, this simulator produces no standard output on the screen.
+
+Further information about the simulator and the Web proxy
+caching performance experiments done with it are available
+in Muda's thesis (Simulation Evaluation of Web Proxy
+Caching Hierarchies), and in two research papers: "On the
+Sensitivity of Web Proxy Cache Performance to Workload
+Characteristics", and "Evaluating Heterogeneous Web Proxy
+Caching Hierarchies". These materials should be accessible from: 
+   http://www.cs.usask.ca/faculty/carey/papers/
+
+
+/* This file created by Carey Williamson, January 27, 2001. */

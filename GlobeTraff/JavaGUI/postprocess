@@ -1,0 +1,14 @@
+mv data/workload.tmp data/workload.web
+
+echo Mergin workloads...
+cat data/workload.web > data/workload.all
+cat data/workload.p2p >> data/workload.all
+cat data/workload.video >> data/workload.all
+cat data/workload.other >> data/workload.all
+
+cat data/docs.web > data/docs.all
+cat data/docs.p2p >> data/docs.all
+cat data/docs.video >> data/docs.all
+cat data/docs.other >> data/docs.all
+echo ...Done!
+

@@ -1,0 +1,80 @@
+#!/bin/sh
+# runsize 
+#
+# Run the size experiment. 
+
+# Usage: ./runsize datafile policy max_cache
+
+# Run with an 'average' zipf of 0.75 for 2.5M requests.
+# 
+# Produces a plot of 5 sizes 
+#
+# Al Fedoruk 
+# CMPT 855 Project, March 2001 
+#
+
+
+#
+DATAFILE=$1
+runtime=`./cut < data/$DATAFILE`
+#runtime=`tail -n1 data/$DATAFILE | awk '{print $1}'`
+#
+DHR=size.dhr
+BHR=size.bhr
+# warmup - how ?
+POLICY=$2
+#POLICY=$GDS
+OUTFILE=misses.dat
+MINCACHE=1           #must be settable
+#MAXCACHE=16384       #same
+MAXCACHE=$3       #same
+WARMUP=0
+
+# Usage: CacheDriver infile dhrfile bhrfile warm infcache pol output 
+
+echo CacheDriver $DATAFILE $DHR $BHR $WARMUP $MINCACHE $MAXCACHE $POLICY $OUTFILE $runtime
+./CacheDriver $DATAFILE $DHR $BHR $WARMUP $MINCACHE $MAXCACHE $POLICY $OUTFILE $runtime
+
+echo Plotting HR and BHR results now
+#
+# Plot the dhr and bhr!
+#
+
+./plotsize $OUTFILE
+
+exit 0
+echo Processing doc popularity data for plotting
+# Plot the document popularity 
+
+# prepare the files
+#
+
+
+I=$MINCACHE
+while [ $I -le $MAXCACHE ] 
+do
+echo $I
+
+   OFILE=${OUTFILE}${I}.out
+   PFILE=${OUTFILE}${I}.pop
+   LFILE=${OUTFILE}${I}.log
+   RFILE=${OUTFILE}${I}.res
+   SFILE=${OUTFILE}${I}.sml
+   UFILE=${OUTFILE}${I}.unq
+
+   ./docpop data/$OFILE > data/$PFILE
+   ./logtrans data/$PFILE > data/$LFILE
+   ./linreg data/$LFILE > data/$RFILE 
+   ./thin < data/$LFILE > data/$SFILE    
+   ./uniqdocs data/$OFILE > data/$UFILE
+
+   I=`expr $I \* 4`
+
+done
+
+rm *.out
+rm *.pop
+rm *.log
+
+echo Generating graphs now
+./plotsize2 $MINCACHE $MAXCACHE $POLICY $OUTFILE

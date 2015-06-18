@@ -1,0 +1,19 @@
+#!/usr/bin/perl 
+
+$| = 0;
+$current_cache = '0'; 
+
+while( $line = <> ) { 
+	chomp $line; 
+	($cache, $time, $ratio) = split(" ", $line); 
+	if ($cache != $current_cache) { 
+		if ($current_cache ne '0') { 
+			close(FNAME);				
+		}
+		$fname = "data/hrt" . "$cache"; 
+		open(FNAME, ">$fname"); 
+		$current_cache = $cache; 
+	}
+
+	print FNAME "$time $ratio\n";
+}	

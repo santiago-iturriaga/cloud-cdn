@@ -1,0 +1,32 @@
+#!/bin/sh 
+
+make  clean 
+
+echo root directory executables cleaned. 
+cd prowgen
+make clean 
+echo
+echo prowgen directory executabls cleaned. 
+echo
+cd ../webproxysim 
+make clean 
+echo
+echo webproxysim directory executabls cleaned. 
+echo
+cd ../pop
+make clean 
+echo
+echo pop directory executabls cleaned. 
+echo
+cd ../locality 
+make clean 
+echo
+echo locality directory executabls cleaned. 
+echo
+cd ..
+
+rm -f CacheDriver
+rm -f ProWGen
+rm -f lrustack 
+rm -f freqsize
+rm -f popularity 

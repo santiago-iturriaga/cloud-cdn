@@ -1,0 +1,2 @@
+echo "this is a local test... at dir"
+pwd

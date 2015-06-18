@@ -1,0 +1,31 @@
+./setup
+
+# First parameter for traffic type, Web: 1, P2P: 2, Video: 3 All: 4
+# Generating Web workload... 
+./ProWGen 1 "default" 100 30 100 0.71 1.20 0 100 0 -1
+./freqsize < data/default.web > data/docs.dat
+./lrustack "stack.dat" 0.20 100 30 30 1 > data/default.tmp
+mv data/default.tmp data/default.web
+
+#Generating P2P workload...
+#lastid=$(cat data/docs.dat | tail -1 | cut -d " " -f1)
+lastid=$(cat data/docs.dat  | tail -1 | cut  -f1 -s)
+./ProWGen 2 "default" 100 30 100 0.71 1.20 0 100 0 $lastid
+
+#Generating Video workload...
+#lastid=$(cat data/docs.dat | tail -1 | cut -d " " -f1)
+lastid=$(cat data/docs.dat  | tail -1 | cut  -f1 -s)
+lastReqTime=$(cat data/default.web  | tail -1 | cut  -f1 -s)
+./ProWGen 3 "default" 100 30 100 0.71 1.20 0 100 0 $lastid $lastReqTime
+
+echo Mergin workloads...
+cat data/default.web > data/default.all
+cat data/default.p2p >> data/default.all
+cat data/default.video >> data/default.all
+echo ...Done!
+
+
+#lastid=$(cat data/docs.dat | tail -1 | cut -d " " -f1)
+#lastid=$(cat data/docs.dat  | tail -1 | cut  -f1 -s)
+
+

@@ -1,0 +1,26 @@
+./setup
+rm data/workload.* 
+rm data/docs.*
+
+
+# First parameter for traffic type, All: 0, Web: 1, P2P: 2, Video: 3, Other: 4, All But Web: 5
+# Generating Web workload... 
+./ProWGen 0 "/home/mmlab/GlobeTraff/" 0.7 70 0.75 1.20 0 100 1 7 9300 9357 1318 0.60 20 87.7 1.1625 3807 0.668 0.513 6010 0.372 23910 0.703 2.0164 5 0.35 0.16 0.20 0.29 0.5 0.5 0 1 0
+
+./freqsize < data/workload.web > data/docs.web
+
+# dir, pop_bias, stack_size, num_requests, num_docs, 
+./lrustack "/home/mmlab/GlobeTraff/" 0.20 100 30 30 1 "stack.dat"> data/workload.tmp
+
+mv data/workload.tmp data/workload.web
+
+echo Mergin workloads...
+cat data/workload.web > data/workload.all
+cat data/workload.p2p >> data/workload.all
+cat data/workload.video >> data/workload.all
+
+cat data/docs.web > data/docs.all
+cat data/docs.p2p >> data/docs.all
+cat data/docs.video >> data/docs.all
+cat data/docs.other >> data/docs.all
+echo ...Done!

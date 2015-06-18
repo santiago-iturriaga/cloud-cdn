@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# Plot the policy graph
+#
+# Al Fedoruk
+# CMPT 855 Project 
+# March 2001
+#
+
+MINCACHE=1
+MAXCACHE=$1
+
+
+cat /dev/null > results/pol.eps
+
+gnuplot pol.plt
+
+#rm -f A.dat
+#rm -f B.dat
+#rm -f C.dat
+##rm -f D.dat     UNCOMMENT LATER RAND
+#rm -f E.dat

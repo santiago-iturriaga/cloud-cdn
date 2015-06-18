@@ -1,0 +1,26 @@
+#!/usr/bin/perl 
+
+print "set terminal postscript eps \"Helvetica\" 20\n";
+print "set output 'results/htr.eps'\n";
+print "set size 2\.0, 2\.0\n";
+print "\n";
+print "set title \"Real Time Document Hit Ratio Results for LRU policy\"\n";
+print "\n";
+print "set xlabel 'Elapsed Time (seconds)'\n";
+print "set ylabel 'Hit Ratio R (%)'\n";
+print "set mxtics 10\n";
+print "set mytics 10\n";
+print "\n";
+print "plot [1:] ";
+
+$cache_size = shift @ARGV; 
+
+$i = 1; 
+while ($i < $cache_size) { 
+	print "'data/hrt$i' title 'Cache size $i \(bytes\)' with linespoints"; 
+	$i *= 4; 
+	if ($i < $cache_size) { 
+		print ","; 
+	}
+}
+

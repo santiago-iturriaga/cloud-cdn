@@ -1,0 +1,38 @@
+DESCRIPTION
+-----------
+
+GlobeTraff is tool for the generation of synthetic traffic mixes. 
+The implementation is based on the WebTraff/ProwGen tool(s): 
+
+Mudashiru Busari and Carey Williamson. 2002. ProWGen: a synthetic 
+workload generation tool for simulation evaluation of web proxy caches. 
+Comput. Netw. 38, 6 (April 2002), 779-794. 
+DOI=10.1016/S1389-1286(01)00285-7 
+http://dx.doi.org/10.1016/S1389-1286(01)00285-7
+
+
+N. Markatchev and C. Williamson. 2002. WebTraff: A GUI for Web Proxy 
+Cache Workload Modeling and Analysis. In Proceedings of the 10th IEEE 
+International Symposium on Modeling, Analysis, and Simulation of 
+Computer and Telecommunications Systems (MASCOTS '02). IEEE Computer 
+Society, Washington, DC, USA, 356-.
+
+GlobeTraff uses WebTraff/ProwGen for the generation of Web workloads.
+In addition it supports the generation of P2P and Video workloads, as 
+well as a generic type of workload. The implementation provides a Java
+based front end for the parameterization of the respective models.
+
+INSTALLATION
+------------
+
+The implementation consists of two parts. The first one is the extended
+ProwGen code and it can be compiled by simply running the "setup" script.
+The second part is the Java front end (JavaGUI). It has been developed 
+as a NetBeans project, so it can be easily  imported to NetBeans and run 
+through the corsesponding interface. Else, the source code is located 
+in the JavaGUI/src directory and it can be compiled and run with the 
+"javac" and "java" commands respectively. Note, that in order to 
+properly prepare and mix the traffic workloads, the Java code uses the 
+following scripts located in the JavaGUI directory: cleanup, freq, 
+lrustack, numWebDocs, numWebRequests,postprocess,sizeSamples.
+

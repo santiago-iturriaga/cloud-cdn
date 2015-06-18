@@ -1,0 +1,16 @@
+#!/usr/bin/perl 
+
+while ($line1 = <>) { 
+	chomp $line1; 
+        $line = $line1; 
+}
+
+
+$line =~ s/\s+//; 
+($line, $dummy, $dummy1) = split(/\s+/, $line); 
+
+($integer, $dummy) = split(/\./, $line); 
+print "$integer"; 
+
+exit 0; 
+

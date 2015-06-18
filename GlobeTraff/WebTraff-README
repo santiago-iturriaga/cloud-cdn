@@ -1,0 +1,13 @@
+This directory contains the webTraff software version 1.0.1. The requirements
+for the systems are to have the following components installed: 
+GNU Linux, kernel 2.4 or later / Solaris OS 2.7 or later,
+gcc/g++ 2.95.3 or later,
+tcl version 8.0 ot later,
+tk version 8.0 or later, 
+perl version 5.0 or later, 
+gnuplot and gs tools. 
+
+To install the software, create a directory webTraff and move the tarball there.
+Then cd to that directory unzip&untar webTraff.tar.gz file and run the 'setup' 
+script. To start using the program type 'wish webTraff.tcl'. 
+

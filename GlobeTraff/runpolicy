@@ -1,0 +1,93 @@
+#!/bin/sh
+#
+# Run the simulations for testing effect cache replacement policy 
+# on document referencing behaviour.
+# This will produce output for all three policies. 
+#
+#
+# Al Fedoruk
+# CMPT 855 Project 
+# March 2001
+#
+
+LRU=1
+LFU=2
+GDS=3
+RAND=4
+FIFO=5
+WARMUP=0 
+INF=$1
+runtime=-1
+
+MINCACHE=1
+MAXCACHE=$2
+
+echo 'Running LRU cache simulation...'
+POLICY=$LRU
+DHR=pol${POLICY}.dhr
+BHR=pol${POLICY}.bhr
+OUTFILE=pol${POLICY}
+
+# Usage: CacheDriver infile dhrfile bhrfile warm strtcache infcache pol outfile runtime
+
+./CacheDriver $INF $DHR $BHR $WARMUP $MINCACHE $MAXCACHE $POLICY $OUTFILE $runtime
+
+echo 'Running LFU cache simulation...'
+POLICY=$LFU
+DHR=pol${POLICY}.dhr
+BHR=pol${POLICY}.bhr
+OUTFILE=pol${POLICY}
+
+./CacheDriver $INF $DHR $BHR $WARMUP $MINCACHE $MAXCACHE $POLICY $OUTFILE $runtime
+
+echo 'Running GDS cache simulation...'
+POLICY=$GDS
+DHR=pol${POLICY}.dhr
+BHR=pol${POLICY}.bhr
+OUTFILE=pol${POLICY}
+
+./CacheDriver $INF $DHR $BHR $WARMUP $MINCACHE $MAXCACHE $POLICY $OUTFILE $runtime
+
+#echo 'Running RAND cache simulation...'
+POLICY=$RAND
+DHR=pol${POLICY}.dhr
+BHR=pol${POLICY}.bhr
+OUTFILE=pol${POLICY}
+
+./CacheDriver $INF $DHR $BHR $WARMUP $MINCACHE $MAXCACHE $POLICY $OUTFILE $runtime
+echo 'Running FIFO cache simulation...'
+
+POLICY=$FIFO
+DHR=pol${POLICY}.dhr
+BHR=pol${POLICY}.bhr
+OUTFILE=pol${POLICY}
+
+./CacheDriver $INF $DHR $BHR $WARMUP $MINCACHE $MAXCACHE $POLICY $OUTFILE $runtime
+
+echo 'Processing data now...'
+# prepare data
+
+#for I in $LRU $LFU $GDS $FIFO   #Add $RAND later
+#do 
+#   IFILE=pol${I}${MINCACHE}.out
+#   PFILE=pol${I}${MINCACHE}.pop
+#   LFILE=pol${I}${MINCACHE}.log
+#   RFILE=pol${I}${MINCACHE}.res
+#   SFILE=pol${I}${MINCACHE}.sml
+#   UFILE=pol${I}${MINCACHE}.unq
+#   AFILE=pol${I}${MINCACHE}.avg
+#   ./docpop $IFILE > $PFILE
+#   ./logtrans $PFILE > $LFILE
+#   ./linreg $LFILE > $RFILE
+#   ./thin < $LFILE > $SFILE
+#   ./uniqdocs $IFILE > $UFILE
+#    ./avg < $IFILE > $AFILE
+
+#done
+rm -f pol*.out
+rm -f pol*.pop
+rm -f pol*.log
+
+echo 'Plotting things now...'
+./plotpolicy $MAXCACHE
+./plotpolicy1 $MAXCACHE

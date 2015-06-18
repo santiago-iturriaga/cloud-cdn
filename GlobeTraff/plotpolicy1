@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# Plot the policy graph
+#
+# Al Fedoruk
+# CMPT 855 Project 
+# March 2001
+#
+
+MINCACHE=1
+MAXCACHE=$1
+
+cat /dev/null > results/pol1.eps
+
+gnuplot pol1.plt
+

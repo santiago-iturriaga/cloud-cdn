@@ -1,0 +1,21 @@
+#!/bin/sh
+# plotsize 
+#
+# Al Fedoruk 
+# CMPT 855 Project, March 2001 
+#
+
+
+#
+# Plot the dhr and bhr!
+#
+
+BHR=data/size.bhr
+DHR=data/size.dhr
+SIZE=results/sizehr.eps
+
+gnuplot sizehr.plt 
+
+#rm size.dhr
+#rm size.bhr
+

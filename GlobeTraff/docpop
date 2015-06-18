@@ -1,0 +1,14 @@
+#! /bin/sh
+# docpop
+#
+# take a file of requested file ids and make a file or 
+# popularity/rank pairs
+#
+# CMPT 855 
+# Al Fedoruk
+# April 2, 2001
+#
+
+# take the input file and generate a file of rank and popularity 
+
+sed -e 's/^ *//' < $1 | cut -d ' ' -f 1 | sort -T . - | uniq -c | sort -T . -nr | ./number 
