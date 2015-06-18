@@ -191,7 +191,8 @@ RequestVideoStream::RequestVideoStream(char* initRequestStreamFile,
 									   unsigned int first_ID, 
 									   Distributions* distrib,
 									   float lastP2PReq,
-									   int video_pop_distr_val)
+									   int video_pop_distr_val,
+									   int numRegions_val)
 {
 	
 	requestStreamFile = (char *) malloc(100 * sizeof(char));
@@ -219,8 +220,10 @@ RequestVideoStream::RequestVideoStream(char* initRequestStreamFile,
 	distributions		= distrib;
 	videoInterArrivalTime 		 = lastP2PReq/noofDistinctDocs;
 	videoRequestInterArrivalTime = lastP2PReq/totalNoofRequests;
-	printf("videoRequestInterArrivalTime = %d, lastP2PReq = %d, totalNoofRequests = %d \n",videoRequestInterArrivalTime,lastP2PReq, totalNoofRequests);
+	printf("videoRequestInterArrivalTime = %f, lastP2PReq = %f, totalNoofRequests = %d \n",videoRequestInterArrivalTime,lastP2PReq, totalNoofRequests);
 	video_pop_distr		= video_pop_distr_val;
+
+	numRegions = numRegions_val;
 }
 
 /*
@@ -920,7 +923,7 @@ void RequestWebStream::GenerateAllRequests()
 				index = (unsigned int)(noofDistinctDocs*erand48(seed));
 
 				Request *req = uniqueDoc[index];
-				fprintf(fp,"%u %u\n", req->GetFileId(),req->GetFileSize());
+				fprintf(fp,"%u %u\n", req->GetFileId(), req->GetFileSize());
 
 				// This increment should be substituted with a procedure. See below.
 				totalReqGenerated++;
@@ -1009,6 +1012,8 @@ void RequestP2PStream::GenerateAllRequests()
 			if (time > lastObjectReqTime)
 				lastObjectReqTime = time;
 
+
+
 			fprintf(fp,"%f\t%d\t%d\n", time, req->GetFileId(),req->GetFileSize());
 		}
 	}
@@ -1053,7 +1058,11 @@ void RequestVideoStream::GenerateAllRequests()
 		for (int k = 0; k < req->GetFreq() ; k++)
 		{
 			time = time + videoRequestInterArrivalTime;//distributions->ParetoCDF(alpha)*24*3600;
-			fprintf(fp,"%f\t%d\t%d\n", time, req->GetFileId(),req->GetFileSize());
+
+			int geoloc;
+			geoloc = distributions->UniformInt(numRegions);
+
+			fprintf(fp,"%f\t%d\t%d\t%d\n", time, req->GetFileId(),req->GetFileSize(),geoloc);
 		}
 	}
 

@@ -215,7 +215,8 @@ class RequestVideoStream {
 					   unsigned int firstId,
 					   Distributions* distrib,
 					   float lastWebReqTime,
-					   int video_pop_distr);
+					   int video_pop_distr,
+					   int numRegions);
 	/*	     
     RequestVideoStream(char* initRequestStreamFile,
 		  char* initStatisticsFile, float initZipfSlope,
@@ -277,6 +278,8 @@ class RequestVideoStream {
     float videoRequestInterArrivalTime;
     Distributions* distributions;
     int video_pop_distr;
+
+    int numRegions; //number of regions
 };
 
 class RequestOtherStream {

@@ -39,6 +39,8 @@ UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 #define OTHER 4
 #define ALL_BUT_WEB 6
 
+#define NUM_REGIONS 10
+
 using namespace std;
 
 /* This modified version assumes command line parameters like this: */
@@ -55,15 +57,15 @@ int main(int argc, char *argv[])
 	
 
 	//The directory where the ouput will be placed
-	char *dataDir = (char *) malloc(100 * sizeof(char)); 
-	memset(dataDir, 0, 100); 
+	char *dataDir = (char *) malloc(512 * sizeof(char));
+	memset(dataDir, 0, 512);
 	strcpy(dataDir, argv[2]);  //1
 	strcat(dataDir, "data/"); 
 
 	// This file will contain the requests stream to generate. A three-culumn 
 	// file with time stamp followed by file id and file size
-	char *requestStreamFile = (char *) malloc(100 * sizeof(char)); 
-	memset(requestStreamFile, 0, 100); 
+	char *requestStreamFile = (char *) malloc(512 * sizeof(char));
+	memset(requestStreamFile, 0, 512);
 	strcpy(requestStreamFile, dataDir); 
 	strcat(requestStreamFile, "workload");
 
@@ -123,8 +125,8 @@ int main(int argc, char *argv[])
 	// columns could be extracted later for generating and estimating 
 	// popularity (Zipf) slope, and the 2nd column for file size distribution 
 	// curves or LLCD plot for estimating tail index slope. 
-	char *statisticsFile = (char *) malloc(100 * sizeof(char)); 
-	memset(statisticsFile, 0, 100); 
+	char *statisticsFile = (char *) malloc(512 * sizeof(char));
+	memset(statisticsFile, 0, 512);
 	strcpy(statisticsFile, dataDir); 
 	strcat(statisticsFile, "docs");
 
@@ -176,6 +178,7 @@ int main(int argc, char *argv[])
 	int video_pop_distr = atoi(argv[35]);
 	float otherZipfSlope  = atof(argv[36]);		//Default value: 0.7
 	int p2p_fixed_object_size = atoi(argv[37]); //When using samples: -1, else default: 650MB
+
 	bool fixedP2PSize = false;
 	//==================================================================
 
@@ -264,7 +267,7 @@ int main(int argc, char *argv[])
 	//heavy tail object size cases (e.g., web)
 	long numWebRequests = web_traffic_size/web_median_object_size;
 	long numP2PRequests = p2p_traffic_size/p2p_median_object_size;
-	long numVideoRequests = video_traffic_size/expected_video_size_mean;
+	int numVideoRequests = video_traffic_size/expected_video_size_mean;
 	long numOtherRequests = other_traffic_size/other_median_object_size;
 	long numTotalRequests = numWebRequests+numP2PRequests+numVideoRequests+numOtherRequests;
 
@@ -272,7 +275,8 @@ int main(int argc, char *argv[])
 	printf("Workload size:  %s GB,  Total #requests: %d\n",argv[26],numTotalRequests);
 	printf("    Web:	%ld #req, %f  of total, median size = %f KBs\n",numWebRequests,( float)numWebRequests/numTotalRequests*100, web_median_object_size/1024);
 	printf("    P2P:	%ld #req, %f  of total, median size = %f MBs\n",numP2PRequests,(float)numP2PRequests/numTotalRequests*100, p2p_median_object_size/(1024*1024));
-	printf("    Video:	%ld #req, %f  of total, median size = %f MBs\n",numVideoRequests,(float)numVideoRequests/numTotalRequests*100, expected_video_size_mean/(1024*1024));
+	//printf("    Video:	%ld #req, %f  of total, median size = %f MBs\n",numVideoRequests,(float)numVideoRequests/numTotalRequests*100, expected_video_size_mean/(1024*1024));
+	printf("    Video:	%d #req, %f  of total, median size = %f MBs\n",numVideoRequests,(float)numVideoRequests/numTotalRequests*100, expected_video_size_mean/(1024*1024));
 	printf("    Other:	%ld #req, %f  of total, median size = %f KBs\n",numOtherRequests,(float)numOtherRequests/numTotalRequests*100, other_median_object_size/1024);
 	printf("\nTotal request traffic (1KB/request)= %d  MB\n",numTotalRequests/1024);
 	printf("===================================================\n");
@@ -378,7 +382,8 @@ int main(int argc, char *argv[])
 											   nextId, 
 											   distr, 
 											   lastP2PReqTime,
-											   video_pop_distr);
+											   video_pop_distr,
+											   NUM_REGIONS);
 											   
 		nextId = nextId+videoWorkload->LastObjectId() + 1;
 
@@ -387,7 +392,7 @@ int main(int argc, char *argv[])
 		delete videoWorkload;
 	}
 		
-	if (( trafficType == OTHER) || ( trafficType == ALL) || ( trafficType == ALL_BUT_WEB) )
+	if (( trafficType == OTHER) || ( trafficType == ALL) ) // || ( trafficType == ALL_BUT_WEB) )
 	{
 		otherWorkload = new RequestOtherStream(requestStreamFile,
 											   statisticsFile,

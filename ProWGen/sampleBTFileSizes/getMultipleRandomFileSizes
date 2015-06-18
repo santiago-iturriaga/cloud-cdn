@@ -1,0 +1,10 @@
+#!/bin/sh
+i=1
+while [ $i -le $1 ]
+do
+	./sampleBTFileSizes/getOneRandomFileSize ./sampleBTFileSizes/BitTorrent/samples
+        i=`expr $i + 1`
+done
+
+
+
