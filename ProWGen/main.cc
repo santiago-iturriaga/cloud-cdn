@@ -39,7 +39,7 @@ UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 #define OTHER 4
 #define ALL_BUT_WEB 6
 
-#define NUM_REGIONS 10
+#define NUM_REGIONS 5
 
 using namespace std;
 
@@ -361,7 +361,7 @@ int main(int argc, char *argv[])
 		p2pWorkload->GenerateRequestStream();
 
 		lastP2PReqTime = p2pWorkload->LastObjectReqTime();
-		printf("lastP2PReqTime = %d \n",lastP2PReqTime);
+		printf("lastP2PReqTime = %f \n",lastP2PReqTime);
 
 		delete p2pWorkload;
 	}
