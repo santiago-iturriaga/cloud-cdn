@@ -27,19 +27,33 @@ import sys
 NUM_REGIONS=5
 
 def main():
+    workload_type = sys.argv[1]
+    inst_num = sys.argv[2]
+    
     requests = []
     for i in range(NUM_REGIONS):
         requests.append({})
         requests[i]['count'] = 0
         requests[i]['traffic'] = 0
+        requests[i]['diffdocs'] = {}
     
-    with open("low/data.0/workload.video") as workload:
+    with open("{0}/data.{1}/workload.video".format(workload_type, inst_num)) as workload:
         for line in workload:
-            data = line.strip().split(" ")
+            data = line.strip().split("\t")
             time = float(data[0])
             docid = int(data[1])
             docsize = int(data[2])
             region = int(data[3])
+
+            requests[region]['count'] = requests[region]['count'] + 1
+            requests[region]['traffic'] = requests[region]['traffic'] + docsize
+            requests[region]['diffdocs'][docid] = None
+        
+    for region in range(NUM_REGIONS):
+        print("Region {0} =>".format(region))
+        print("    # of requests: {0}".format(requests[region]['count']))
+        print("    total traffic: {0}".format(requests[region]['traffic']))
+        print("    # of docs    : {0}".format(len(requests[region]['diffdocs'])))
         
     return 0
 
