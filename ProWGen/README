@@ -1,0 +1,7 @@
+File docs.video format:
+
+<doc #> <doc requests> <doc size> <doc type>
+
+File workload.video format:
+
+<req. time> <doc #> <doc size> <region>
