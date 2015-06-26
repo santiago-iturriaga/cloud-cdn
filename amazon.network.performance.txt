@@ -1,0 +1,13 @@
+http://www.aerospike.com/blog/boosting-amazon-ec2-network-for-high-throughput/
+Low - Up to 100 Mbps (t2.medium)
+Moderate - 100 Mbps to 300 Mbps (c4.large)
+High - 100 Mbps to 1.86 Gbps (c4.xlarge)
+10Gb - upto 8.86Gbps (c4.8xlarge)
+
+http://blog.flux7.com/benchmarking-analyzing-aws-m3-instances-for-performance-bandwidth
+m3.medium 391 Mbps
+m3.large 723 Mbps
+m3.xlarge 1116 Mbps
+m3.2xlarge 1116 Mbps
+
+http://www.ec2instances.info

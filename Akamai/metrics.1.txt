@@ -1,5 +1,6 @@
 http://www.akamai.com/html/technology/real-time-web-monitor.html
-Wed 16:10
+
+=== Wed 16:10
 
 North America
 California 4%
@@ -31,8 +32,7 @@ Asia
 Japan 1.2%
 Saudi Arabia 1%
 
-
-Thu 09:23
+=== Thu 09:23
 
 North America
 California 1.7%
@@ -70,4 +70,68 @@ Philippines 1%
 Australia
 Australia 3.5%
 
+=== Thu 14:07
+
+North America
+California 4%
+Texas 2.5%
+Mexico 1.9%
+New York 1.9%
+Florida 1.6%
+Illinois 1.4%
+New Jersey 1.2%
+Georgia 1.2%
+Virginia 1.2%
+
+South America
+Brazil 5.4%
+
+Europe
+United Kingdom 10.6%
+Germany 6.2%
+France 3.7%
+Russian Federation 2.7%
+Spain 2.2%
+Italy 2%
+Turkey 1.9%
+Sweden 1.7%
+Netherlands 1.3%
+
+Asia
+Japan 2.2%
+India 1.3%
+Saudi Arabia 1.2%
+Taiwan 1%
+
+=== Fri 15:01
+
+North America
+California 4%
+Texas 2.6%
+Mexico 2.1%
+New York 2%
+Florida 1.8%
+Illinois 1.4%
+New Jersey 1.3%
+Georgia 1.2%
+Virginia 1.2%
+
+South America
+Brazil 4.8%
+
+Europe
+United Kingdom 12.5%
+Germany 6.9%
+France 3.8%
+Russian Federation 2.6%
+Spain 2.4%
+Italy 1.9%
+Sweden 1.6%
+Turkey 1.5%
+Netherlands 1.4%
+
+Asia
+Japan 1.6%
+India 1.1%
+Saudi Arabia 1.1%
 
