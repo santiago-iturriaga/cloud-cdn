@@ -34,7 +34,7 @@ def main():
                 line_work = line_work.strip()
 
                 if (len(line_work) > 0):
-                    work_data = line_work.split('\t')
+                    work_data = line_work.split(' ')
 
                     #['505245.156250', '79305', '877150', '1']
                     #print(work_data)
@@ -57,7 +57,7 @@ def main():
                         print('ERROR! {0}'.format(line_work))
                         sys.exit(-1)
 
-                    print("{0}\t{1}\t{2}\t{3}".format(work_arrival, work_docid, work_docsize, work_loc))
+                    print("{0} {1} {2} {3}".format(work_arrival, work_docid, work_docsize, work_loc))
     return 0
 
 if __name__ == '__main__':
