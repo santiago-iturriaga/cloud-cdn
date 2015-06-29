@@ -1,0 +1,6 @@
+1 = africa
+2 = asia
+3 = australia
+4 = europa
+5 = n america
+6 = s america

@@ -1,6 +1,7 @@
 %val = rand(500000,1) * 449817.156250;
 
-workload = load('test.workload.video');
+load('trafico.mat');
+workload = load('workload.video');
 val = workload;
 
 val_int = round(val);
