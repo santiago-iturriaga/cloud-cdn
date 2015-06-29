@@ -1,3 +1,4 @@
+set -x
 cd /home/siturria/github/cloud-cdn/Akamai
 
 TYPE[0]=low
@@ -10,7 +11,7 @@ do
 	do
 		mkdir -p ../Instances/${TYPE[j]}/data.${i}
 		rm ../Instances/${TYPE[j]}/data.${i}/*
-	        cp ../ProWGen/${TYPE[j]}/data.${i}/* ../Instances/low/data.${i}/
+	        cp ../ProWGen/${TYPE[j]}/data.${i}/* ../Instances/${TYPE[j]}/data.${i}/
 	
 	        cp ../ProWGen/${TYPE[j]}/data.${i}/workload.video .
 		./run.sh
