@@ -24,3 +24,6 @@ Formato del archivo: <vm id> <bandwidth> <cost time step>
 Nombre del archivo: dc_vm.<#>
 Formato del archivo: <dc id> <vm id>
 
+* Archivo de regiones.
+Nombre del archivo: reg.<#>
+Formato del archivo: <region id> <nombre>
