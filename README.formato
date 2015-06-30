@@ -1,29 +1,37 @@
 A continuación se detalla el formato de los diferentes archivos de una instancia del problema.
 
+* Archivo de regiones globales.
+Nombre del archivo: reg.<#>
+Formato del archivo: <r id> <nombre>
+
+* Archivo de regiones de datacenters.
+Nombre del archivo: reg_dc.<#>
+Formato del archivo: <r dc id> <nombre> <r id>
+
+* Archivo de regiones de usuarios.
+Nombre del archivo: reg_users.<#>
+Formato del archivo: <r user id> <nombre> <r id>
+
 * Archivo de documentos.
 Nombre del archivo: docs.<#>
 Formato del archivo: <doc. id> <doc. size>
 
 * Archivo de tráfico.
 Nombre del archivo: workload.<#>
-Formato del archivo: <req. time> <doc. id> <doc. size> <region id>
+Formato del archivo: <req. time> <doc. id> <doc. size> <r user id>
 
 * Archivo de QoS.
 Nombre del archivo: qos.<#>
-Formato del archivo: <region id 1> <region id 2> <qos metric>
+Formato del archivo: <r user id> <r dc id> <qos metric>
 
 * Archivo de centros de datos.
 Nombre del archivo: dc.<#>
-Formato del archivo: <dc id> <region id> <fun. cost storage> <fun. cost transfer>
+Formato del archivo: <dc id> <r dc id> <fun. cost storage> <fun. cost transfer>
 
 * Archivo de máquinas virtuales.
 Nombre del archivo: vm.<#>
-Formato del archivo: <vm id> <bandwidth> <cost time step>
+Formato del archivo: <vm id> <vm name> <bandwidth>
 
 * Archivo de máquinas virtuales en centros de datos.
 Nombre del archivo: dc_vm.<#>
-Formato del archivo: <dc id> <vm id>
-
-* Archivo de regiones.
-Nombre del archivo: reg.<#>
-Formato del archivo: <region id> <nombre>
+Formato del archivo: <dc id> <vm id> <cost time step>
