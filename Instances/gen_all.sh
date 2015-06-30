@@ -18,8 +18,3 @@ do
         mv geo_loc.workload.video ../Instances/${TYPE[j]}/data.${i}/
     done
 done
-
-
-
-
-

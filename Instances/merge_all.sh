@@ -13,8 +13,3 @@ do
         ./merge.py ${TYPE[j]}/data.${i}/workload.video.uniform ${TYPE[j]}/data.${i}/geo_loc.workload.video > ${TYPE[j]}/data.${i}/workload.video
     done
 done
-
-
-
-
-
