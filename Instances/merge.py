@@ -39,7 +39,7 @@ def main():
                     #['505245.156250', '79305', '877150', '1']
                     #print(work_data)
                     
-                    work_arrival = float(work_data[0])
+                    work_arrival = int(work_data[0])
                     work_docid = int(work_data[1])
                     work_docsize = int(work_data[2])
                     work_loc = -1

@@ -46,7 +46,7 @@ def main():
     with open(workload_file) as workf:
         for workl in workf:
             data = workl.strip().split(' ')
-            work_arrival = float(data[0])
+            work_arrival = int(data[0])
             work_docid = int(data[1])
             work_docsize = int(data[2])
             work_loc = int(data[3])

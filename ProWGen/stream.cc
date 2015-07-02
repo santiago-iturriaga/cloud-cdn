@@ -1063,7 +1063,7 @@ void RequestVideoStream::GenerateAllRequests()
 			geoloc = distributions->UniformInt(numRegions);
 
 			//fprintf(fp,"%f\t%d\t%d\t%d\n", time, req->GetFileId(),req->GetFileSize(),geoloc);
-			fprintf(fp,"%f %d %d %d\n", time, req->GetFileId(),req->GetFileSize(),geoloc);
+			fprintf(fp,"%d %d %d %d\n", (int)time, req->GetFileId(),req->GetFileSize(),geoloc);
 		}
 	}
 
@@ -1685,7 +1685,8 @@ void OutputPopAndFileSize(char* statisticsFile, int noofDistinctDocs, Request **
 	FILE *fp = fopen(statisticsFile, fmode);
 	for (int i=0; i<noofDistinctDocs; i++)
 		//fprintf(fp, "%u\t%u\t%u\t%u\n",uniqueDoc[i]->GetFileId(),uniqueDoc[i]->GetFreq(), uniqueDoc[i]->GetFileSize(),uniqueDoc[i]->GetFileType());
-		fprintf(fp, "%u %u %u %u\n",uniqueDoc[i]->GetFileId(),uniqueDoc[i]->GetFreq(), uniqueDoc[i]->GetFileSize(),uniqueDoc[i]->GetFileType());
+		//Santiago Iturriaga: modified video.docs output
+		fprintf(fp, "%u %u\n",uniqueDoc[i]->GetFileId(), uniqueDoc[i]->GetFileSize());
 
 	fclose(fp);
 }
