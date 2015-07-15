@@ -19,12 +19,15 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.operators.crossover;
+package jmetal.operators.crossover.cloudcdn;
 
 import jmetal.core.Solution;
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.BinarySolutionType;
+import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
+import jmetal.encodings.variable.ArrayInt;
 import jmetal.encodings.variable.Binary;
+import jmetal.operators.crossover.Crossover;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
@@ -42,8 +45,7 @@ public class HUXCrossover extends Crossover {
 	/**
 	 * Valid solution types to apply this operator
 	 */
-	private static final List VALID_TYPES = Arrays.asList(
-			BinarySolutionType.class, BinaryRealSolutionType.class);
+	private static final List VALID_TYPES = Arrays.asList(CloudCDNSolutionType.class);
 
 	private Double probability_ = null;
 
@@ -78,34 +80,28 @@ public class HUXCrossover extends Crossover {
 	 */
 	public Solution[] doCrossover(double probability, Solution parent1,
 			Solution parent2) throws JMException {
+		
 		Solution[] offSpring = new Solution[2];
 		offSpring[0] = new Solution(parent1);
 		offSpring[1] = new Solution(parent2);
+		
 		try {
 			if (PseudoRandom.randDouble() < probability) {
 				for (int var = 0; var < parent1.getDecisionVariables().length; var++) {
-					Binary p1 = (Binary) parent1.getDecisionVariables()[var];
-					Binary p2 = (Binary) parent2.getDecisionVariables()[var];
+					ArrayInt p1 = (ArrayInt) parent1.getDecisionVariables()[var];
+					ArrayInt p2 = (ArrayInt) parent2.getDecisionVariables()[var];
 
-					for (int bit = 0; bit < p1.getNumberOfBits(); bit++) {
-						if (p1.bits_.get(bit) != p2.bits_.get(bit)) {
+					for (int index = 0; index < p1.getLength(); index++) {
+						if (p1.getValue(index) != p2.getValue(index)) {
 							if (PseudoRandom.randDouble() < 0.5) {
-								((Binary) offSpring[0].getDecisionVariables()[var]).bits_
-										.set(bit, p2.bits_.get(bit));
-								((Binary) offSpring[1].getDecisionVariables()[var]).bits_
-										.set(bit, p1.bits_.get(bit));
+								((ArrayInt) offSpring[0].getDecisionVariables()[var]).setValue(index, p2.getValue(index));
+								((ArrayInt) offSpring[1].getDecisionVariables()[var]).setValue(index, p1.getValue(index));
 							}
 						}
 					}
 				}
-				// 7. Decode the results
-				for (int i = 0; i < offSpring[0].getDecisionVariables().length; i++) {
-					((Binary) offSpring[0].getDecisionVariables()[i]).decode();
-					((Binary) offSpring[1].getDecisionVariables()[i]).decode();
-				}
 			}
 		} catch (ClassCastException e1) {
-
 			Configuration.logger_
 					.severe("HUXCrossover.doCrossover: Cannot perfom "
 							+ "SinglePointCrossover ");

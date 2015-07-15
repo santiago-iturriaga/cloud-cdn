@@ -62,7 +62,7 @@ public class gGA_Settings extends Settings {
 			e.printStackTrace();
 		}
 		// Default experiments.settings
-		populationSize_ = 100;
+		populationSize_ = 20;
 		maxEvaluations_ = 25000;
 		mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
 		crossoverProbability_ = 0.9;
@@ -96,14 +96,14 @@ public class gGA_Settings extends Settings {
 		parameters.put("probability", crossoverProbability_);
 		//TODO: para que sirve?
 		//parameters.put("distributionIndex", crossoverDistributionIndex_);
-		crossover = CrossoverFactory.getCrossoverOperator("HUXCrossover",
+		crossover = CrossoverFactory.getCrossoverOperator("cloudcdn.HUXCrossover",
 				parameters);
 
 		parameters = new HashMap();
 		parameters.put("probability", mutationProbability_);
 		//TODO: para que sirve?
 		//parameters.put("distributionIndex", mutationDistributionIndex_);
-		mutation = MutationFactory.getMutationOperator("UniformMutation",
+		mutation = MutationFactory.getMutationOperator("cloudcdn.BitFlipMutation",
 				parameters);
 
 		// Selection Operator

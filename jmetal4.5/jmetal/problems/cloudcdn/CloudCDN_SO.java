@@ -31,6 +31,7 @@ public class CloudCDN_SO extends Problem {
 	static final public Integer CANTIDAD_MAXIMA_DE_LINEAS_DE_ARCHIVO = 1000;
 
 	static final public String SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS = " ";
+
 	static final public String NOMBRE_ARCHIVO_DE_DOCUMENTOS = "docs.0";
 	static final public String NOMBRE_ARCHIVO_DE_REGIONES = "reg.0";
 	static final public String NOMBRE_ARCHIVO_DE_REGIONES_DATACENTERS = "reg_dc.0";
@@ -293,9 +294,8 @@ public class CloudCDN_SO extends Problem {
 			// ** CARGANDO DOCUMENTOS **//
 			Collection<String> lineasArchivo = null;
 			Path path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_DOCUMENTOS);
-			lineasArchivo = leerArchivo(path.toString()); // TODO: arreglar
-															// numeración de
-															// documentos!
+			// TODO: arreglar numeración de documentos!
+			lineasArchivo = leerArchivo(path.toString());
 
 			cantidadDocumentos_ = lineasArchivo.size();
 			int i = 0;

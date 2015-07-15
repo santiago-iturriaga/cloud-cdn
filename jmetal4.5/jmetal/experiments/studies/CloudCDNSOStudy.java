@@ -83,7 +83,7 @@ public class CloudCDNSOStudy extends Experiment {
 				+ exp.experimentName_;
 		exp.paretoFrontDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/data/paretoFronts";
 		exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
-		exp.independentRuns_ = 100;
+		exp.independentRuns_ = 1;
 
 		exp.initExperiment();
 
