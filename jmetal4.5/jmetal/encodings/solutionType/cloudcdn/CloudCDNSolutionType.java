@@ -29,7 +29,7 @@ public class CloudCDNSolutionType extends SolutionType {
 			for (int var = 0; var < problem_.getNumberOfVariables() / 2; var++) {
 				
 				variables[var] = new ArrayInt(
-						customProblem.getNumberOfContents(),
+						customProblem.getCantidadDocumentos(),
 						customProblem.getNumberOfContentsLowerLimits(),
 						customProblem.getNumberOfContentsUpperLimits());
 			}
@@ -38,7 +38,7 @@ public class CloudCDNSolutionType extends SolutionType {
 					.getNumberOfVariables(); var++) {
 				
 				variables[var] = new ArrayInt(
-						customProblem.getNumberOfVMTypes(),
+						customProblem.getCantidadMaquinas(),
 						customProblem.getNumberOfVMTypesLowerLimits(),
 						customProblem.getNumberOfVMTypesUpperLimits());
 			}
