@@ -67,7 +67,7 @@ public class RegionDatacenter {
 	}
 
 	public void loadStorageCostFuction(String function) {
-		String[] data = function.trim().split("|");
+		String[] data = function.trim().split("\\|");
 
 		storageCostValues = new double[data.length];
 		storageCostLimits = new double[data.length];
@@ -85,7 +85,7 @@ public class RegionDatacenter {
 	}
 
 	public void loadTransferCostFuction(String function) {
-		String[] data = function.trim().split("|");
+		String[] data = function.trim().split("\\|");
 
 		transferCostValues = new double[data.length];
 		transferCostLimits = new double[data.length];
@@ -115,7 +115,7 @@ public class RegionDatacenter {
 			currentValue = storageCostValues[currentIndex];
 		}
 		
-		return currentValue;
+		return currentValue * dataSize;
 	}
 
 	public double computeTransferCost(double dataSize) {
@@ -131,7 +131,7 @@ public class RegionDatacenter {
 			currentValue = transferCostValues[currentIndex];
 		}
 		
-		return currentValue;
+		return currentValue * dataSize;
 	}
 
 	public boolean hasVmType(int vmType) {

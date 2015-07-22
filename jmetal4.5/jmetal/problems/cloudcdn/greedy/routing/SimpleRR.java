@@ -118,10 +118,10 @@ public class SimpleRR {
 						bandwidthConstraint_[bestDC][minuteOfDay] += bandwidthConstraint_[bestDC][minuteOfDay]
 								+ problem_.getTrafico()[i].getDocSize();
 
-						if (((ArrayInt) vars[bestDC]).getValue(t.getDocId()) == 0) {
+						/*if (((ArrayInt) vars[bestDC]).getValue(t.getDocId()) == 0) {
 							feasible_ = false;
 							return;
-						}
+						}*/
 					}
 				} else {
 					current_day = day;

@@ -216,7 +216,7 @@ public class CloudCDN_SO extends Problem {
 	 *            The solution to evaluate
 	 */
 	public void evaluate(Solution solution) {
-		double fitness;
+		double fitness = 0.0;
 
 		double storageCost = 0.0;
 		double machineCost = 0.0;
@@ -262,7 +262,9 @@ public class CloudCDN_SO extends Problem {
 				fitness = -1;
 			}
 
-			fitness = storageCost + machineCost + trafficCost;
+			if (fitness == 0) {
+				fitness = storageCost + machineCost + trafficCost;
+			}
 		} catch (JMException e) {
 			e.printStackTrace();
 			fitness = -1;
@@ -291,7 +293,7 @@ public class CloudCDN_SO extends Problem {
 			int i = 0;
 			for (String linea : lineasArchivo) {
 				double docSizeGB;
-				docSizeGB = Integer.valueOf((linea
+				docSizeGB = Double.valueOf((linea
 						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1])
 						/ (1024 * 1024 * 1024);
 
@@ -392,7 +394,7 @@ public class CloudCDN_SO extends Problem {
 			i = 0;
 			for (String linea : lineasArchivo) {
 				double docSizeGB;
-				docSizeGB = Integer.valueOf((linea
+				docSizeGB = Double.valueOf((linea
 						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])
 						/ (1024 * 1024 * 1024);
 
