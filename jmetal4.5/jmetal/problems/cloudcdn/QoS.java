@@ -1,31 +1,31 @@
 package jmetal.problems.cloudcdn;
 
 public class QoS {
-	Integer regUsrId;
-	Integer regDocId;
-	Integer qosMetric;
-	public QoS(Integer regUsrId, Integer regDocId, Integer qosMetric) {
+	int regUsrId;
+	int regDocId;
+	int qosMetric;
+	public QoS(int regUsrId, int regDocId, int qosMetric) {
 		super();
 		this.regUsrId = regUsrId;
 		this.regDocId = regDocId;
 		this.qosMetric = qosMetric;
 	}
-	public Integer getRegUsrId() {
+	public int getRegUsrId() {
 		return regUsrId;
 	}
-	public void setRegUsrId(Integer regUsrId) {
+	public void setRegUsrId(int regUsrId) {
 		this.regUsrId = regUsrId;
 	}
-	public Integer getRegDocId() {
+	public int getRegDocId() {
 		return regDocId;
 	}
-	public void setRegDocId(Integer regDocId) {
+	public void setRegDocId(int regDocId) {
 		this.regDocId = regDocId;
 	}
-	public Integer getQosMetric() {
+	public int getQosMetric() {
 		return qosMetric;
 	}
-	public void setQosMetric(Integer qosMetric) {
+	public void setQosMetric(int qosMetric) {
 		this.qosMetric = qosMetric;
 	}
 }

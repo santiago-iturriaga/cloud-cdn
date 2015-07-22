@@ -58,7 +58,6 @@ public class gGA_Settings extends Settings {
 			problem_ = (new ProblemFactory()).getProblem(problemName_,
 					problemParams);
 		} catch (JMException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// Default experiments.settings
@@ -66,8 +65,8 @@ public class gGA_Settings extends Settings {
 		maxEvaluations_ = 25000;
 		mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
 		crossoverProbability_ = 0.9;
-		mutationDistributionIndex_ = 20.0;
-		crossoverDistributionIndex_ = 20.0;
+		//mutationDistributionIndex_ = 20.0;
+		//crossoverDistributionIndex_ = 20.0;
 	} // NSGAII_Settings
 
 	/**

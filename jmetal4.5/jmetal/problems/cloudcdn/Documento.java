@@ -1,23 +1,23 @@
 package jmetal.problems.cloudcdn;
 
 public class Documento {
-	Integer docId;
-	Integer docSize;
-	public Documento(Integer docId, Integer docSize) {
+	int docId;
+	double docSize;
+	public Documento(int docId, double docSize) {
 		super();
 		this.docId = docId;
 		this.docSize = docSize;
 	}
-	public Integer getDocId() {
+	public int getDocId() {
 		return docId;
 	}
-	public void setDocId(Integer docId) {
+	public void setDocId(int docId) {
 		this.docId = docId;
 	}
-	public Integer getDocSize() {
+	public double getDocSize() {
 		return docSize;
 	}
-	public void setDocSize(Integer docSize) {
+	public void setDocSize(double docSize) {
 		this.docSize = docSize;
 	}
 }

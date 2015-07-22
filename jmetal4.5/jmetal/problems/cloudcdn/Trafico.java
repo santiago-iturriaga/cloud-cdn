@@ -1,40 +1,40 @@
 package jmetal.problems.cloudcdn;
 
 public class Trafico {
-	Integer reqTime;
-	Integer docId;
-	Integer docSize;
-	Integer regUsrId;
-	public Trafico(Integer reqTime, Integer docId, Integer docSize,
-			Integer regUsrId) {
+	int reqTime;
+	int docId;
+	double docSize;
+	int regUsrId;
+	public Trafico(int reqTime, int docId, double docSize,
+			int regUsrId) {
 		super();
 		this.reqTime = reqTime;
 		this.docId = docId;
 		this.docSize = docSize;
 		this.regUsrId = regUsrId;
 	}
-	public Integer getReqTime() {
+	public int getReqTime() {
 		return reqTime;
 	}
-	public void setReqTime(Integer reqTime) {
+	public void setReqTime(int reqTime) {
 		this.reqTime = reqTime;
 	}
-	public Integer getDocId() {
+	public int getDocId() {
 		return docId;
 	}
-	public void setDocId(Integer docId) {
+	public void setDocId(int docId) {
 		this.docId = docId;
 	}
-	public Integer getDocSize() {
+	public double getDocSize() {
 		return docSize;
 	}
-	public void setDocSize(Integer docSize) {
+	public void setDocSize(double docSize) {
 		this.docSize = docSize;
 	}
-	public Integer getRegUsrId() {
+	public int getRegUsrId() {
 		return regUsrId;
 	}
-	public void setRegUsrId(Integer regUsrId) {
+	public void setRegUsrId(int regUsrId) {
 		this.regUsrId = regUsrId;
 	}
 }

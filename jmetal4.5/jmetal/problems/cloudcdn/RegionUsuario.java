@@ -1,13 +1,14 @@
 package jmetal.problems.cloudcdn;
 
 public class RegionUsuario {
-	Integer regUsrId;
+	int regUsrId;
 	String regNombre;
-	Integer regId;
-	public Integer getRegUsrId() {
+	int regId;
+	
+	public int getRegUsrId() {
 		return regUsrId;
 	}
-	public void setRegUsrId(Integer regUsrId) {
+	public void setRegUsrId(int regUsrId) {
 		this.regUsrId = regUsrId;
 	}
 	public String getRegNombre() {
@@ -16,13 +17,13 @@ public class RegionUsuario {
 	public void setRegNombre(String regNombre) {
 		this.regNombre = regNombre;
 	}
-	public Integer getRegId() {
+	public int getRegId() {
 		return regId;
 	}
-	public void setRegId(Integer regId) {
+	public void setRegId(int regId) {
 		this.regId = regId;
 	}
-	public RegionUsuario(Integer regUsrId, String regNombre, Integer regId) {
+	public RegionUsuario(int regUsrId, String regNombre, int regId) {
 		super();
 		this.regUsrId = regUsrId;
 		this.regNombre = regNombre;

@@ -21,20 +21,18 @@ public class CloudCDN_SO extends Problem {
 	static final public Boolean DEBUG = true;
 
 	static final public Integer CANTIDAD_MAXIMA_DE_DOCUMENTOS = 100000;
-	static final public Integer CANTIDAD_MAXIMA_DE_REGIONES = 1000;
-	static final public Integer CANTIDAD_MAXIMA_DE_REGIONES_DATACENTERS = 1000;
-	static final public Integer CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS = 1000;
+	static final public Integer CANTIDAD_MAXIMA_DE_REGIONES = 100;
+	static final public Integer CANTIDAD_MAXIMA_DE_REGIONES_DATACENTERS = 50;
+	static final public Integer CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS = 500;
 	static final public Integer CANTIDAD_MAXIMA_DE_TRAFICO = 100000;
-	static final public Integer CANTIDAD_MAXIMA_DE_QOS = 1000;
-	static final public Integer CANTIDAD_MAXIMA_DE_MAQUINAS = 1000;
-	static final public Integer CANTIDAD_MAXIMA_DE_DATACENTERS_MAQUINAS = 1000;
-	static final public Integer CANTIDAD_MAXIMA_DE_LINEAS_DE_ARCHIVO = 1000;
+	static final public Integer CANTIDAD_MAXIMA_DE_QOS = 5000;
+	static final public Integer CANTIDAD_MAXIMA_DE_MAQUINAS = 50;
 
 	static final public String SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS = " ";
 
 	static final public String NOMBRE_ARCHIVO_DE_DOCUMENTOS = "docs.0";
 	static final public String NOMBRE_ARCHIVO_DE_REGIONES = "reg.0";
-	static final public String NOMBRE_ARCHIVO_DE_REGIONES_DATACENTERS = "reg_dc.0";
+	static final public String NOMBRE_ARCHIVO_DE_DATACENTERS = "dc.0";
 	static final public String NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS = "reg_users.0";
 	static final public String NOMBRE_ARCHIVO_DE_TRAFICO = "workload.0";
 	static final public String NOMBRE_ARCHIVO_DE_QOS = "qos.0";
@@ -66,9 +64,6 @@ public class CloudCDN_SO extends Problem {
 
 	private Maquina[] maquinas_ = new Maquina[CANTIDAD_MAXIMA_DE_MAQUINAS];
 	private Integer cantidadMaquinas_ = 0;
-
-	private DatacenterMaquina[] datacentersMaquinas_ = new DatacenterMaquina[CANTIDAD_MAXIMA_DE_DATACENTERS_MAQUINAS];
-	private Integer cantidadDatacenterMaquina_ = 0;
 
 	private SimpleRR routingSimpleRR_;
 
@@ -121,6 +116,8 @@ public class CloudCDN_SO extends Problem {
 			vmTypesUpperLimits_[i] = getCantidadTrafico(); // Big enough value.
 		}
 
+		routingSimpleRR_ = new SimpleRR(this);
+
 		try {
 			if (solutionType.compareTo("CloudCDNSolutionType") == 0)
 				solutionType_ = new CloudCDNSolutionType(this);
@@ -130,8 +127,6 @@ public class CloudCDN_SO extends Problem {
 		} catch (JMException e) {
 			e.printStackTrace();
 		}
-
-		routingSimpleRR_ = new SimpleRR(this);
 	}
 
 	public double[] getNumberOfContentsLowerLimits() {
@@ -162,7 +157,7 @@ public class CloudCDN_SO extends Problem {
 		return documentos_;
 	}
 
-	public Integer getCantidadDocumentos() {
+	public int getCantidadDocumentos() {
 		return cantidadDocumentos_;
 	}
 
@@ -170,7 +165,7 @@ public class CloudCDN_SO extends Problem {
 		return regiones_;
 	}
 
-	public Integer getCantidadRegiones() {
+	public int getCantidadRegiones() {
 		return cantidadRegiones_;
 	}
 
@@ -178,7 +173,7 @@ public class CloudCDN_SO extends Problem {
 		return regionesDatacenters_;
 	}
 
-	public Integer getCantidadRegionesDatacenters() {
+	public int getCantidadRegionesDatacenters() {
 		return cantidadRegionesDatacenters_;
 	}
 
@@ -186,7 +181,7 @@ public class CloudCDN_SO extends Problem {
 		return regionesUsuarios_;
 	}
 
-	public Integer getCantidadRegionesUsuarios() {
+	public int getCantidadRegionesUsuarios() {
 		return cantidadRegionesUsuarios_;
 	}
 
@@ -202,7 +197,7 @@ public class CloudCDN_SO extends Problem {
 		return qoS_;
 	}
 
-	public Integer getCantidadQoS() {
+	public int getCantidadQoS() {
 		return cantidadQoS_;
 	}
 
@@ -210,16 +205,8 @@ public class CloudCDN_SO extends Problem {
 		return maquinas_;
 	}
 
-	public Integer getCantidadMaquinas() {
+	public int getCantidadMaquinas() {
 		return cantidadMaquinas_;
-	}
-
-	public DatacenterMaquina[] getDatacentersMaquinas() {
-		return datacentersMaquinas_;
-	}
-
-	public Integer getCantidadDatacenterMaquina() {
-		return cantidadDatacenterMaquina_;
 	}
 
 	/**
@@ -263,13 +250,16 @@ public class CloudCDN_SO extends Problem {
 				}
 			}
 
-			// TODO: implement routing algorithm.
 			routingSimpleRR_.Compute(solution);
 
-			for (int i = 0; i < getCantidadRegionesDatacenters(); i++) {
-				trafficCost += getRegionesDatacenters()[i]
-						.computeTransferCost(routingSimpleRR_
-								.getTrafficAmount()[i]);
+			if (routingSimpleRR_.isFeasible()) {
+				for (int i = 0; i < getCantidadRegionesDatacenters(); i++) {
+					trafficCost += getRegionesDatacenters()[i]
+							.computeTransferCost(routingSimpleRR_
+									.getTrafficAmount()[i]);
+				}
+			} else {
+				fitness = -1;
 			}
 
 			fitness = storageCost + machineCost + trafficCost;
@@ -300,10 +290,14 @@ public class CloudCDN_SO extends Problem {
 			cantidadDocumentos_ = lineasArchivo.size();
 			int i = 0;
 			for (String linea : lineasArchivo) {
+				double docSizeGB;
+				docSizeGB = Integer.valueOf((linea
+						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1])
+						/ (1024 * 1024 * 1024);
+
 				documentos_[i++] = new Documento(Integer.valueOf((linea
 						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
-						Integer.valueOf((linea
-								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]));
+						docSizeGB);
 			}
 
 			if (DEBUG) {
@@ -335,8 +329,8 @@ public class CloudCDN_SO extends Problem {
 				}
 			}
 
-			// ** CARGANDO REGIONES DATACENTERS **//
-			path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_REGIONES_DATACENTERS);
+			// ** CARGANDO DATACENTERS **//
+			path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_DATACENTERS);
 			lineasArchivo = leerArchivo(path.toString());
 
 			cantidadRegionesDatacenters_ = lineasArchivo.size();
@@ -348,7 +342,11 @@ public class CloudCDN_SO extends Problem {
 						String.valueOf((linea
 								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
 						Integer.valueOf((linea
-								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]));
+								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]),
+						String.valueOf((linea
+								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[3]),
+						String.valueOf((linea
+								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[4]));
 			}
 
 			if (DEBUG) {
@@ -393,13 +391,16 @@ public class CloudCDN_SO extends Problem {
 			cantidadTrafico_ = lineasArchivo.size();
 			i = 0;
 			for (String linea : lineasArchivo) {
+				double docSizeGB;
+				docSizeGB = Integer.valueOf((linea
+						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])
+						/ (1024 * 1024 * 1024);
+
 				trafico_[i++] = new Trafico(Integer.valueOf((linea
 						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
 						Integer.valueOf((linea
 								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
-						Integer.valueOf((linea
-								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]),
-						Integer.valueOf((linea
+						docSizeGB, Integer.valueOf((linea
 								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[3]));
 			}
 
@@ -463,37 +464,33 @@ public class CloudCDN_SO extends Problem {
 
 					);
 				}
-
 			}
 
 			// ** CARGANDO DATACENTERS MAQUINAS **//
 			path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_DATACENTERS_MAQUINAS);
 			lineasArchivo = leerArchivo(path.toString());
 
-			cantidadDatacenterMaquina_ = lineasArchivo.size();
-			i = 0;
 			for (String linea : lineasArchivo) {
-				datacentersMaquinas_[i++] = new DatacenterMaquina(
-						Integer.valueOf((linea
-								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
-						Integer.valueOf((linea
-								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
-						Double.valueOf((linea
-								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])
+				int dcId;
+				dcId = Integer.valueOf((linea
+						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]);
 
-				);
+				int vmId;
+				vmId = Integer.valueOf((linea
+						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]);
+
+				double cost;
+				cost = Double.valueOf((linea
+						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]);
+
+				regionesDatacenters_[dcId].setVMCost(vmId, cost);
 			}
 
 			if (DEBUG) {
 				System.out.println("IMPRIMIENDO DATACENTERS MAQUINAS: ");
-				for (int j = 0; j < cantidadDatacenterMaquina_; j++) {
-					System.out.println(datacentersMaquinas_[j].getDcId() + " "
-							+ datacentersMaquinas_[j].getVmId() + " "
-							+ datacentersMaquinas_[j].getCostTimeStep()
-
-					);
+				for (int j = 0; j < cantidadRegionesDatacenters_; j++) {
+					regionesDatacenters_[j].printVmCosts();
 				}
-
 			}
 		} catch (Exception e) {
 			System.err.println("readProblem(): error when reading data file "

@@ -28,7 +28,7 @@ import random
 def main():
     distance_file = sys.argv[1]
     reg_users_file = sys.argv[2]
-    reg_dc_file = sys.argv[3]
+    dc_file = sys.argv[3]
 
     u_regions = []
 
@@ -43,7 +43,7 @@ def main():
 
     dc_regions = []
 
-    with open(reg_dc_file) as regdcf:
+    with open(dc_file) as regdcf:
         for regdcl in regdcf:
             data = regdcl.strip().split(' ')
 

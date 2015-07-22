@@ -379,7 +379,7 @@ int main(int argc, char *argv[])
 											   gamma8,
 											   alpha,
 											   alphaBirth,
-											   nextId, 
+											   0, /*nextId,*/
 											   distr, 
 											   lastP2PReqTime,
 											   video_pop_distr,

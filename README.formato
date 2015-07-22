@@ -4,10 +4,6 @@ A continuación se detalla el formato de los diferentes archivos de una instanci
 Nombre del archivo: reg.<#>
 Formato del archivo: <r id> <nombre>
 
-* Archivo de regiones de datacenters.
-Nombre del archivo: reg_dc.<#>
-Formato del archivo: <r dc id> <nombre> <r id>
-
 * Archivo de regiones de usuarios.
 Nombre del archivo: reg_users.<#>
 Formato del archivo: <r user id> <nombre> <r id>
@@ -26,7 +22,7 @@ Formato del archivo: <r user id> <r dc id> <qos metric>
 
 * Archivo de centros de datos.
 Nombre del archivo: dc.<#>
-Formato del archivo: <dc id> <r dc id> <fun. cost storage> <fun. cost transfer>
+Formato del archivo: <dc id> <nombre> <r id> <fun. cost storage> <fun. cost transfer>
 
 * Archivo de máquinas virtuales.
 Nombre del archivo: vm.<#>

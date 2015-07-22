@@ -89,7 +89,8 @@ public class CloudCDNSOStudy extends Experiment {
 
 		// Run the experiments
 		int numberOfThreads;
-		exp.runExperiment(numberOfThreads = 4);
+		exp.runExperiment(numberOfThreads = 1);
+		//exp.runExperiment(numberOfThreads = 4);
 
 		exp.generateQualityIndicators();
 

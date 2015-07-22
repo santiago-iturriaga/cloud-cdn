@@ -107,7 +107,6 @@ public class RunExperiment extends Thread {
 		int[] problemData; // Contains current problemId, algorithmId and iRun
 
 		while(!finished){
-
 			problemData = null;
 			problemData = experiment_.getNextProblem();
 

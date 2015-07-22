@@ -1,19 +1,19 @@
 package jmetal.problems.cloudcdn;
 
 public class Maquina {
-	Integer vmId;
+	int vmId;
 	String  vmNombre;
-	Integer bandwidth;
-	public Maquina(Integer vmId, String vmNombre, Integer bandwidth) {
+	int bandwidth;
+	public Maquina(int vmId, String vmNombre, int bandwidth) {
 		super();
 		this.vmId = vmId;
 		this.vmNombre = vmNombre;
 		this.bandwidth = bandwidth;
 	}
-	public Integer getVmId() {
+	public int getVmId() {
 		return vmId;
 	}
-	public void setVmId(Integer vmId) {
+	public void setVmId(int vmId) {
 		this.vmId = vmId;
 	}
 	public String getVmNombre() {
@@ -22,10 +22,10 @@ public class Maquina {
 	public void setVmNombre(String vmNombre) {
 		this.vmNombre = vmNombre;
 	}
-	public Integer getBandwidth() {
+	public int getBandwidth() {
 		return bandwidth;
 	}
-	public void setBandwidth(Integer bandwidth) {
+	public void setBandwidth(int bandwidth) {
 		this.bandwidth = bandwidth;
 	}
 }

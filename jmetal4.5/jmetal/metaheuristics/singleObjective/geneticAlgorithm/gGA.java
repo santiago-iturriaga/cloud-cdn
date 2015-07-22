@@ -83,8 +83,8 @@ public class gGA extends Algorithm {
 		// Create the initial population
 		Solution newIndividual;
 		for (int i = 0; i < populationSize; i++) {
-			System.out.println("init " + i);
-			
+			System.out.println(">> Init " + i);
+
 			newIndividual = new Solution(problem_);
 			problem_.evaluate(newIndividual);
 			evaluations++;
@@ -95,8 +95,9 @@ public class gGA extends Algorithm {
 		population.sort(comparator);
 		while (evaluations < maxEvaluations) {
 			// if ((evaluations % 10) == 0) {
-			System.out.println(evaluations + ": "
-					+ population.get(0).getObjective(0));
+			System.out.println("Num. evaluations " + evaluations + ": "
+					+ population.get(0).getObjective(0) + "/"
+					+ population.get(0).getObjective(1));
 			// } //
 
 			// Copy the best two individuals to the offspring population

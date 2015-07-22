@@ -1,19 +1,19 @@
 package jmetal.problems.cloudcdn;
 
 public class Region {
-	Integer regId;
+	int regId;
 	String regNombre;
 	
 	
-	public Region(Integer regId, String regNombre) {
+	public Region(int regId, String regNombre) {
 		super();
 		this.regId = regId;
 		this.regNombre = regNombre;
 	}
-	public Integer getRegId() {
+	public int getRegId() {
 		return regId;
 	}
-	public void setRegId(Integer regId) {
+	public void setRegId(int regId) {
 		this.regId = regId;
 	}
 	public String getRegNombre() {
