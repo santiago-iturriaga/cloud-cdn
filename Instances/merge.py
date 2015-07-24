@@ -48,7 +48,7 @@ def main():
                     line_loc = line_loc.strip()
 
                     if (len(line_loc) > 0):
-                        loc = int(float(line_loc))
+                        loc = int(float(line_loc)) - 1
 
                         #print(loc)
 
