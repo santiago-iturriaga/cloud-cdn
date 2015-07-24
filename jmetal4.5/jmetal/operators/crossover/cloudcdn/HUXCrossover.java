@@ -28,6 +28,7 @@ import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
 import jmetal.encodings.variable.ArrayInt;
 import jmetal.encodings.variable.Binary;
 import jmetal.operators.crossover.Crossover;
+import jmetal.problems.cloudcdn.CloudCDN_SO;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
@@ -101,6 +102,9 @@ public class HUXCrossover extends Crossover {
 					}
 				}
 			}
+			
+			((CloudCDN_SO) offSpring[0].getProblem()).FixSolution(offSpring[0]);
+			((CloudCDN_SO) offSpring[1].getProblem()).FixSolution(offSpring[1]);
 		} catch (ClassCastException e1) {
 			Configuration.logger_
 					.severe("HUXCrossover.doCrossover: Cannot perfom "
@@ -109,6 +113,7 @@ public class HUXCrossover extends Crossover {
 			String name = cls.getName();
 			throw new JMException("Exception in " + name + ".doCrossover()");
 		}
+				
 		return offSpring;
 	} // doCrossover
 

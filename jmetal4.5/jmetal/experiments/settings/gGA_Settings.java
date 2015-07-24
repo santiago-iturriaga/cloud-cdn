@@ -62,7 +62,8 @@ public class gGA_Settings extends Settings {
 		}
 		// Default experiments.settings
 		populationSize_ = 20;
-		maxEvaluations_ = 25000;
+		maxEvaluations_ = 2500;
+		//maxEvaluations_ = 25000;
 		mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
 		crossoverProbability_ = 0.9;
 		//mutationDistributionIndex_ = 20.0;

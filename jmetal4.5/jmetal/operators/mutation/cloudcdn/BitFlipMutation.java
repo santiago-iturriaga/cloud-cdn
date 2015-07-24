@@ -28,6 +28,7 @@ import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
 import jmetal.encodings.variable.ArrayInt;
 import jmetal.encodings.variable.Binary;
 import jmetal.operators.mutation.Mutation;
+import jmetal.problems.cloudcdn.CloudCDN_SO;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
@@ -84,6 +85,8 @@ public class BitFlipMutation extends Mutation {
 					}
 				}
 			}
+			
+			((CloudCDN_SO) solution.getProblem()).FixSolution(solution);
 		} catch (ClassCastException e1) {
 			Configuration.logger_.severe("BitFlipMutation.doMutation: "
 					+ "ClassCastException error" + e1.getMessage());

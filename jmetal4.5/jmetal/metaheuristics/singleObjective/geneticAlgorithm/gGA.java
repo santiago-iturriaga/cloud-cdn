@@ -96,8 +96,7 @@ public class gGA extends Algorithm {
 		while (evaluations < maxEvaluations) {
 			// if ((evaluations % 10) == 0) {
 			System.out.println("Num. evaluations " + evaluations + ": "
-					+ population.get(0).getObjective(0) + "/"
-					+ population.get(0).getObjective(1));
+					+ population.get(0).getObjective(0));
 			// } //
 
 			// Copy the best two individuals to the offspring population
