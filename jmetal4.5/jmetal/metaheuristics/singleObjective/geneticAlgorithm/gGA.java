@@ -61,7 +61,10 @@ public class gGA extends Algorithm {
 		Operator selectionOperator;
 
 		Comparator comparator;
-		comparator = new ObjectiveComparator(0); // Single objective comparator
+		// comparator = new ObjectiveComparator(0); // Single objective
+		// comparator
+		comparator = new jmetal.util.comparators.cloudcdn.OverallConstraintViolationComparator(
+				0); // Single objective comparator
 
 		// Read the params
 		populationSize = ((Integer) this.getInputParameter("populationSize"))
@@ -83,10 +86,13 @@ public class gGA extends Algorithm {
 		// Create the initial population
 		Solution newIndividual;
 		for (int i = 0; i < populationSize; i++) {
-			System.out.println(">> Init " + i);
-
 			newIndividual = new Solution(problem_);
 			problem_.evaluate(newIndividual);
+
+			System.out.println(">> Init " + i + " => "
+					+ newIndividual.getObjective(0) + " [Penalty: "
+					+ newIndividual.getOverallConstraintViolation() + "]");
+
 			evaluations++;
 			population.add(newIndividual);
 		} // for
@@ -95,9 +101,10 @@ public class gGA extends Algorithm {
 		population.sort(comparator);
 		while (evaluations < maxEvaluations) {
 			// if ((evaluations % 10) == 0) {
-			System.out.println("Num. evaluations " + evaluations + ": "
-					+ population.get(0).getObjective(0));
-			// } //
+			System.out.println(">> #Eval " + evaluations + " best => "
+					+ population.get(0).getObjective(0) + " [Penalty: "
+					+ population.get(0).getOverallConstraintViolation() + "]");			
+			// }
 
 			// Copy the best two individuals to the offspring population
 			offspringPopulation.add(new Solution(population.get(0)));

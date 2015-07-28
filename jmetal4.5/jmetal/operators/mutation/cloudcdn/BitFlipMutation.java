@@ -85,8 +85,6 @@ public class BitFlipMutation extends Mutation {
 					}
 				}
 			}
-			
-			((CloudCDN_SO) solution.getProblem()).FixSolution(solution);
 		} catch (ClassCastException e1) {
 			Configuration.logger_.severe("BitFlipMutation.doMutation: "
 					+ "ClassCastException error" + e1.getMessage());

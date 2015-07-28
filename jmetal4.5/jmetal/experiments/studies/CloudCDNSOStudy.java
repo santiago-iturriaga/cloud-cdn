@@ -56,9 +56,12 @@ public class CloudCDNSOStudy extends Experiment {
 		try {
 			Object[] problemParams = { "CloudCDNSolutionType", "test/", 0 };
 
-			algorithm[0] = new gGA_Settings(problemName, problemParams)
-					.configure();
-
+			algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings(problemName, problemParams).configure();
+			
+			/*
+			algorithm[0] = new jmetal.experiments.settings.cloudcdn.ES_Settings(
+					problemName, problemParams).configure();
+					*/
 		} catch (IllegalArgumentException ex) {
 			Logger.getLogger(CloudCDNSOStudy.class.getName()).log(Level.SEVERE,
 					null, ex);
@@ -72,7 +75,10 @@ public class CloudCDNSOStudy extends Experiment {
 		CloudCDNSOStudy exp = new CloudCDNSOStudy();
 
 		exp.experimentName_ = "CloudCDNStudy";
+		
+		//exp.algorithmNameList_ = new String[] { "ElitistES" };
 		exp.algorithmNameList_ = new String[] { "gGA" };
+		
 		exp.problemList_ = new String[] { "cloudcdn.CloudCDN_SO" };
 		exp.paretoFrontFile_ = new String[] { "CloudCDN_SO.pf" };
 		exp.indicatorList_ = new String[] { "EPSILON", "SPREAD", "HV" };
@@ -90,7 +96,7 @@ public class CloudCDNSOStudy extends Experiment {
 		// Run the experiments
 		int numberOfThreads;
 		exp.runExperiment(numberOfThreads = 1);
-		//exp.runExperiment(numberOfThreads = 4);
+		// exp.runExperiment(numberOfThreads = 4);
 
 		exp.generateQualityIndicators();
 
@@ -120,4 +126,3 @@ public class CloudCDNSOStudy extends Experiment {
 		exp.generateRWilcoxonScripts(problems, prefix, exp);
 	}
 }
-

@@ -83,18 +83,25 @@ public class CloudCDN_SO extends Problem {
 		qoS_.trimToSize();
 		maquinas_.trimToSize();
 
-		numberOfVariables_ = regionesDatacenters_.size() * 2;
+		numberOfVariables_ = regionesDatacenters_.size()
+				+ (regionesDatacenters_.size() * 24); // 1 document assignment +
+														// DC*24 hours VM
+														// assignment
 		numberOfObjectives_ = 1;
 		numberOfConstraints_ = 2;
 
 		problemName_ = "CloudCDN_SO";
 
 		length_ = new int[numberOfVariables_];
-		for (int var = 0; var < getNumberOfVariables() / 2; var++) {
+		for (int var = 0; var < regionesDatacenters_.size(); var++) {
 			length_[var] = getDocumentos().size();
 		}
-		for (int var = getNumberOfVariables() / 2; var < getNumberOfVariables(); var++) {
-			length_[var] = getMaquinas().size();
+
+		for (int var_dc = 0; var_dc < regionesDatacenters_.size(); var_dc++) {
+			for (int var_hr = 0; var_hr < 24; var_hr++) {
+				length_[var_dc * 24 + var_hr + regionesDatacenters_.size()] = getMaquinas()
+						.size();
+			}
 		}
 
 		contentsLowerLimits_ = new double[getDocumentos().size()];
@@ -187,17 +194,14 @@ public class CloudCDN_SO extends Problem {
 	}
 
 	public void FixSolution(Solution solution) {
-		FixSolution(solution.getDecisionVariables());
-	}
-	
-	public void FixSolution(Variable[] vars) {
 		for (int j = 0; j < getDocumentos().size(); j++) {
 			int docCount;
 			docCount = 0;
-			
-			for (int i = 0; i < getNumberOfVariables() / 2; i++) {
+
+			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
 				try {
-					docCount += ((ArrayInt) vars[i]).getValue(j);
+					docCount += CloudCDNSolutionType.GetDocumentVariables(
+							solution, i).getValue(j);
 				} catch (JMException e) {
 					e.printStackTrace();
 				}
@@ -205,10 +209,12 @@ public class CloudCDN_SO extends Problem {
 
 			if (docCount == 0) {
 				int randDC;
-				randDC = PseudoRandom.randInt(0, (getNumberOfVariables() / 2)-1);
-				
+				randDC = PseudoRandom.randInt(0, getRegionesDatacenters()
+						.size() - 1);
+
 				try {
-					((ArrayInt) vars[randDC]).setValue(j, 1);
+					CloudCDNSolutionType.GetDocumentVariables(solution, randDC)
+							.setValue(j, 1);
 				} catch (JMException e) {
 					e.printStackTrace();
 				}
@@ -223,20 +229,26 @@ public class CloudCDN_SO extends Problem {
 	 *            The solution to evaluate
 	 */
 	public void evaluate(Solution solution) {
+		FixSolution(solution);
+
 		double fitness = 0.0;
 
 		double storageCost = 0.0;
 		double machineCost = 0.0;
 		double trafficCost = 0.0;
 
+		int totalSimTimeSecs = getTrafico().get(getTrafico().size() - 1).reqTime;
+		double totalSimTimeMonths = totalSimTimeSecs / (30 * 24 * 60 * 60);
+		double totalSimTimeDays = totalSimTimeSecs / (24 * 60 * 60);
+		double totalSimTimeHours = totalSimTimeSecs / (60 * 60);
+
 		try {
-			for (int i = 0; i < getNumberOfVariables() / 2; i++) {
+			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
 				double dataSize = 0.0;
 
 				for (int j = 0; j < getDocumentos().size(); j++) {
-					ArrayInt var = (ArrayInt) solution.getDecisionVariables()[i];
-
-					if (var.getValue(j) == 1) {
+					if (CloudCDNSolutionType.GetDocumentVariables(solution, i)
+							.getValue(j) == 1) {
 						dataSize += getDocumentos().get(j).docSize;
 					}
 				}
@@ -245,19 +257,20 @@ public class CloudCDN_SO extends Problem {
 						.computeStorageCost(dataSize);
 			}
 
-			for (int i = getNumberOfVariables() / 2; i < getNumberOfVariables(); i++) {
-				for (int j = 0; j < getMaquinas().size(); j++) {
-					ArrayInt var = (ArrayInt) solution.getDecisionVariables()[i];
+			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
+				for (int h = 0; h < 24; h++) {
+					for (int j = 0; j < getMaquinas().size(); j++) {
+						int numVM;
+						numVM = CloudCDNSolutionType.GetVMVariables(solution,
+								i, h).getValue(j);
 
-					int numVM;
-					numVM = var.getValue(j);
+						double priceVM;
+						priceVM = getRegionesDatacenters().get(i)
+								.computeVMCost(j);
 
-					double priceVM;
-					priceVM = getRegionesDatacenters().get(
-							i - getNumberOfVariables() / 2).computeVMCost(j);
-
-					if (numVM > 0) {
-						machineCost += numVM * priceVM;
+						if (numVM > 0) {
+							machineCost += numVM * priceVM;
+						}
 					}
 				}
 			}
@@ -270,7 +283,14 @@ public class CloudCDN_SO extends Problem {
 								routingSimpleRR_.getTrafficAmount()[i]);
 			}
 
-			fitness = storageCost + machineCost + trafficCost;
+			solution.setNumberOfViolatedConstraint(routingSimpleRR_
+					.getNumberOfViolatedRequests());
+			solution.setOverallConstraintViolation(routingSimpleRR_
+					.getTotalViolatedBandwidth());
+
+			fitness = (storageCost * totalSimTimeMonths)
+					+ (machineCost * totalSimTimeDays)
+					+ (trafficCost * totalSimTimeMonths);
 		} catch (JMException e) {
 			e.printStackTrace();
 			fitness = Double.MAX_VALUE;
@@ -552,12 +572,11 @@ public class CloudCDN_SO extends Problem {
 	public void evaluateConstraints(Solution solution) throws JMException {
 		double[] constraint = new double[this.getNumberOfConstraints()];
 
-		double total = 0.0;
-		int number = 0;
+		routingSimpleRR_.Compute(solution);
 
-		// TODO: implementar constraint C1 y C3.
-
-		solution.setOverallConstraintViolation(total);
-		solution.setNumberOfViolatedConstraint(number);
+		solution.setNumberOfViolatedConstraint(routingSimpleRR_
+				.getNumberOfViolatedRequests());
+		solution.setOverallConstraintViolation(routingSimpleRR_
+				.getTotalViolatedBandwidth());
 	}
 }

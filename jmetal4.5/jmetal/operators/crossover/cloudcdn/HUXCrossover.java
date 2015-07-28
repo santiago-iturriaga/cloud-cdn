@@ -102,9 +102,6 @@ public class HUXCrossover extends Crossover {
 					}
 				}
 			}
-			
-			((CloudCDN_SO) offSpring[0].getProblem()).FixSolution(offSpring[0]);
-			((CloudCDN_SO) offSpring[1].getProblem()).FixSolution(offSpring[1]);
 		} catch (ClassCastException e1) {
 			Configuration.logger_
 					.severe("HUXCrossover.doCrossover: Cannot perfom "

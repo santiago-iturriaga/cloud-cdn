@@ -8,6 +8,7 @@ import jmetal.core.Variable;
 import jmetal.problems.cloudcdn.CloudCDN_SO;
 import jmetal.problems.cloudcdn.Trafico;
 import jmetal.util.JMException;
+import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
 import jmetal.encodings.variable.ArrayInt;
 
 public class SimpleRR {
@@ -24,6 +25,7 @@ public class SimpleRR {
 
 	private double maxViolatedBandwidth_;
 	private double totalViolatedBandwidth_;
+	private int numberOfViolatedRequests_;
 
 	public SimpleRR(CloudCDN_SO problem) {
 		problem_ = problem;
@@ -37,8 +39,6 @@ public class SimpleRR {
 
 	public void Compute(Solution solution) {
 		try {
-			Variable[] vars = solution.getDecisionVariables();
-
 			maxViolatedBandwidth_ = 0.0;
 			totalViolatedBandwidth_ = 0.0;
 
@@ -52,21 +52,21 @@ public class SimpleRR {
 
 				double machGBPerMin;
 				int machCount;
-				for (int j = 0; j < problem_.getMaquinas().size(); j++) {
-					machGBPerMin = problem_.getMaquinas().get(j)
-							.getBandwidthGBpm();
-					machCount = ((ArrayInt) vars[i
-							+ problem_.getRegionesDatacenters().size()])
-							.getValue(j);
-					maxGBPerMin_[i] += machCount * machGBPerMin;
+				for (int h = 0; h < 24; h++) {
+					for (int j = 0; j < problem_.getMaquinas().size(); j++) {
+						machGBPerMin = problem_.getMaquinas().get(j)
+								.getBandwidthGBpm();
+						machCount = CloudCDNSolutionType.GetVMVariables(
+								solution, i, h).getValue(j);
+						maxGBPerMin_[i] += machCount * machGBPerMin;
+					}
 				}
 			}
 
-			int j = 0;
 			int arrival = 0, day = 0, minuteOfDay = 0;
 			int current_day = 0;
-			int bestDC;
-			int kIdx;
+			int current_dc = 0;
+			int best_dc;
 
 			Boolean assigned;
 			Trafico t;
@@ -83,13 +83,17 @@ public class SimpleRR {
 
 				if (day == current_day) {
 					assigned = false;
-					kIdx = j;
-					bestDC = j;
+					best_dc = current_dc;
 
-					for (int k = j; k < j
-							+ problem_.getRegionesDatacenters().size(); k++) {
+					int offset;
+					for (offset = 0; offset < problem_.getRegionesDatacenters()
+							.size() && !assigned; offset++) {
+						int j;
+						j = (current_dc + offset)
+								% problem_.getRegionesDatacenters().size();
 
-						if (((ArrayInt) vars[j]).getValue(t.getDocId()) == 1) {
+						if (CloudCDNSolutionType.GetDocumentVariables(solution,
+								j).getValue(t.getDocId()) == 1) {
 							// The current DC has a copy of the required
 							// document.
 
@@ -106,30 +110,23 @@ public class SimpleRR {
 
 								assigned = true;
 							} else {
-								if (bandwidthConstraint_[j][minuteOfDay] < bandwidthConstraint_[bestDC][minuteOfDay]) {
-									bestDC = j;
+								if (bandwidthConstraint_[j][minuteOfDay] < bandwidthConstraint_[best_dc][minuteOfDay]) {
+									best_dc = j;
 								}
-
-								kIdx = (kIdx + 1)
-										% problem_.getRegionesDatacenters()
-												.size();
 							}
-						} else {
-							kIdx = (kIdx + 1)
-									% problem_.getRegionesDatacenters().size();
 						}
 					}
 
 					if (assigned) {
-						j = (kIdx + 1)
+						current_dc = (current_dc + offset + 1)
 								% problem_.getRegionesDatacenters().size();
 					} else {
-						totalTrafficAmount_[bestDC] += problem_.getTrafico()
+						totalTrafficAmount_[best_dc] += problem_.getTrafico()
 								.get(i).getDocSize();
-						bandwidthConstraint_[bestDC][minuteOfDay] += bandwidthConstraint_[bestDC][minuteOfDay]
+						bandwidthConstraint_[best_dc][minuteOfDay] += bandwidthConstraint_[best_dc][minuteOfDay]
 								+ problem_.getTrafico().get(i).getDocSize();
 
-						j = (bestDC + 1)
+						current_dc = (best_dc + 1)
 								% problem_.getRegionesDatacenters().size();
 					}
 				} else {
@@ -140,13 +137,14 @@ public class SimpleRR {
 
 						for (int n = 0; n < totalBandwidthSlots_; n++) {
 							double diff;
-							diff = bandwidthConstraint_[m][n] - maxGBPerMin_[j];
+							diff = bandwidthConstraint_[m][n] - maxGBPerMin_[m];
 
 							if (diff > 0) {
 								if (diff > maxViolatedBandwidth_) {
 									maxViolatedBandwidth_ = diff;
 								}
 								totalViolatedBandwidth_ += diff;
+								numberOfViolatedRequests_++;
 							}
 
 							bandwidthConstraint_[m][n] = 0;
@@ -168,6 +166,10 @@ public class SimpleRR {
 
 	public double getMaxViolatedBandwidth() {
 		return maxViolatedBandwidth_;
+	}
+
+	public int getNumberOfViolatedRequests() {
+		return numberOfViolatedRequests_;
 	}
 
 	public double[] getTrafficAmount() {
