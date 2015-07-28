@@ -44,7 +44,7 @@ public class SimpleRR {
 		maxGBPerMin_ = new double[problem_.getRegionesDatacenters().size()];
 	}
 
-	public void Compute(Solution solution) {
+	public void Compute(Solution solution, int startTime, int endTime) {
 		try {
 			maxViolatedBandwidth_ = 0.0;
 			totalViolatedBandwidth_ = 0.0;
@@ -53,7 +53,7 @@ public class SimpleRR {
 
 			numberOfBandwidthViolatedRequests_ = 0;
 			numberOfQoSViolatedRequests_ = 0;
-			
+
 			for (int i = 0; i < problem_.getRegionesDatacenters().size(); i++) {
 				totalRequests_[i] = 0;
 				totalTrafficAmount_[i] = 0;
@@ -87,118 +87,130 @@ public class SimpleRR {
 			current_day = problem_.getTrafico().get(0).getReqTime()
 					/ (24 * 60 * 60);
 
-			for (int i = 0; i < problem_.getTrafico().size(); i++) {
+			for (int i = 0; (i < problem_.getTrafico().size())
+					&& (problem_.getTrafico().get(i).getReqTime() < endTime); i++) {
+
 				arrival = problem_.getTrafico().get(i).getReqTime();
-				day = arrival / (24 * 60 * 60);
-				minuteOfDay = (arrival / 60) % (24 * 60);
 
-				t = problem_.getTrafico().get(i);
+				if (arrival >= startTime) {
+					day = arrival / (24 * 60 * 60);
+					minuteOfDay = (arrival / 60) % (24 * 60);
 
-				if (day == current_day) {
-					assigned = false;
-					best_dc = current_dc;
+					t = problem_.getTrafico().get(i);
 
-					int offset;
-					for (offset = 0; offset < problem_.getRegionesDatacenters()
-							.size() && !assigned; offset++) {
-						int j;
-						j = (current_dc + offset)
-								% problem_.getRegionesDatacenters().size();
+					if (day == current_day) {
+						assigned = false;
+						best_dc = current_dc;
 
-						if (CloudCDNSolutionType.GetDocumentVariables(solution,
-								j).getValue(t.getDocId()) == 1) {
-							// The current DC has a copy of the required
-							// document.
+						int offset;
+						for (offset = 0; offset < problem_
+								.getRegionesDatacenters().size() && !assigned; offset++) {
+							int j;
+							j = (current_dc + offset)
+									% problem_.getRegionesDatacenters().size();
 
-							if ((bandwidthConstraint_[j][minuteOfDay]
-									+ t.getDocSize() < maxGBPerMin_[j])
-									&& (problem_.getQoS(t.getRegUsrId(), j).getQosMetric() <= problem_
-											.getRegionesUsuarios()
-											.get(t.getRegUsrId())
-											.getQoSThreshold())) {
-								// The current DC has enough bandwidth to
-								// satisfy the request, and satisfies the QoS
+							if (CloudCDNSolutionType.GetDocumentVariables(
+									solution, j).getValue(t.getDocId()) == 1) {
+								// The current DC has a copy of the required
+								// document.
 
-								totalRequests_[j]++;
-
-								totalQos_ += problem_.getRegionesUsuarios()
-										.get(t.getRegUsrId()).getQoSThreshold();
-
-								totalTrafficAmount_[j] += problem_.getTrafico()
-										.get(i).getDocSize();
-
-								bandwidthConstraint_[j][minuteOfDay] += bandwidthConstraint_[j][minuteOfDay]
-										+ problem_.getTrafico().get(i)
-												.getDocSize();
-
-								assigned = true;
-							} else {
-								if ((bandwidthConstraint_[j][minuteOfDay] < bandwidthConstraint_[best_dc][minuteOfDay])
-										&& (problem_.getQoS(t.getRegUsrId(), j).getQosMetric() <= problem_
+								if ((bandwidthConstraint_[j][minuteOfDay]
+										+ t.getDocSize() < maxGBPerMin_[j])
+										&& (problem_.getQoS(t.getRegUsrId(), j)
+												.getQosMetric() <= problem_
 												.getRegionesUsuarios()
 												.get(t.getRegUsrId())
 												.getQoSThreshold())) {
+									// The current DC has enough bandwidth to
+									// satisfy the request, and satisfies the
+									// QoS
 
-									best_dc = j;
+									totalRequests_[j]++;
+
+									totalQos_ += problem_.getRegionesUsuarios()
+											.get(t.getRegUsrId())
+											.getQoSThreshold();
+
+									totalTrafficAmount_[j] += problem_
+											.getTrafico().get(i).getDocSize();
+
+									bandwidthConstraint_[j][minuteOfDay] += bandwidthConstraint_[j][minuteOfDay]
+											+ problem_.getTrafico().get(i)
+													.getDocSize();
+
+									assigned = true;
+								} else {
+									if ((bandwidthConstraint_[j][minuteOfDay] < bandwidthConstraint_[best_dc][minuteOfDay])
+											&& (problem_.getQoS(
+													t.getRegUsrId(), j)
+													.getQosMetric() <= problem_
+													.getRegionesUsuarios()
+													.get(t.getRegUsrId())
+													.getQoSThreshold())) {
+
+										best_dc = j;
+									}
 								}
 							}
 						}
-					}
 
-					if (assigned) {
-						current_dc = (current_dc + offset + 1)
-								% problem_.getRegionesDatacenters().size();
+						if (assigned) {
+							current_dc = (current_dc + offset + 1)
+									% problem_.getRegionesDatacenters().size();
+						} else {
+							totalRequests_[best_dc]++;
+
+							totalTrafficAmount_[best_dc] += problem_
+									.getTrafico().get(i).getDocSize();
+
+							bandwidthConstraint_[best_dc][minuteOfDay] += bandwidthConstraint_[best_dc][minuteOfDay]
+									+ problem_.getTrafico().get(i).getDocSize();
+
+							totalQos_ += problem_.getRegionesUsuarios()
+									.get(t.getRegUsrId()).getQoSThreshold();
+
+							double diffqos;
+							diffqos = problem_.getQoS(t.getRegUsrId(), best_dc)
+									.getQosMetric()
+									- problem_.getRegionesUsuarios()
+											.get(t.getRegUsrId())
+											.getQoSThreshold();
+
+							if (diffqos > 0) {
+								violatedQos_ += diffqos;
+								numberOfQoSViolatedRequests_++;
+							}
+
+							current_dc = (best_dc + 1)
+									% problem_.getRegionesDatacenters().size();
+						}
 					} else {
-						totalRequests_[best_dc]++;
+						current_day = day;
 
-						totalTrafficAmount_[best_dc] += problem_.getTrafico()
-								.get(i).getDocSize();
+						for (int m = 0; m < problem_.getRegionesDatacenters()
+								.size(); m++) {
 
-						bandwidthConstraint_[best_dc][minuteOfDay] += bandwidthConstraint_[best_dc][minuteOfDay]
-								+ problem_.getTrafico().get(i).getDocSize();
+							for (int n = 0; n < totalBandwidthSlots_; n++) {
+								double diff;
+								diff = bandwidthConstraint_[m][n]
+										- maxGBPerMin_[m];
 
-						totalQos_ += problem_.getRegionesUsuarios()
-								.get(t.getRegUsrId()).getQoSThreshold();
-
-						double diffqos;
-						diffqos = problem_.getQoS(t.getRegUsrId(), best_dc).getQosMetric()
-								- problem_.getRegionesUsuarios()
-										.get(t.getRegUsrId()).getQoSThreshold();
-
-						if (diffqos > 0) {
-							violatedQos_ += diffqos;
-							numberOfQoSViolatedRequests_++;
-						}
-
-						current_dc = (best_dc + 1)
-								% problem_.getRegionesDatacenters().size();
-					}
-				} else {
-					current_day = day;
-
-					for (int m = 0; m < problem_.getRegionesDatacenters()
-							.size(); m++) {
-
-						for (int n = 0; n < totalBandwidthSlots_; n++) {
-							double diff;
-							diff = bandwidthConstraint_[m][n] - maxGBPerMin_[m];
-
-							if (diff > 0) {
-								if (diff > maxViolatedBandwidth_) {
-									maxViolatedBandwidth_ = diff;
+								if (diff > 0) {
+									if (diff > maxViolatedBandwidth_) {
+										maxViolatedBandwidth_ = diff;
+									}
+									totalViolatedBandwidth_ += diff;
+									numberOfBandwidthViolatedRequests_++;
 								}
-								totalViolatedBandwidth_ += diff;							
-								numberOfBandwidthViolatedRequests_++;
-							}
 
-							bandwidthConstraint_[m][n] = 0;
+								bandwidthConstraint_[m][n] = 0;
+							}
 						}
 					}
 				}
 			}
-			
-			for (int m = 0; m < problem_.getRegionesDatacenters()
-					.size(); m++) {
+
+			for (int m = 0; m < problem_.getRegionesDatacenters().size(); m++) {
 
 				for (int n = 0; n < totalBandwidthSlots_; n++) {
 					double diff;
@@ -208,7 +220,7 @@ public class SimpleRR {
 						if (diff > maxViolatedBandwidth_) {
 							maxViolatedBandwidth_ = diff;
 						}
-						totalViolatedBandwidth_ += diff;							
+						totalViolatedBandwidth_ += diff;
 						numberOfBandwidthViolatedRequests_++;
 					}
 
@@ -238,19 +250,19 @@ public class SimpleRR {
 	public int getNumberOfQoSViolatedRequests() {
 		return numberOfQoSViolatedRequests_;
 	}
-	
+
 	public double[] getTrafficAmount() {
 		return totalTrafficAmount_;
 	}
-	
+
 	public int[] getTotalRequests() {
 		return totalRequests_;
 	}
-	
+
 	public double getViolatedQoS() {
 		return violatedQos_;
 	}
-	
+
 	public double getTotalQoS() {
 		return totalQos_;
 	}
