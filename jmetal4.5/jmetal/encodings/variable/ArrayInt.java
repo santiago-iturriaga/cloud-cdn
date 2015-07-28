@@ -118,6 +118,26 @@ public class ArrayInt extends Variable {
     } // for
   } // Constructor
   
+  /**
+   * Constructor 
+   * @param size The size of the array
+   * @param lowerBounds Lower bounds
+   * @param upperBounds Upper bounds
+   */
+  public ArrayInt(int size, double[] lowerBounds, double [] upperBounds, double [] initUpperBounds) {
+		size_   = size;
+		array_ = new int[size_];
+		
+    lowerBounds_ = new int[size_] ;
+    upperBounds_ = new int[size_] ;
+    
+    for (int i = 0; i < size_ ; i++) {
+    	lowerBounds_[i] = (int)lowerBounds[i] ;
+    	upperBounds_[i] = (int)upperBounds[i] ;   	
+    	array_[i] = PseudoRandom.randInt(lowerBounds_[i], (int)initUpperBounds[i]) ;
+    } // for
+  } // Constructor
+  
   /** 
    * Copy Constructor
    * @param arrayInt The arrayInt to copy

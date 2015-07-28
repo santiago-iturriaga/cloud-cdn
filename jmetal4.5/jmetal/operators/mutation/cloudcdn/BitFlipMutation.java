@@ -81,6 +81,7 @@ public class BitFlipMutation extends Mutation {
 						int value = PseudoRandom.randInt(
 								(int) var.getLowerBound(j),
 								(int) var.getUpperBound(j));
+						
 						var.setValue(j, value);
 					}
 				}

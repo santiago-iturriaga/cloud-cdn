@@ -14,8 +14,12 @@ import jmetal.encodings.variable.ArrayInt;
 public class SimpleRR {
 	private CloudCDN_SO problem_;
 
+	private int[] totalRequests_;
 	private double[] totalTrafficAmount_;
 	private double[][] bandwidthConstraint_;
+
+	private double totalQos_;
+	private double violatedQos_;
 
 	// Max. number of bytes per minute per datacenter.
 	private double[] maxGBPerMin_;
@@ -25,11 +29,14 @@ public class SimpleRR {
 
 	private double maxViolatedBandwidth_;
 	private double totalViolatedBandwidth_;
-	private int numberOfViolatedRequests_;
+
+	private int numberOfBandwidthViolatedRequests_;
+	private int numberOfQoSViolatedRequests_;
 
 	public SimpleRR(CloudCDN_SO problem) {
 		problem_ = problem;
 
+		totalRequests_ = new int[problem_.getRegionesDatacenters().size()];
 		totalTrafficAmount_ = new double[problem_.getRegionesDatacenters()
 				.size()];
 		bandwidthConstraint_ = new double[problem_.getRegionesDatacenters()
@@ -41,8 +48,14 @@ public class SimpleRR {
 		try {
 			maxViolatedBandwidth_ = 0.0;
 			totalViolatedBandwidth_ = 0.0;
+			totalQos_ = 0.0;
+			violatedQos_ = 0.0;
 
+			numberOfBandwidthViolatedRequests_ = 0;
+			numberOfQoSViolatedRequests_ = 0;
+			
 			for (int i = 0; i < problem_.getRegionesDatacenters().size(); i++) {
+				totalRequests_[i] = 0;
 				totalTrafficAmount_[i] = 0;
 				maxGBPerMin_[i] = 0;
 
@@ -97,20 +110,35 @@ public class SimpleRR {
 							// The current DC has a copy of the required
 							// document.
 
-							if (bandwidthConstraint_[j][minuteOfDay]
-									+ t.getDocSize() < maxGBPerMin_[j]) {
+							if ((bandwidthConstraint_[j][minuteOfDay]
+									+ t.getDocSize() < maxGBPerMin_[j])
+									&& (problem_.getQoS(t.getRegUsrId(), j) <= problem_
+											.getRegionesUsuarios()
+											.get(t.getRegUsrId())
+											.getQoSThreshold())) {
 								// The current DC has enough bandwidth to
-								// satisfy the request.
+								// satisfy the request, and satisfies the QoS
+
+								totalRequests_[j]++;
+
+								totalQos_ += problem_.getRegionesUsuarios()
+										.get(t.getRegUsrId()).getQoSThreshold();
 
 								totalTrafficAmount_[j] += problem_.getTrafico()
 										.get(i).getDocSize();
+
 								bandwidthConstraint_[j][minuteOfDay] += bandwidthConstraint_[j][minuteOfDay]
 										+ problem_.getTrafico().get(i)
 												.getDocSize();
 
 								assigned = true;
 							} else {
-								if (bandwidthConstraint_[j][minuteOfDay] < bandwidthConstraint_[best_dc][minuteOfDay]) {
+								if ((bandwidthConstraint_[j][minuteOfDay] < bandwidthConstraint_[best_dc][minuteOfDay])
+										&& (problem_.getQoS(t.getRegUsrId(), j) <= problem_
+												.getRegionesUsuarios()
+												.get(t.getRegUsrId())
+												.getQoSThreshold())) {
+
 									best_dc = j;
 								}
 							}
@@ -121,10 +149,26 @@ public class SimpleRR {
 						current_dc = (current_dc + offset + 1)
 								% problem_.getRegionesDatacenters().size();
 					} else {
+						totalRequests_[best_dc]++;
+
 						totalTrafficAmount_[best_dc] += problem_.getTrafico()
 								.get(i).getDocSize();
+
 						bandwidthConstraint_[best_dc][minuteOfDay] += bandwidthConstraint_[best_dc][minuteOfDay]
 								+ problem_.getTrafico().get(i).getDocSize();
+
+						totalQos_ += problem_.getRegionesUsuarios()
+								.get(t.getRegUsrId()).getQoSThreshold();
+
+						double diffqos;
+						diffqos = problem_.getQoS(t.getRegUsrId(), best_dc)
+								- problem_.getRegionesUsuarios()
+										.get(t.getRegUsrId()).getQoSThreshold();
+
+						if (diffqos > 0) {
+							violatedQos_ += diffqos;
+							numberOfQoSViolatedRequests_++;
+						}
 
 						current_dc = (best_dc + 1)
 								% problem_.getRegionesDatacenters().size();
@@ -143,13 +187,32 @@ public class SimpleRR {
 								if (diff > maxViolatedBandwidth_) {
 									maxViolatedBandwidth_ = diff;
 								}
-								totalViolatedBandwidth_ += diff;
-								numberOfViolatedRequests_++;
+								totalViolatedBandwidth_ += diff;							
+								numberOfBandwidthViolatedRequests_++;
 							}
 
 							bandwidthConstraint_[m][n] = 0;
 						}
 					}
+				}
+			}
+			
+			for (int m = 0; m < problem_.getRegionesDatacenters()
+					.size(); m++) {
+
+				for (int n = 0; n < totalBandwidthSlots_; n++) {
+					double diff;
+					diff = bandwidthConstraint_[m][n] - maxGBPerMin_[m];
+
+					if (diff > 0) {
+						if (diff > maxViolatedBandwidth_) {
+							maxViolatedBandwidth_ = diff;
+						}
+						totalViolatedBandwidth_ += diff;							
+						numberOfBandwidthViolatedRequests_++;
+					}
+
+					bandwidthConstraint_[m][n] = 0;
 				}
 			}
 		} catch (JMException e) {
@@ -168,11 +231,27 @@ public class SimpleRR {
 		return maxViolatedBandwidth_;
 	}
 
-	public int getNumberOfViolatedRequests() {
-		return numberOfViolatedRequests_;
+	public int getNumberOfBandwidthViolatedRequests() {
+		return numberOfBandwidthViolatedRequests_;
 	}
 
+	public int getNumberOfQoSViolatedRequests() {
+		return numberOfQoSViolatedRequests_;
+	}
+	
 	public double[] getTrafficAmount() {
 		return totalTrafficAmount_;
+	}
+	
+	public int[] getTotalRequests() {
+		return totalRequests_;
+	}
+	
+	public double getViolatedQoS() {
+		return violatedQos_;
+	}
+	
+	public double getTotalQoS() {
+		return totalQos_;
 	}
 }

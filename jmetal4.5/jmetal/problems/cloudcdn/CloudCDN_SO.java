@@ -125,7 +125,8 @@ public class CloudCDN_SO extends Problem {
 		vmTypesUpperLimits_ = new double[getMaquinas().size()];
 
 		for (int i = 0; i < getMaquinas().size(); i++) {
-			vmTypesUpperLimits_[i] = getTrafico().size(); // Big enough value.
+			vmTypesUpperLimits_[i] = 5; // getTrafico().size(); // Big enough
+										// value.
 		}
 
 		routingSimpleRR_ = new SimpleRR(this);
@@ -193,6 +194,29 @@ public class CloudCDN_SO extends Problem {
 		return maquinas_;
 	}
 
+	public int getQoS(int regUsr, int regDC) {
+		return 0;
+	}
+
+	public int getTotalNumVM(Solution solution) {
+		int total = 0;
+
+		for (int i = 0; i < getRegionesDatacenters().size(); i++) {
+			for (int h = 0; h < 24; h++) {
+				for (int j = 0; j < getMaquinas().size(); j++) {
+					try {
+						total += CloudCDNSolutionType.GetVMVariables(solution,
+								i, h).getValue(j);
+					} catch (JMException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		return total;
+	}
+
 	public void FixSolution(Solution solution) {
 		for (int j = 0; j < getDocumentos().size(); j++) {
 			int docCount;
@@ -237,10 +261,10 @@ public class CloudCDN_SO extends Problem {
 		double machineCost = 0.0;
 		double trafficCost = 0.0;
 
-		int totalSimTimeSecs = getTrafico().get(getTrafico().size() - 1).reqTime;
+		double totalSimTimeSecs = (double) getTrafico().get(
+				getTrafico().size() - 1).reqTime;
 		double totalSimTimeMonths = totalSimTimeSecs / (30 * 24 * 60 * 60);
 		double totalSimTimeDays = totalSimTimeSecs / (24 * 60 * 60);
-		double totalSimTimeHours = totalSimTimeSecs / (60 * 60);
 
 		try {
 			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
@@ -284,9 +308,11 @@ public class CloudCDN_SO extends Problem {
 			}
 
 			solution.setNumberOfViolatedConstraint(routingSimpleRR_
-					.getNumberOfViolatedRequests());
+					.getNumberOfBandwidthViolatedRequests()
+					+ routingSimpleRR_.getNumberOfQoSViolatedRequests());
 			solution.setOverallConstraintViolation(routingSimpleRR_
-					.getTotalViolatedBandwidth());
+					.getTotalViolatedBandwidth()
+					+ routingSimpleRR_.getViolatedQoS());
 
 			fitness = (storageCost * totalSimTimeMonths)
 					+ (machineCost * totalSimTimeDays)
@@ -386,19 +412,69 @@ public class CloudCDN_SO extends Problem {
 
 			}
 
+			// ** CARGANDO QOS **//
+			path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_QOS);
+			lineasArchivo = leerArchivo(path.toString());
+
+			ArrayList qosList = new ArrayList();
+
+			for (String linea : lineasArchivo) {
+				QoS q;
+				q = new QoS(Integer.valueOf((linea
+						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
+						Integer.valueOf((linea
+								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
+						Integer.valueOf((linea
+								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]));
+
+				qoS_.add(q);
+
+				if (q.regUsrId >= qosList.size()) {
+					qosList.add(new ArrayList());
+				}
+
+				((ArrayList) qosList.get(q.regUsrId)).add(q.getQosMetric());
+			}
+
+			if (DEBUG) {
+				System.out.println("IMPRIMIENDO QOS: ");
+				for (int j = 0; j < qoS_.size(); j++) {
+					System.out.println(qoS_.get(j).getRegUsrId() + " "
+							+ qoS_.get(j).getRegDocId() + " "
+							+ qoS_.get(j).getQosMetric());
+				}
+			}
+
+			double alpha;
+			alpha = 1.0;
+
+			ArrayList qosMedian = new ArrayList();
+			for (int i = 0; i < qosList.size(); i++) {
+				ArrayList sorted;
+				sorted = (ArrayList) qosList.get(i);
+				sorted.sort(null);
+
+				qosMedian.add(((int) sorted.get(sorted.size() / 2)) * alpha);
+			}
+
 			// ** CARGANDO REGIONES USUARIOS **//
 			path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS);
 			lineasArchivo = leerArchivo(path.toString());
 
 			for (String linea : lineasArchivo) {
-				regionesUsuarios_
-						.add(new RegionUsuario(
-								Integer.valueOf((linea
-										.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
-								String.valueOf((linea
-										.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
-								Integer.valueOf((linea
-										.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])));
+				int regId;
+				regId = Integer.valueOf((linea
+						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]);
+
+				double qosThreshold;
+				qosThreshold = (double) qosMedian.get(regId);
+
+				regionesUsuarios_.add(new RegionUsuario(regId, String
+						.valueOf((linea
+								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
+						Integer.valueOf((linea
+								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]),
+						qosThreshold));
 			}
 
 			if (DEBUG) {
@@ -420,12 +496,19 @@ public class CloudCDN_SO extends Problem {
 						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])
 						/ (1024 * 1024 * 1024);
 
-				trafico_.add(new Trafico(Integer.valueOf((linea
-						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]), Integer
-						.valueOf((linea
-								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
-						docSizeGB, Integer.valueOf((linea
-								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[3])));
+				int reqTime = Integer.valueOf((linea
+						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]);
+
+				// Mecanismo trucho para generar más carga.
+				for (int truch = 0; truch < 1; truch++) {
+					trafico_.add(new Trafico(
+							reqTime,
+							Integer.valueOf((linea
+									.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
+							docSizeGB,
+							Integer.valueOf((linea
+									.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[3])));
+				}
 			}
 
 			trafico_.sort(new TraficoComparator());
@@ -437,28 +520,6 @@ public class CloudCDN_SO extends Problem {
 							+ trafico_.get(j).getDocId() + " "
 							+ trafico_.get(j).getDocSize() + " "
 							+ trafico_.get(j).getRegUsrId());
-				}
-			}
-
-			// ** CARGANDO QOS **//
-			path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_QOS);
-			lineasArchivo = leerArchivo(path.toString());
-
-			for (String linea : lineasArchivo) {
-				qoS_.add(new QoS(Integer.valueOf((linea
-						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]), Integer
-						.valueOf((linea
-								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
-						Integer.valueOf((linea
-								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])));
-			}
-
-			if (DEBUG) {
-				System.out.println("IMPRIMIENDO QOS: ");
-				for (int j = 0; j < qoS_.size(); j++) {
-					System.out.println(qoS_.get(j).getRegUsrId() + " "
-							+ qoS_.get(j).getRegDocId() + " "
-							+ qoS_.get(j).getQosMetric());
 				}
 			}
 
@@ -575,8 +636,10 @@ public class CloudCDN_SO extends Problem {
 		routingSimpleRR_.Compute(solution);
 
 		solution.setNumberOfViolatedConstraint(routingSimpleRR_
-				.getNumberOfViolatedRequests());
+				.getNumberOfBandwidthViolatedRequests()
+				+ routingSimpleRR_.getNumberOfQoSViolatedRequests());
 		solution.setOverallConstraintViolation(routingSimpleRR_
-				.getTotalViolatedBandwidth());
+				.getTotalViolatedBandwidth()
+				+ routingSimpleRR_.getViolatedQoS());
 	}
 }

@@ -22,6 +22,7 @@
 package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 
 import jmetal.core.*;
+import jmetal.problems.cloudcdn.CloudCDN_SO;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
 
@@ -90,8 +91,9 @@ public class gGA extends Algorithm {
 			problem_.evaluate(newIndividual);
 
 			System.out.println(">> Init " + i + " => "
-					+ newIndividual.getObjective(0) + " [Penalty: "
-					+ newIndividual.getOverallConstraintViolation() + "]");
+					+ newIndividual.getObjective(0)
+					+ " [#VM: " + ((CloudCDN_SO)problem_).getTotalNumVM(newIndividual) + "]"
+					+ " [Penalty: "	+ newIndividual.getOverallConstraintViolation() + "]");
 
 			evaluations++;
 			population.add(newIndividual);
@@ -102,8 +104,9 @@ public class gGA extends Algorithm {
 		while (evaluations < maxEvaluations) {
 			// if ((evaluations % 10) == 0) {
 			System.out.println(">> #Eval " + evaluations + " best => "
-					+ population.get(0).getObjective(0) + " [Penalty: "
-					+ population.get(0).getOverallConstraintViolation() + "]");			
+					+ population.get(0).getObjective(0)
+					+ " [#VM: " + ((CloudCDN_SO)problem_).getTotalNumVM(population.get(0)) + "]"
+					+ " [Penalty: "	+ population.get(0).getOverallConstraintViolation() + "]");			
 			// }
 
 			// Copy the best two individuals to the offspring population
