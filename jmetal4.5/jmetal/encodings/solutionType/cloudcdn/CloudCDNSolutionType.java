@@ -59,7 +59,7 @@ public class CloudCDNSolutionType extends SolutionType {
 							.getMaquinas().size()];
 
 					for (int i = 0; i < customProblem_.getMaquinas().size(); i++) {
-						vmTypesUpperLimits_[i] = 1;
+						vmTypesUpperLimits_[i] = 0;
 					}
 
 					variables[getVMVarIndex(var_dc, var_hr)] = new ArrayInt(

@@ -112,7 +112,7 @@ public class SimpleRR {
 
 							if ((bandwidthConstraint_[j][minuteOfDay]
 									+ t.getDocSize() < maxGBPerMin_[j])
-									&& (problem_.getQoS(t.getRegUsrId(), j) <= problem_
+									&& (problem_.getQoS(t.getRegUsrId(), j).getQosMetric() <= problem_
 											.getRegionesUsuarios()
 											.get(t.getRegUsrId())
 											.getQoSThreshold())) {
@@ -134,7 +134,7 @@ public class SimpleRR {
 								assigned = true;
 							} else {
 								if ((bandwidthConstraint_[j][minuteOfDay] < bandwidthConstraint_[best_dc][minuteOfDay])
-										&& (problem_.getQoS(t.getRegUsrId(), j) <= problem_
+										&& (problem_.getQoS(t.getRegUsrId(), j).getQosMetric() <= problem_
 												.getRegionesUsuarios()
 												.get(t.getRegUsrId())
 												.getQoSThreshold())) {
@@ -161,7 +161,7 @@ public class SimpleRR {
 								.get(t.getRegUsrId()).getQoSThreshold();
 
 						double diffqos;
-						diffqos = problem_.getQoS(t.getRegUsrId(), best_dc)
+						diffqos = problem_.getQoS(t.getRegUsrId(), best_dc).getQosMetric()
 								- problem_.getRegionesUsuarios()
 										.get(t.getRegUsrId()).getQoSThreshold();
 

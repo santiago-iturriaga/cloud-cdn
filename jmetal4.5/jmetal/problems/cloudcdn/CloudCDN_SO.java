@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 import jmetal.core.Problem;
@@ -58,9 +59,12 @@ public class CloudCDN_SO extends Problem {
 			CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
 	private ArrayList<Trafico> trafico_ = new ArrayList<Trafico>(
 			CANTIDAD_MAXIMA_DE_TRAFICO);
-	private ArrayList<QoS> qoS_ = new ArrayList<QoS>(CANTIDAD_MAXIMA_DE_QOS);
 	private ArrayList<Maquina> maquinas_ = new ArrayList<Maquina>(
 			CANTIDAD_MAXIMA_DE_MAQUINAS);
+
+	private ArrayList<ArrayList<QoS>> qoS_ = new ArrayList<ArrayList<QoS>>(
+			CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS
+					* CANTIDAD_MAXIMA_DE_REGIONES_DATACENTERS);
 
 	private SimpleRR routingSimpleRR_;
 
@@ -186,7 +190,7 @@ public class CloudCDN_SO extends Problem {
 		return trafico_;
 	}
 
-	public ArrayList<QoS> getQoS() {
+	public ArrayList<ArrayList<QoS>> getQoS() {
 		return qoS_;
 	}
 
@@ -194,8 +198,8 @@ public class CloudCDN_SO extends Problem {
 		return maquinas_;
 	}
 
-	public int getQoS(int regUsr, int regDC) {
-		return 0;
+	public QoS getQoS(int regUsr, int regDC) {
+		return qoS_.get(regUsr).get(regDC);
 	}
 
 	public int getTotalNumVM(Solution solution) {
@@ -416,8 +420,6 @@ public class CloudCDN_SO extends Problem {
 			path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_QOS);
 			lineasArchivo = leerArchivo(path.toString());
 
-			ArrayList qosList = new ArrayList();
-
 			for (String linea : lineasArchivo) {
 				QoS q;
 				q = new QoS(Integer.valueOf((linea
@@ -427,34 +429,37 @@ public class CloudCDN_SO extends Problem {
 						Integer.valueOf((linea
 								.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]));
 
-				qoS_.add(q);
-
-				if (q.regUsrId >= qosList.size()) {
-					qosList.add(new ArrayList());
+				if (q.regUsrId >= qoS_.size()) {
+					qoS_.add(new ArrayList());
 				}
-
-				((ArrayList) qosList.get(q.regUsrId)).add(q.getQosMetric());
+				qoS_.get(q.regUsrId).add(q);
 			}
 
 			if (DEBUG) {
 				System.out.println("IMPRIMIENDO QOS: ");
 				for (int j = 0; j < qoS_.size(); j++) {
-					System.out.println(qoS_.get(j).getRegUsrId() + " "
-							+ qoS_.get(j).getRegDocId() + " "
-							+ qoS_.get(j).getQosMetric());
+					for (int i = 0; i < qoS_.get(j).size(); i++) {
+						System.out.println(qoS_.get(j).get(i).getRegUsrId()
+								+ " " + qoS_.get(j).get(i).getRegDocId() + " "
+								+ qoS_.get(j).get(i).getQosMetric());
+					}
 				}
 			}
 
 			double alpha;
 			alpha = 1.0;
 
-			ArrayList qosMedian = new ArrayList();
-			for (int i = 0; i < qosList.size(); i++) {
-				ArrayList sorted;
-				sorted = (ArrayList) qosList.get(i);
-				sorted.sort(null);
-
-				qosMedian.add(((int) sorted.get(sorted.size() / 2)) * alpha);
+			ArrayList<Double> qosMedian = new ArrayList<Double>();
+			for (int i = 0; i < qoS_.size(); i++) {
+				ArrayList<Integer> aux;
+				aux = new ArrayList<Integer>(qoS_.get(i).size());
+				
+				for (int j = 0; j < qoS_.get(i).size(); j++) {
+					aux.add(qoS_.get(i).get(j).qosMetric);
+				}
+				
+				aux.sort(null);
+				qosMedian.add(((int) aux.get(aux.size() / 2)) * alpha);
 			}
 
 			// ** CARGANDO REGIONES USUARIOS **//
