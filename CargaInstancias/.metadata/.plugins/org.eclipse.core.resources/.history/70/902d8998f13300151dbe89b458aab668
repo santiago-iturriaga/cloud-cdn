@@ -1,0 +1,1025 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.Collection;
+import java.util.LinkedList;
+
+
+
+
+public class Carga {
+
+	// configuraciones 1
+	static final public String DIRECTORIO_DE_INSTANCIAS = "../instancias";
+	static final public String SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS = " ";
+	static final public String SEPARADOR_DE_VALORES_FUNCION = "\\|";
+	static final public String NOMBRE_ARCHIVO_DE_DOCUMENTOS = "docs.video";
+	static final public String NOMBRE_ARCHIVO_DE_REGIONES = "reg.0";
+	static final public String NOMBRE_ARCHIVO_DE_REGIONES_DATACENTERS = "reg_dc.0";
+	static final public String NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS = "reg_users.0";
+	static final public String NOMBRE_ARCHIVO_DE_TRAFICO = "workload.video";
+	static final public String NOMBRE_ARCHIVO_DE_QOS = "qos.0";
+	static final public String NOMBRE_ARCHIVO_DE_MAQUINAS = "vm.0";
+	static final public String NOMBRE_ARCHIVO_DE_DATACENTERS_MAQUINAS= "vm_dc.0";
+	static final public String NOMBRE_ARCHIVO_DE_DATACENTERS= "dc.0";
+	
+	// configuraciones 2
+	static final public Integer CANTIDAD_MAXIMA_DE_DOCUMENTOS = 100000;
+	static final public Integer CANTIDAD_MAXIMA_DE_REGIONES = 1000;
+	static final public Integer CANTIDAD_MAXIMA_DE_REGIONES_DATACENTERS = 1000;
+	static final public Integer CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS = 1000;
+	static final public Integer CANTIDAD_MAXIMA_DE_TRAFICO = 1000000;
+	static final public Integer CANTIDAD_MAXIMA_DE_QOS = 1000;
+	static final public Integer CANTIDAD_MAXIMA_DE_MAQUINAS = 1000;
+	static final public Integer CANTIDAD_MAXIMA_DE_DATACENTERS_MAQUINAS = 1000;
+	static final public Integer CANTIDAD_MAXIMA_DE_PARES_COSTO = 10;
+	static final public Integer CANTIDAD_MAXIMA_DE_DATACENTERS = 20;
+	
+	
+	static final public Integer CANTIDAD_MAXIMA_DE_LINEAS_DE_ARCHIVO = 1000;
+
+	// configuraciones 3
+	static final public Boolean DEBUG = true;
+	static final public Boolean DEBUG_HEU1 = true;
+	static final public Boolean DEBUG_HEU2 = true;
+	
+	
+
+	// auxiliares
+	static Collection<String> lineasArchivo = null;
+
+	// estructura
+	static Documento[] documentos = new Documento[CANTIDAD_MAXIMA_DE_DOCUMENTOS];
+	static Integer cantidadDocumentos = 0;
+	static Region[] regiones = new Region[CANTIDAD_MAXIMA_DE_REGIONES];
+    static Integer cantidadRegiones = 0;
+    static RegionDatacenter[] regionesDatacenters = new RegionDatacenter[CANTIDAD_MAXIMA_DE_REGIONES_DATACENTERS];
+    static Integer cantidadRegionesDatacenters = 0;
+    static RegionUsuario[] regionesUsuarios = new RegionUsuario[CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS];
+    static Integer cantidadRegionesUsuarios = 0;
+    static Trafico[] trafico = new Trafico[CANTIDAD_MAXIMA_DE_TRAFICO];
+    static Integer cantidadTrafico = 0;
+    static QoS[] qoS = new QoS[CANTIDAD_MAXIMA_DE_QOS];
+    static Integer cantidadQos = 0;
+    static Maquina[] maquinas = new Maquina[CANTIDAD_MAXIMA_DE_MAQUINAS];
+    static Integer cantidadMaquinas = 0;
+    static DatacenterMaquina[] datacentersMaquinas = new DatacenterMaquina[CANTIDAD_MAXIMA_DE_DATACENTERS_MAQUINAS];
+    static Integer cantidadDatacenterMaquina = 0;
+	static Datacenter[] datacenters = new Datacenter[CANTIDAD_MAXIMA_DE_DATACENTERS];
+    static Integer cantidadDatacenters = 0;
+	
+	
+	//soluci�n
+	
+	//fila datacenter 
+	//columna documentos
+	static Boolean [][] datacenterDocumentos;
+	
+	//fila datacenter 
+	//columna maquinas
+	static Integer [][] datacenterMaquinas;
+	
+	//fila trafico 
+	
+	static Integer [] datacenterTrafico;
+	
+	public static void main(String args[]) {
+		carga();
+		heuristica2() ;
+	}
+	
+	//* aleatoria*//
+	public static void heuristica2() {
+		
+		datacenterDocumentos = new Boolean[cantidadDatacenters][cantidadDocumentos];
+		
+		for (int i = 0;i<cantidadDatacenters;i++){
+			for (int j = 0;j<cantidadDocumentos;j++){
+				datacenterDocumentos[i][j] = Math.random()>0.5?true:false;
+			}
+		}
+		
+		
+		datacenterMaquinas = new Integer[cantidadDatacenters][cantidadMaquinas];
+		
+		for (int i = 0;i<cantidadDatacenters;i++){
+			for (int j = 0;j<cantidadMaquinas;j++){
+			
+				Double miDouble = Math.random()*cantidadMaquinas;
+				datacenterMaquinas[i][j] = miDouble.intValue();
+			}
+		}
+		
+		
+		datacenterTrafico = new Integer[cantidadTrafico];
+			
+		for (int j = 0;j<cantidadTrafico;j++){
+		//agarro el primero que tenga el archivo
+			for (int i = 0;i<cantidadDatacenters;i++){
+					if (datacenterDocumentos[i][trafico[j].getDocId()]){
+						datacenterTrafico[j] = i;
+					}
+			}
+		}
+		
+		
+		Double costo = 0.0;
+		
+		//costo de storage
+		for (int i = 0;i<cantidadDatacenters;i++){
+			Double bytesEnElDC = 0.0;			
+			for(int j = 0;j<cantidadDocumentos;j++){
+				if (datacenterDocumentos[i][j]){
+					bytesEnElDC += documentos[j].getDocSize();
+				}
+			}
+			
+			if (DEBUG_HEU2) {
+				System.out.println("bytesEnElDC" + i + "=" +  bytesEnElDC);
+			}
+			
+		}
+		
+		
+		
+		if (DEBUG_HEU2) {
+				System.out.println("****** COMENZANDO ETAPA1 *******");
+		}
+		
+	}
+	
+	//* por etapas *//
+	public static void heuristica1() {
+		
+		if (DEBUG_HEU1) {
+				System.out.println("****** COMENZANDO HEURISTICA 1 *******");
+			}
+		
+		if (DEBUG_HEU1) {
+				System.out.println("****** COMENZANDO ETAPA1 *******");
+			}
+		
+		int i = 0;
+		for(i = 0;i<cantidadTrafico/3;i++){
+			if (DEBUG_HEU1) {
+				
+				System.out.println( "pedido: " +
+				trafico[i].getReqTime() + " "+ 
+							trafico[i].getDocId() + " "+ 
+							trafico[i].getDocSize()+ " "+ 
+							trafico[i].getRegUsrId()
+							);
+			}
+		
+		}
+		
+	}
+	
+	
+	
+	
+
+	//public static void main(String args[]) {
+	
+	public static void carga() {
+		File miDir = new File(DIRECTORIO_DE_INSTANCIAS);
+		try {
+		
+			
+			
+			if (DEBUG) {
+				System.out.println("DIRECTORIO_DE_INSTANCIAS: "
+						+ miDir.getCanonicalPath());
+			}
+			
+			//**  CARGANDO DOCUMENTOS **//
+
+			lineasArchivo = leerArchivo(DIRECTORIO_DE_INSTANCIAS+"/"+NOMBRE_ARCHIVO_DE_DOCUMENTOS);
+			
+			if (DEBUG) {
+				System.out.println("LINEAS LEIDAS=" + lineasArchivo.size());
+				for(String linea:lineasArchivo)	{
+					System.out.println(linea);	
+					
+			    }
+				System.out.println("FIN");	
+			}
+			
+			cantidadDocumentos = lineasArchivo.size();
+			int i = 0;
+			for(String linea:lineasArchivo)	{
+				documentos[i++]= new Documento(Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]));	
+		    }
+			
+			if (DEBUG) {
+				System.out.println("IMPRIMIENDO DOCUMENTOS: ");
+				for(int j = 0;j<cantidadDocumentos;j++)	{
+					System.out.println(documentos[j].getDocId() + " "+ documentos[j].getDocSize());	
+			    }
+				
+			}
+						
+			//**  CARGANDO REGIONES **//
+
+			
+			lineasArchivo = leerArchivo(DIRECTORIO_DE_INSTANCIAS+"/"+NOMBRE_ARCHIVO_DE_REGIONES);
+			
+			if (DEBUG) {
+				System.out.println("LINEAS LEIDAS=" + lineasArchivo.size());
+				for(String linea:lineasArchivo)	{
+					System.out.println(linea);	
+					
+			    }
+				System.out.println("FIN");	
+			}
+			
+			cantidadRegiones = lineasArchivo.size();
+			i = 0;
+			for(String linea:lineasArchivo)	{
+				regiones[i++]= new Region
+						(Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
+								String.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]));	
+		    }
+			
+			if (DEBUG) {
+				System.out.println("IMPRIMIENDO REGIONES: ");
+				for(int j = 0;j<cantidadRegiones;j++)	{
+					System.out.println(regiones[j].getRegId() + " "+ regiones[j].getRegNombre());	
+			    }
+				
+			}
+			
+			//**  CARGANDO REGIONES DATACENTERS **//
+
+			
+			lineasArchivo = leerArchivo(DIRECTORIO_DE_INSTANCIAS+"/"+NOMBRE_ARCHIVO_DE_REGIONES_DATACENTERS);
+			
+			if (DEBUG) {
+				System.out.println("LINEAS LEIDAS=" + lineasArchivo.size());
+				for(String linea:lineasArchivo)	{
+					System.out.println(linea);	
+					
+			    }
+				System.out.println("FIN");	
+			}
+			
+			cantidadRegionesDatacenters = lineasArchivo.size();
+			i = 0;
+			for(String linea:lineasArchivo)	{
+				regionesDatacenters[i++]= new RegionDatacenter
+						(Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
+								String.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
+								Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])
+								
+								);	
+		    }
+			
+			if (DEBUG) {
+				System.out.println("IMPRIMIENDO REGIONES DATACENTERS: ");
+				for(int j = 0;j<cantidadRegionesDatacenters;j++)	{
+					System.out.println(regionesDatacenters[j].getRegDctId() + " "+ 
+				
+							regionesDatacenters[j].getRegNombre() + " "+ 
+							
+							regionesDatacenters[j].getRegId()
+							);	
+			    }
+				
+			}
+			
+			
+			//**  CARGANDO REGIONES USUARIOS **//
+
+			
+			lineasArchivo = leerArchivo(DIRECTORIO_DE_INSTANCIAS+"/"+NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS);
+			
+			if (DEBUG) {
+				System.out.println("LINEAS LEIDAS=" + lineasArchivo.size());
+				for(String linea:lineasArchivo)	{
+					System.out.println(linea);	
+					
+			    }
+				System.out.println("FIN");	
+			}
+			
+			cantidadRegionesUsuarios = lineasArchivo.size();
+			i = 0;
+			for(String linea:lineasArchivo)	{
+				regionesUsuarios[i++]= new RegionUsuario
+						(Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
+								String.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
+								Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])
+								
+								);	
+		    }
+			
+			if (DEBUG) {
+				System.out.println("IMPRIMIENDO REGIONES USUARIOS: ");
+				for(int j = 0;j<cantidadRegionesUsuarios;j++)	{
+					System.out.println(regionesUsuarios[j].getRegUsrId() + " "+ 
+regionesUsuarios[j].getRegNombre() + " "+ 
+regionesUsuarios[j].getRegId()
+							);	
+			    }
+				
+			}
+			
+			
+//**  CARGANDO TRAFICO **//
+
+			
+			lineasArchivo = leerArchivo(DIRECTORIO_DE_INSTANCIAS+"/"+NOMBRE_ARCHIVO_DE_TRAFICO);
+			
+			if (DEBUG) {
+				System.out.println("LINEAS LEIDAS=" + lineasArchivo.size());
+				for(String linea:lineasArchivo)	{
+					System.out.println(linea);	
+					
+			    }
+				System.out.println("FIN");	
+			}
+			
+			cantidadTrafico = lineasArchivo.size();
+			i = 0;
+			for(String linea:lineasArchivo)	{
+				trafico[i++]= new Trafico
+						(Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
+								Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
+								Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]),
+								Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[3])
+								);	
+		    }
+			
+
+			
+			if (DEBUG) {
+				System.out.println("IMPRIMIENDO TRAFICO: ");
+				for(int j = 0;j<cantidadTrafico;j++)	{
+					System.out.println(trafico[j].getReqTime() + " "+ 
+							trafico[j].getDocId() + " "+ 
+							trafico[j].getDocSize()+ " "+ 
+							trafico[j].getRegUsrId()
+							);	
+			    }
+				
+			}
+			
+			
+			
+//**  CARGANDO QOS **//
+
+			
+			lineasArchivo = leerArchivo(DIRECTORIO_DE_INSTANCIAS+"/"+NOMBRE_ARCHIVO_DE_QOS);
+			
+			if (DEBUG) {
+				System.out.println("LINEAS LEIDAS=" + lineasArchivo.size());
+				for(String linea:lineasArchivo)	{
+					System.out.println(linea);	
+					
+			    }
+				System.out.println("FIN" + NOMBRE_ARCHIVO_DE_QOS);	
+			}
+			
+			cantidadQos = lineasArchivo.size();
+			i = 0;
+			for(String linea:lineasArchivo)	{
+				qoS[i++]= new QoS
+						(Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
+								Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
+								Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])
+							
+								);	
+		    }
+			
+
+			
+			if (DEBUG) {
+				System.out.println("IMPRIMIENDO QOS: ");
+				for(int j = 0;j<cantidadQos;j++)	{
+					System.out.println(qoS[j].getRegUsrId()+ " "+ 
+							qoS[j].getRegDocId()+ " "+ 
+							qoS[j].getQosMetric()
+							
+							);	
+			    }
+				
+			}
+			
+
+			//**  CARGANDO MAQUINAS **//
+
+						
+						lineasArchivo = leerArchivo(DIRECTORIO_DE_INSTANCIAS+"/"+NOMBRE_ARCHIVO_DE_MAQUINAS);
+						
+						if (DEBUG) {
+							System.out.println("LINEAS LEIDAS=" + lineasArchivo.size());
+							for(String linea:lineasArchivo)	{
+								System.out.println(linea);	
+								
+						    }
+							System.out.println("FIN");	
+						}
+						
+					
+						
+						cantidadMaquinas = lineasArchivo.size();
+						i = 0;
+						for(String linea:lineasArchivo)	{
+							maquinas[i++]= new Maquina
+									(Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
+											String.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
+											Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])
+										
+											);	
+					    }
+						
+
+						
+						if (DEBUG) {
+							System.out.println("IMPRIMIENDO QOS: ");
+							for(int j = 0;j<cantidadMaquinas;j++)	{
+								System.out.println(maquinas[j].getVmId()+ " "+ 
+										maquinas[j].getVmNombre()+ " "+ 
+										maquinas[j].getBandwidth()
+										
+										);	
+						    }
+							
+						}
+						
+			
+			
+			
+
+						//**  CARGANDO DATACENTERS MAQUINAS **//
+
+									
+									lineasArchivo = leerArchivo(DIRECTORIO_DE_INSTANCIAS+"/"+NOMBRE_ARCHIVO_DE_DATACENTERS_MAQUINAS);
+									
+									if (DEBUG) {
+										System.out.println("LINEAS LEIDAS=" + lineasArchivo.size());
+										for(String linea:lineasArchivo)	{
+											System.out.println(linea);	
+											
+									    }
+										System.out.println("FIN");	
+									}
+									
+								
+									
+									cantidadDatacenterMaquina = lineasArchivo.size();
+									i = 0;
+									for(String linea:lineasArchivo)	{
+										datacentersMaquinas[i++]= new DatacenterMaquina
+												(Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
+														Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
+														Double.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])
+													
+														);	
+								    }
+									
+									
+									if (DEBUG) {
+										System.out.println("IMPRIMIENDO DATACENTERS MAQUINAS: ");
+										for(int j = 0;j<cantidadDatacenterMaquina;j++)	{
+											System.out.println(datacentersMaquinas[j].getDcId()+ " "+ 
+													datacentersMaquinas[j].getVmId()+ " "+ 
+													datacentersMaquinas[j].getCostTimeStep()
+													
+													);	
+									    }
+										
+									}
+									
+									
+									//**  CARGANDO DATACENTERS**//
+
+									
+									lineasArchivo = leerArchivo(DIRECTORIO_DE_INSTANCIAS+"/"+NOMBRE_ARCHIVO_DE_DATACENTERS);
+									
+									if (DEBUG) {
+										System.out.println("LINEAS LEIDAS=" + lineasArchivo.size());
+										for(String linea:lineasArchivo)	{
+											System.out.println(linea);	
+											
+									    }
+										System.out.println("FIN");	
+									}
+									
+								
+									
+									cantidadDatacenters = lineasArchivo.size();
+									i = 0;
+									for(String linea:lineasArchivo)	{
+									
+										
+									
+									
+									String funcionAux = linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS)[2];
+									String[] paresString =  funcionAux.split(SEPARADOR_DE_VALORES_FUNCION);
+								    FuncionCosto funcionCostoStorage = new FuncionCosto();
+								    funcionCostoStorage.setCantidadPares(paresString.length);
+									System.out.println("aaaaa =" + paresString);
+									System.out.println("asd =" + paresString.length);
+									String parString = "";
+									for (int k=0;k<funcionCostoStorage.getCantidadPares();k++){
+										parString = paresString[k];
+										System.out.println("parString =" + parString );
+										String param1 = paresString[k].split(",")[0];
+										String param2 = paresString[k].split(",")[1];
+										Double doubleParam1 = 0.0;
+										if ("-".equals(param1)){
+											doubleParam1 = Double.MAX_VALUE;
+										}else{
+											doubleParam1 = Double.valueOf(param1);
+										}
+										funcionCostoStorage.getPares()[k] = new ParCosto(doubleParam1,Double.valueOf(param2));
+									}
+									
+									funcionAux = linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS)[3];
+									paresString =  funcionAux.split(SEPARADOR_DE_VALORES_FUNCION);
+								    FuncionCosto funcionCostoDataTransfer = new FuncionCosto();
+								    funcionCostoDataTransfer.setCantidadPares(paresString.length);
+									System.out.println("aaaaa =" + paresString);
+									System.out.println("asd =" + paresString.length);
+									parString = "";
+									for (int k=0;k<funcionCostoDataTransfer.getCantidadPares();k++){
+										parString = paresString[k];
+										System.out.println("parString =" + parString );
+										String param1 = paresString[k].split(",")[0];
+										String param2 = paresString[k].split(",")[1];
+										Double doubleParam1 = 0.0;
+										if ("-".equals(param1)){
+											doubleParam1 = Double.MAX_VALUE;
+										}else{
+											doubleParam1 = Double.valueOf(param1);
+										}
+										funcionCostoDataTransfer.getPares()[k] = new ParCosto(doubleParam1,Double.valueOf(param2));
+									}
+									
+									
+									
+									
+									
+											datacenters[i++]= new Datacenter
+												(
+												Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
+												Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
+														funcionCostoStorage,
+														funcionCostoDataTransfer
+									);				
+								    }
+									if (DEBUG) {
+										System.out.println("IMPRIMIENDO DATACENTERS MAQUINAS: ");
+										for(int j = 0;j<cantidadDatacenters;j++)	{
+											System.out.println(datacenters[j].getDcId() + " " + 
+											datacenters[j].getRegDctId()
+													);	
+													
+											System.out.println("STORAGE:");		
+											for(int k=0;k<datacenters[j].getStorageCost().getCantidadPares();k++){
+											System.out.println("Threshold="+datacenters[j].getStorageCost().getPares()[k].getThreshold());
+											System.out.println("Price="+datacenters[j].getStorageCost().getPares()[k].getPrice());
+											}
+											System.out.println("DATA TRANSFER:");		
+											for(int k=0;k<datacenters[j].getDataTransferCost().getCantidadPares();k++){
+											System.out.println("Threshold="+datacenters[j].getDataTransferCost().getPares()[k].getThreshold());
+											System.out.println("Price="+datacenters[j].getDataTransferCost().getPares()[k].getPrice());
+											}
+									    }
+									}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	static public Collection<String> leerArchivo(String nombreCompletoArchivo) {
+
+		Collection<String> lineas = new LinkedList<String>();
+
+		File archivo = null;
+		FileReader fr = null;
+		BufferedReader br = null;
+
+		try {
+			archivo = new File(nombreCompletoArchivo);
+			if (!archivo.exists()){
+				System.out.println("no existe el archivo= " + nombreCompletoArchivo);
+				System.exit(0);
+			}
+			
+			
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+			String linea;
+			// leo hasta que no hay nada o hasta una linea vacia 
+			while ((linea = br.readLine()) != null && linea.length()!=0)
+				lineas.add(linea); 
+			
+			
+			return lineas;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (null != fr) {
+					fr.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return lineas;
+	}
+	
+	
+	//** CLASES AUXILIARES **//
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+}
+
+class Documento {
+	Integer docId;
+	Integer docSize;
+	public Documento(Integer docId, Integer docSize) {
+		super();
+		this.docId = docId;
+		this.docSize = docSize;
+	}
+	public Integer getDocId() {
+		return docId;
+	}
+	public void setDocId(Integer docId) {
+		this.docId = docId;
+	}
+	public Integer getDocSize() {
+		return docSize;
+	}
+	public void setDocSize(Integer docSize) {
+		this.docSize = docSize;
+	}
+}
+
+class Region {
+	Integer regId;
+	String regNombre;
+	
+	
+	public Region(Integer regId, String regNombre) {
+		super();
+		this.regId = regId;
+		this.regNombre = regNombre;
+	}
+	public Integer getRegId() {
+		return regId;
+	}
+	public void setRegId(Integer regId) {
+		this.regId = regId;
+	}
+	public String getRegNombre() {
+		return regNombre;
+	}
+	public void setRegNombre(String regNombre) {
+		this.regNombre = regNombre;
+	}
+	
+}
+
+//<r dc id> <nombre> <r id>
+class RegionDatacenter {
+	Integer regDctId;
+	String regNombre;
+	Integer regId;
+	
+	public RegionDatacenter(Integer regDctId, String regNombre, Integer regId) {
+		super();
+		this.regDctId = regDctId;
+		this.regNombre = regNombre;
+		this.regId = regId;
+	}
+	public Integer getRegDctId() {
+		return regDctId;
+	}
+	public void setRegDctId(Integer regDctId) {
+		this.regDctId = regDctId;
+	}
+	public String getRegNombre() {
+		return regNombre;
+	}
+	public void setRegNombre(String regNombre) {
+		this.regNombre = regNombre;
+	}
+	public Integer getRegId() {
+		return regId;
+	}
+	public void setRegId(Integer regId) {
+		this.regId = regId;
+	}
+	
+	
+	
+}
+
+//<r user id> <nombre> <r id>
+
+class RegionUsuario {
+	Integer regUsrId;
+	String regNombre;
+	Integer regId;
+	public Integer getRegUsrId() {
+		return regUsrId;
+	}
+	public void setRegUsrId(Integer regUsrId) {
+		this.regUsrId = regUsrId;
+	}
+	public String getRegNombre() {
+		return regNombre;
+	}
+	public void setRegNombre(String regNombre) {
+		this.regNombre = regNombre;
+	}
+	public Integer getRegId() {
+		return regId;
+	}
+	public void setRegId(Integer regId) {
+		this.regId = regId;
+	}
+	public RegionUsuario(Integer regUsrId, String regNombre, Integer regId) {
+		super();
+		this.regUsrId = regUsrId;
+		this.regNombre = regNombre;
+		this.regId = regId;
+	}
+	
+	
+	
+	
+}
+
+//<req. time> <doc. id> <doc. size> <r user id>
+class Trafico {
+	Integer reqTime;
+	Integer docId;
+	Integer docSize;
+	Integer regUsrId;
+	public Trafico(Integer reqTime, Integer docId, Integer docSize,
+			Integer regUsrId) {
+		super();
+		this.reqTime = reqTime;
+		this.docId = docId;
+		this.docSize = docSize;
+		this.regUsrId = regUsrId;
+	}
+	public Integer getReqTime() {
+		return reqTime;
+	}
+	public void setReqTime(Integer reqTime) {
+		this.reqTime = reqTime;
+	}
+	public Integer getDocId() {
+		return docId;
+	}
+	public void setDocId(Integer docId) {
+		this.docId = docId;
+	}
+	public Integer getDocSize() {
+		return docSize;
+	}
+	public void setDocSize(Integer docSize) {
+		this.docSize = docSize;
+	}
+	public Integer getRegUsrId() {
+		return regUsrId;
+	}
+	public void setRegUsrId(Integer regUsrId) {
+		this.regUsrId = regUsrId;
+	}
+	
+	
+	
+	
+	
+	
+	
+}
+
+//<r user id> <r dc id> <qos metric>
+class QoS {
+	Integer regUsrId;
+	Integer regDocId;
+	Integer qosMetric;
+	public QoS(Integer regUsrId, Integer regDocId, Integer qosMetric) {
+		super();
+		this.regUsrId = regUsrId;
+		this.regDocId = regDocId;
+		this.qosMetric = qosMetric;
+	}
+	public Integer getRegUsrId() {
+		return regUsrId;
+	}
+	public void setRegUsrId(Integer regUsrId) {
+		this.regUsrId = regUsrId;
+	}
+	public Integer getRegDocId() {
+		return regDocId;
+	}
+	public void setRegDocId(Integer regDocId) {
+		this.regDocId = regDocId;
+	}
+	public Integer getQosMetric() {
+		return qosMetric;
+	}
+	public void setQosMetric(Integer qosMetric) {
+		this.qosMetric = qosMetric;
+	}
+	
+}
+
+//<vm id> <vm name> <bandwidth>
+class Maquina {
+	Integer vmId;
+	String  vmNombre;
+	Integer bandwidth;
+	public Maquina(Integer vmId, String vmNombre, Integer bandwidth) {
+		super();
+		this.vmId = vmId;
+		this.vmNombre = vmNombre;
+		this.bandwidth = bandwidth;
+	}
+	public Integer getVmId() {
+		return vmId;
+	}
+	public void setVmId(Integer vmId) {
+		this.vmId = vmId;
+	}
+	public String getVmNombre() {
+		return vmNombre;
+	}
+	public void setVmNombre(String vmNombre) {
+		this.vmNombre = vmNombre;
+	}
+	public Integer getBandwidth() {
+		return bandwidth;
+	}
+	public void setBandwidth(Integer bandwidth) {
+		this.bandwidth = bandwidth;
+	}
+
+	
+	
+	
+	
+}
+//<dc id> <vm id> <cost time step>
+class DatacenterMaquina {
+	Integer dcId;
+	Integer  vmId;
+	Double costTimeStep;
+	public Integer getDcId() {
+		return dcId;
+	}
+	public void setDcId(Integer dcId) {
+		this.dcId = dcId;
+	}
+	public Integer getVmId() {
+		return vmId;
+	}
+	public void setVmId(Integer vmId) {
+		this.vmId = vmId;
+	}
+	public Double getCostTimeStep() {
+		return costTimeStep;
+	}
+	public void setCostTimeStep(Double costTimeStep) {
+		this.costTimeStep = costTimeStep;
+	}
+	public DatacenterMaquina(Integer dcId, Integer vmId, Double costTimeStep) {
+		super();
+		this.dcId = dcId;
+		this.vmId = vmId;
+		this.costTimeStep = costTimeStep;
+	}
+
+	
+
+
+	
+}
+
+//* Archivo de centros de datos.
+//Nombre del archivo: dc.<#>
+//Formato del archivo: <dc id> <r dc id> <fun. cost storage> <fun. cost transfer>
+class Datacenter{
+	Integer dcId;
+	Integer regDctId;
+	FuncionCosto storageCost;
+	FuncionCosto dataTransferCost;
+	
+	public Datacenter(Integer dcId, Integer regDctId, FuncionCosto storageCost, FuncionCosto dataTransferCost) {
+		super();
+		this.dcId = dcId;
+		this.regDctId = regDctId;
+		this.storageCost = storageCost;
+		this.dataTransferCost = dataTransferCost;
+	}
+	
+	public Integer getDcId() {
+		return dcId;
+	}
+	public void setDcId(Integer dcId) {
+		this.dcId = dcId;
+	}
+	
+	public Integer getRegDctId() {
+		return regDctId;
+	}
+	public void setRegDctId(Integer regDctId) {
+		this.regDctId = regDctId;
+	}
+		
+	public FuncionCosto getStorageCost() {
+		return storageCost;
+	}
+	public void setStorageCost(FuncionCosto regDctId) {
+		this.storageCost = storageCost;
+	}
+	
+	public FuncionCosto getDataTransferCost() {
+		return dataTransferCost;
+	}
+	public void setDataTransferCost(FuncionCosto dataTransferCost) {
+		this.dataTransferCost = dataTransferCost;
+	}
+	
+	
+	
+}
+
+class FuncionCosto{
+	ParCosto[] pares;
+	Integer cantidadPares;
+	public FuncionCosto() {
+		super();
+		//this.pares = new ParCosto[CANTIDAD_MAXIMA_DE_PARES_COSTO];
+		this.pares = new ParCosto[10];
+		this.cantidadPares = 0;
+	}
+	
+	public ParCosto[] getPares() {
+		return pares;
+	}
+	public void setPares(ParCosto[] pares) {
+		this.pares = pares;
+	}
+	
+	public Integer getCantidadPares() {
+		return cantidadPares;
+	}
+	public void setCantidadPares(Integer cantidadPares) {
+		this.cantidadPares = cantidadPares;
+	}
+		
+}
+
+class ParCosto{
+	Double threshold;
+	Double price;
+	public ParCosto(Double threshold,Double price) {
+		super();
+		this.threshold = threshold;
+		this.price = price;
+	}
+	
+	public Double getThreshold() {
+		return threshold;
+	}
+	public void setThreshold(Double threshold) {
+		this.threshold = threshold;
+	}
+	
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+	
+	
+}
+
+
+
+
+
+
+
