@@ -108,7 +108,7 @@ public class CloudCDNSOStudy extends Experiment {
 
 		// Generate latex tables
 		exp.generateLatexTables();
-
+		
 		// Configure the R scripts to be generated
 		int rows;
 		int columns;

@@ -61,7 +61,7 @@ public class gGA_Settings extends Settings {
 			e.printStackTrace();
 		}
 		// Default experiments.settings
-		populationSize_ = 20;
+		populationSize_ = 10;
 		maxEvaluations_ = 2500;
 		// maxEvaluations_ = 25000;
 		

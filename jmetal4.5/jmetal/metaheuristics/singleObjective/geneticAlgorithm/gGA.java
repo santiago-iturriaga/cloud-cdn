@@ -152,8 +152,11 @@ public class gGA extends Algorithm {
 		} // while
 
 		// Return a population with the best individual
-		SolutionSet resultPopulation = new SolutionSet(1);
+		SolutionSet resultPopulation = new SolutionSet(2);
+		Solution bestTraining = new Solution(population.get(0));
+		((CloudCDN_SO)problem_).evaluateFinalSolution(population.get(0));
 		resultPopulation.add(population.get(0));
+		resultPopulation.add(bestTraining);
 
 		System.out.println("Evaluations: " + evaluations);
 		return resultPopulation;

@@ -72,7 +72,7 @@ public class CloudCDN_SO extends Problem {
 	double totalSimTimeHours;
 	double totalSimTimeMonths;
 	double totalSimTimeDays;
-	
+
 	int totalTrainingSecs;
 	double totalTrainingHours;
 	double totalTrainingDays;
@@ -139,8 +139,8 @@ public class CloudCDN_SO extends Problem {
 		vmTypesUpperLimits_ = new double[getMaquinas().size()];
 
 		for (int i = 0; i < getMaquinas().size(); i++) {
-			vmTypesUpperLimits_[i] = 5; // getTrafico().size(); // Big enough
-										// value.
+			vmTypesUpperLimits_[i] = 15; // getTrafico().size(); // Big enough
+											// value.
 		}
 
 		routingSimpleRR_ = new SimpleRR(this);
@@ -159,7 +159,7 @@ public class CloudCDN_SO extends Problem {
 		totalSimTimeHours = totalSimTimeSecs / (60.0 * 60.0);
 		totalSimTimeDays = totalSimTimeHours / 24.0;
 		totalSimTimeMonths = totalSimTimeDays / 30.0;
-		
+
 		totalTrainingSecs = totalSimTimeSecs / 2;
 		totalTrainingHours = totalSimTimeHours / 2.0;
 		totalTrainingDays = totalSimTimeDays / 2.0;
@@ -270,6 +270,87 @@ public class CloudCDN_SO extends Problem {
 		}
 	}
 
+	public void evaluateFinalSolution(Solution solution) {
+		double fitness = 0.0;
+		double storageCost = 0.0;
+		double machineCost = 0.0;
+		double trafficCost = 0.0;
+
+		System.out.println(">> [INFO] Expected fitness: "
+				+ solution.getObjective(0) + " [Penalty: "
+				+ solution.getOverallConstraintViolation() + "]");
+
+		try {
+			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
+				double dataSize = 0.0;
+
+				for (int j = 0; j < getDocumentos().size(); j++) {
+					if (CloudCDNSolutionType.GetDocumentVariables(solution, i)
+							.getValue(j) == 1) {
+						dataSize += getDocumentos().get(j).docSize;
+					}
+				}
+
+				storageCost += getRegionesDatacenters().get(i)
+						.computeStorageCost(dataSize);
+			}
+
+			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
+				for (int h = 0; h < 24; h++) {
+					for (int j = 0; j < getMaquinas().size(); j++) {
+						int numVM;
+						numVM = CloudCDNSolutionType.GetVMVariables(solution,
+								i, h).getValue(j);
+
+						double priceVM;
+						priceVM = getRegionesDatacenters().get(i)
+								.computeVMCost(j);
+
+						if (numVM > 0) {
+							machineCost += numVM * priceVM;
+						}
+					}
+				}
+			}
+
+			routingSimpleRR_.Compute(solution, totalTrainingSecs,
+					totalSimTimeSecs);
+
+			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
+				trafficCost += getRegionesDatacenters().get(i)
+						.computeTransferCost(
+								routingSimpleRR_.getTrafficAmount()[i]);
+			}
+
+			if (routingSimpleRR_.getRatioQoS() >= 0.90) {
+				solution.setNumberOfViolatedConstraint(routingSimpleRR_
+						.getNumberOfBandwidthViolatedRequests());
+				solution.setOverallConstraintViolation(routingSimpleRR_
+						.getTotalViolatedBandwidth());
+			} else {
+				solution.setNumberOfViolatedConstraint(routingSimpleRR_
+						.getNumberOfBandwidthViolatedRequests()
+						+ routingSimpleRR_.getNumberOfQoSViolatedRequests());
+				solution.setOverallConstraintViolation(routingSimpleRR_
+						.getTotalViolatedBandwidth()
+						+ routingSimpleRR_.getViolatedQoS());
+			}
+
+			fitness = (storageCost * totalTrainingMonths) + (machineCost)
+					+ (trafficCost * totalTrainingMonths);
+		} catch (JMException e) {
+			e.printStackTrace();
+			fitness = Double.MAX_VALUE;
+		}
+
+		System.out.println(">> [INFO] Actual fitness: " + fitness
+				+ " [Penalty: " + solution.getOverallConstraintViolation()
+				+ "]");
+
+		if (solution.getOverallConstraintViolation() > 0) fitness = -1;
+		solution.setObjective(0, fitness);
+	}
+
 	/**
 	 * Evaluates a solution
 	 * 
@@ -280,7 +361,6 @@ public class CloudCDN_SO extends Problem {
 		FixSolution(solution);
 
 		double fitness = 0.0;
-
 		double storageCost = 0.0;
 		double machineCost = 0.0;
 		double trafficCost = 0.0;
@@ -326,15 +406,21 @@ public class CloudCDN_SO extends Problem {
 								routingSimpleRR_.getTrafficAmount()[i]);
 			}
 
-			solution.setNumberOfViolatedConstraint(routingSimpleRR_
-					.getNumberOfBandwidthViolatedRequests()
-					+ routingSimpleRR_.getNumberOfQoSViolatedRequests());
-			solution.setOverallConstraintViolation(routingSimpleRR_
-					.getTotalViolatedBandwidth()
-					+ routingSimpleRR_.getViolatedQoS());
+			if (routingSimpleRR_.getRatioQoS() >= 0.90) {
+				solution.setNumberOfViolatedConstraint(routingSimpleRR_
+						.getNumberOfBandwidthViolatedRequests());
+				solution.setOverallConstraintViolation(routingSimpleRR_
+						.getTotalViolatedBandwidth());
+			} else {
+				solution.setNumberOfViolatedConstraint(routingSimpleRR_
+						.getNumberOfBandwidthViolatedRequests()
+						+ routingSimpleRR_.getNumberOfQoSViolatedRequests());
+				solution.setOverallConstraintViolation(routingSimpleRR_
+						.getTotalViolatedBandwidth()
+						+ routingSimpleRR_.getViolatedQoS());
+			}
 
-			fitness = (storageCost * totalTrainingMonths)
-					+ (machineCost)
+			fitness = (storageCost * totalTrainingMonths) + (machineCost)
 					+ (trafficCost * totalTrainingMonths);
 		} catch (JMException e) {
 			e.printStackTrace();

@@ -14,6 +14,7 @@ import jmetal.encodings.variable.ArrayInt;
 public class SimpleRR {
 	private CloudCDN_SO problem_;
 
+	private int countRequests_;
 	private int[] totalRequests_;
 	private double[] totalTrafficAmount_;
 	private double[][] bandwidthConstraint_;
@@ -46,6 +47,7 @@ public class SimpleRR {
 
 	public void Compute(Solution solution, int startTime, int endTime) {
 		try {
+			countRequests_ = 0;
 			maxViolatedBandwidth_ = 0.0;
 			totalViolatedBandwidth_ = 0.0;
 			totalQos_ = 0.0;
@@ -88,11 +90,13 @@ public class SimpleRR {
 					/ (24 * 60 * 60);
 
 			for (int i = 0; (i < problem_.getTrafico().size())
-					&& (problem_.getTrafico().get(i).getReqTime() < endTime); i++) {
+					&& (problem_.getTrafico().get(i).getReqTime() <= endTime); i++) {
 
 				arrival = problem_.getTrafico().get(i).getReqTime();
 
 				if (arrival >= startTime) {
+					countRequests_++;
+
 					day = arrival / (24 * 60 * 60);
 					minuteOfDay = (arrival / 60) % (24 * 60);
 
@@ -265,5 +269,10 @@ public class SimpleRR {
 
 	public double getTotalQoS() {
 		return totalQos_;
+	}
+
+	public double getRatioQoS() {
+		return (double) (countRequests_ - getNumberOfQoSViolatedRequests())
+				/ (double) countRequests_;
 	}
 }
