@@ -41,7 +41,7 @@ import java.util.logging.Logger;
  * Example of experiment. In particular four algorithms are compared when
  * solving four constrained problems.
  */
-public class CloudCDNSOStudy extends Experiment {
+public class CloudCDNRandomStudy extends Experiment {
 
 	/**
 	 * Configures the algorithms in each independent run
@@ -54,55 +54,28 @@ public class CloudCDNSOStudy extends Experiment {
 	public void algorithmSettings(String problemName, int problemIndex,
 			Algorithm[] algorithm) throws ClassNotFoundException {
 		try {
-			if (algorithm[0] == null) {
-				Object[] problemParams0 = { "CloudCDNSolutionType", "test/", 0,
-						"BestQoS" };
-				algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings(
-						problemName, problemParams0).configure();
-			}
+			Object[] problemParams = { "CloudCDNSolutionType", "test/", 0,
+					"RandomRouting" };
+			algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings(
+					problemName, problemParams).configure();
 
-			if (algorithm[1] == null) {
-				Object[] problemParams1 = { "CloudCDNSolutionType", "test/", 0,
-						"Cheapest" };
-				algorithm[1] = new jmetal.experiments.settings.cloudcdn.gGA_Settings(
-						problemName, problemParams1).configure();
-			}
-
-			if (algorithm[2] == null) {
-				Object[] problemParams2 = { "CloudCDNSolutionType", "test/", 0,
-						"RandomRouting" };
-				algorithm[2] = new jmetal.experiments.settings.cloudcdn.gGA_Settings(
-						problemName, problemParams2).configure();
-			}
-
-			if (algorithm[3] == null) {
-				Object[] problemParams3 = { "CloudCDNSolutionType", "test/", 0,
-						"SimpleRR" };
-				algorithm[3] = new jmetal.experiments.settings.cloudcdn.gGA_Settings(
-						problemName, problemParams3).configure();
-			}
-
-			/*
-			 * algorithm[0] = new
-			 * jmetal.experiments.settings.cloudcdn.ES_Settings( problemName,
-			 * problemParams).configure();
-			 */
 		} catch (IllegalArgumentException ex) {
-			Logger.getLogger(CloudCDNSOStudy.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(CloudCDNRandomStudy.class.getName()).log(
+					Level.SEVERE, null, ex);
 		} catch (JMException ex) {
-			Logger.getLogger(CloudCDNSOStudy.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(CloudCDNRandomStudy.class.getName()).log(
+					Level.SEVERE, null, ex);
 		}
 	}
 
 	public static void main(String[] args) throws JMException, IOException {
-		CloudCDNSOStudy exp = new CloudCDNSOStudy();
+		CloudCDNRandomStudy exp = new CloudCDNRandomStudy();
 
-		exp.experimentName_ = "CloudCDNStudy";
+		// exp.experimentName_ = "CloudCDNStudy";
+		exp.experimentName_ = exp.getClass().getSimpleName();
 
 		// exp.algorithmNameList_ = new String[] { "ElitistES" };
-		exp.algorithmNameList_ = new String[] { "gGA", "gGA", "gGA", "gGA" };
+		exp.algorithmNameList_ = new String[] { "gGA" };
 
 		exp.problemList_ = new String[] { "cloudcdn.CloudCDN_SO" };
 		exp.paretoFrontFile_ = new String[] { "CloudCDN_SO.pf" };

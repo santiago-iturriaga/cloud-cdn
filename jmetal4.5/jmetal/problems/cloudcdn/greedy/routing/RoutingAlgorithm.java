@@ -5,7 +5,7 @@ import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
 import jmetal.problems.cloudcdn.CloudCDN_SO;
 import jmetal.util.JMException;
 
-public class RoutingAlgorithm {
+public abstract class RoutingAlgorithm {
 	protected CloudCDN_SO problem_;
 
 	protected int countRequests_;
@@ -70,6 +70,8 @@ public class RoutingAlgorithm {
 			}
 		}
 	}
+	
+	public abstract void Compute(Solution solution, int startTime, int endTime);
 
 	public double getTotalViolatedBandwidth() {
 		return totalViolatedBandwidth_;

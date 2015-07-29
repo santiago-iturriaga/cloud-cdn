@@ -17,6 +17,10 @@ import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
 import jmetal.encodings.variable.ArrayInt;
+import jmetal.problems.cloudcdn.greedy.routing.BestQoS;
+import jmetal.problems.cloudcdn.greedy.routing.Cheapest;
+import jmetal.problems.cloudcdn.greedy.routing.RandomRouting;
+import jmetal.problems.cloudcdn.greedy.routing.RoutingAlgorithm;
 import jmetal.problems.cloudcdn.greedy.routing.SimpleRR;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
@@ -63,10 +67,9 @@ public class CloudCDN_SO extends Problem {
 			CANTIDAD_MAXIMA_DE_MAQUINAS);
 
 	private ArrayList<ArrayList<QoS>> qoS_ = new ArrayList<ArrayList<QoS>>(
-			CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS
-					* CANTIDAD_MAXIMA_DE_REGIONES_DATACENTERS);
+			CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
 
-	private SimpleRR routingSimpleRR_;
+	private RoutingAlgorithm routingAlgorithm_;
 
 	int totalSimTimeSecs;
 	double totalSimTimeHours;
@@ -79,10 +82,11 @@ public class CloudCDN_SO extends Problem {
 	double totalTrainingMonths;
 
 	public CloudCDN_SO(String solutionType) {
-		this(solutionType, "test/", 0);
+		this(solutionType, "test/", 0, "RandomRouting");
 	}
 
-	public CloudCDN_SO(String solutionType, String pathName, int instanceNumber) {
+	public CloudCDN_SO(String solutionType, String pathName,
+			int instanceNumber, String routingAlgorithm) {
 		try {
 			readProblem(pathName, instanceNumber);
 		} catch (IOException e) {
@@ -143,7 +147,15 @@ public class CloudCDN_SO extends Problem {
 											// value.
 		}
 
-		routingSimpleRR_ = new SimpleRR(this);
+		if (routingAlgorithm.compareTo("SimpleRR") == 0) {
+			routingAlgorithm_ = new SimpleRR(this);
+		} else if (routingAlgorithm.compareTo("Cheapest") == 0) {
+			routingAlgorithm_ = new Cheapest(this);
+		} else if (routingAlgorithm.compareTo("BestQoS") == 0) {
+			routingAlgorithm_ = new BestQoS(this);
+		} else if (routingAlgorithm.compareTo("RandomRouting") == 0) {
+			routingAlgorithm_ = new RandomRouting(this);
+		}
 
 		try {
 			if (solutionType.compareTo("CloudCDNSolutionType") == 0)
@@ -276,6 +288,8 @@ public class CloudCDN_SO extends Problem {
 		double machineCost = 0.0;
 		double trafficCost = 0.0;
 
+		System.out.println(">> [INFO] Routing algorithm: " + routingAlgorithm_.getClass().toString());
+		
 		System.out.println(">> [INFO] Expected fitness: "
 				+ solution.getObjective(0) + " [Penalty: "
 				+ solution.getOverallConstraintViolation() + "]");
@@ -313,27 +327,27 @@ public class CloudCDN_SO extends Problem {
 				}
 			}
 
-			routingSimpleRR_.Compute(solution, totalTrainingSecs,
+			routingAlgorithm_.Compute(solution, totalTrainingSecs,
 					totalSimTimeSecs);
 
 			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
 				trafficCost += getRegionesDatacenters().get(i)
 						.computeTransferCost(
-								routingSimpleRR_.getTrafficAmount()[i]);
+								routingAlgorithm_.getTrafficAmount()[i]);
 			}
 
-			if (routingSimpleRR_.getRatioQoS() >= 0.90) {
-				solution.setNumberOfViolatedConstraint(routingSimpleRR_
+			if (routingAlgorithm_.getRatioQoS() >= 0.90) {
+				solution.setNumberOfViolatedConstraint(routingAlgorithm_
 						.getNumberOfBandwidthViolatedRequests());
-				solution.setOverallConstraintViolation(routingSimpleRR_
+				solution.setOverallConstraintViolation(routingAlgorithm_
 						.getTotalViolatedBandwidth());
 			} else {
-				solution.setNumberOfViolatedConstraint(routingSimpleRR_
+				solution.setNumberOfViolatedConstraint(routingAlgorithm_
 						.getNumberOfBandwidthViolatedRequests()
-						+ routingSimpleRR_.getNumberOfQoSViolatedRequests());
-				solution.setOverallConstraintViolation(routingSimpleRR_
+						+ routingAlgorithm_.getNumberOfQoSViolatedRequests());
+				solution.setOverallConstraintViolation(routingAlgorithm_
 						.getTotalViolatedBandwidth()
-						+ routingSimpleRR_.getViolatedQoS());
+						+ routingAlgorithm_.getViolatedQoS());
 			}
 
 			fitness = (storageCost * totalTrainingMonths) + (machineCost)
@@ -347,7 +361,8 @@ public class CloudCDN_SO extends Problem {
 				+ " [Penalty: " + solution.getOverallConstraintViolation()
 				+ "]");
 
-		if (solution.getOverallConstraintViolation() > 0) fitness = -1;
+		if (solution.getOverallConstraintViolation() > 0)
+			fitness = -1;
 		solution.setObjective(0, fitness);
 	}
 
@@ -398,26 +413,26 @@ public class CloudCDN_SO extends Problem {
 				}
 			}
 
-			routingSimpleRR_.Compute(solution, 0, totalTrainingSecs);
+			routingAlgorithm_.Compute(solution, 0, totalTrainingSecs);
 
 			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
 				trafficCost += getRegionesDatacenters().get(i)
 						.computeTransferCost(
-								routingSimpleRR_.getTrafficAmount()[i]);
+								routingAlgorithm_.getTrafficAmount()[i]);
 			}
 
-			if (routingSimpleRR_.getRatioQoS() >= 0.90) {
-				solution.setNumberOfViolatedConstraint(routingSimpleRR_
+			if (routingAlgorithm_.getRatioQoS() >= 0.90) {
+				solution.setNumberOfViolatedConstraint(routingAlgorithm_
 						.getNumberOfBandwidthViolatedRequests());
-				solution.setOverallConstraintViolation(routingSimpleRR_
+				solution.setOverallConstraintViolation(routingAlgorithm_
 						.getTotalViolatedBandwidth());
 			} else {
-				solution.setNumberOfViolatedConstraint(routingSimpleRR_
+				solution.setNumberOfViolatedConstraint(routingAlgorithm_
 						.getNumberOfBandwidthViolatedRequests()
-						+ routingSimpleRR_.getNumberOfQoSViolatedRequests());
-				solution.setOverallConstraintViolation(routingSimpleRR_
+						+ routingAlgorithm_.getNumberOfQoSViolatedRequests());
+				solution.setOverallConstraintViolation(routingAlgorithm_
 						.getTotalViolatedBandwidth()
-						+ routingSimpleRR_.getViolatedQoS());
+						+ routingAlgorithm_.getViolatedQoS());
 			}
 
 			fitness = (storageCost * totalTrainingMonths) + (machineCost)
@@ -739,13 +754,13 @@ public class CloudCDN_SO extends Problem {
 	public void evaluateConstraints(Solution solution) throws JMException {
 		double[] constraint = new double[this.getNumberOfConstraints()];
 
-		routingSimpleRR_.Compute(solution, 0, totalTrainingSecs);
+		routingAlgorithm_.Compute(solution, 0, totalTrainingSecs);
 
-		solution.setNumberOfViolatedConstraint(routingSimpleRR_
+		solution.setNumberOfViolatedConstraint(routingAlgorithm_
 				.getNumberOfBandwidthViolatedRequests()
-				+ routingSimpleRR_.getNumberOfQoSViolatedRequests());
-		solution.setOverallConstraintViolation(routingSimpleRR_
+				+ routingAlgorithm_.getNumberOfQoSViolatedRequests());
+		solution.setOverallConstraintViolation(routingAlgorithm_
 				.getTotalViolatedBandwidth()
-				+ routingSimpleRR_.getViolatedQoS());
+				+ routingAlgorithm_.getViolatedQoS());
 	}
 }

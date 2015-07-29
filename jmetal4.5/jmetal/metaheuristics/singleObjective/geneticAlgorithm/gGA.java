@@ -150,7 +150,7 @@ public class gGA extends Algorithm {
 			offspringPopulation.clear();
 			population.sort(comparator);
 		} // while
-
+		
 		// Return a population with the best individual
 		SolutionSet resultPopulation = new SolutionSet(2);
 		Solution bestTraining = new Solution(population.get(0));

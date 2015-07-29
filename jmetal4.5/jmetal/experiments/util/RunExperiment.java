@@ -115,7 +115,7 @@ public class RunExperiment extends Thread {
 				int runs = problemData[2];
 
 				// The problem to solve
-				Problem problem;
+				//Problem problem;
 				String problemName;
 
 				// STEP 2: get the problem from the list
@@ -133,7 +133,7 @@ public class RunExperiment extends Thread {
 					e1.printStackTrace();
 				}
 
-				problem = algorithm[0].getProblem();
+				//problem = algorithm[0].getProblem();
 
 				// STEP 5: run the algorithms
 
