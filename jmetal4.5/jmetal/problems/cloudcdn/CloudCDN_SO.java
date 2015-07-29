@@ -68,11 +68,15 @@ public class CloudCDN_SO extends Problem {
 
 	private SimpleRR routingSimpleRR_;
 
-	double totalSimTimeSecs;
+	int totalSimTimeSecs;
+	double totalSimTimeHours;
 	double totalSimTimeMonths;
 	double totalSimTimeDays;
-	int trainingDays;
-	int maxTrainingReqTime;
+	
+	int totalTrainingSecs;
+	double totalTrainingHours;
+	double totalTrainingDays;
+	double totalTrainingMonths;
 
 	public CloudCDN_SO(String solutionType) {
 		this(solutionType, "test/", 0);
@@ -151,11 +155,15 @@ public class CloudCDN_SO extends Problem {
 			e.printStackTrace();
 		}
 
-		totalSimTimeSecs = (double) getTrafico().get(getTrafico().size() - 1).reqTime;
-		totalSimTimeMonths = totalSimTimeSecs / (30 * 24 * 60 * 60);
-		totalSimTimeDays = totalSimTimeSecs / (24 * 60 * 60);
-		trainingDays = (int) (totalSimTimeDays / 2.0);
-		maxTrainingReqTime = trainingDays * (24 * 60 * 60);
+		totalSimTimeSecs = getTrafico().get(getTrafico().size() - 1).reqTime;
+		totalSimTimeHours = totalSimTimeSecs / (60.0 * 60.0);
+		totalSimTimeDays = totalSimTimeHours / 24.0;
+		totalSimTimeMonths = totalSimTimeDays / 30.0;
+		
+		totalTrainingSecs = totalSimTimeSecs / 2;
+		totalTrainingHours = totalSimTimeHours / 2.0;
+		totalTrainingDays = totalSimTimeDays / 2.0;
+		totalTrainingMonths = totalSimTimeMonths / 2.0;
 	}
 
 	public double[] getNumberOfContentsLowerLimits() {
@@ -310,7 +318,7 @@ public class CloudCDN_SO extends Problem {
 				}
 			}
 
-			routingSimpleRR_.Compute(solution, 0, maxTrainingReqTime);
+			routingSimpleRR_.Compute(solution, 0, totalTrainingSecs);
 
 			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
 				trafficCost += getRegionesDatacenters().get(i)
@@ -325,9 +333,9 @@ public class CloudCDN_SO extends Problem {
 					.getTotalViolatedBandwidth()
 					+ routingSimpleRR_.getViolatedQoS());
 
-			fitness = (storageCost * totalSimTimeMonths)
-					+ (machineCost * totalSimTimeDays)
-					+ (trafficCost * totalSimTimeMonths);
+			fitness = (storageCost * totalTrainingMonths)
+					+ (machineCost)
+					+ (trafficCost * totalTrainingMonths);
 		} catch (JMException e) {
 			e.printStackTrace();
 			fitness = Double.MAX_VALUE;
@@ -645,7 +653,7 @@ public class CloudCDN_SO extends Problem {
 	public void evaluateConstraints(Solution solution) throws JMException {
 		double[] constraint = new double[this.getNumberOfConstraints()];
 
-		routingSimpleRR_.Compute(solution, 0, maxTrainingReqTime);
+		routingSimpleRR_.Compute(solution, 0, totalTrainingSecs);
 
 		solution.setNumberOfViolatedConstraint(routingSimpleRR_
 				.getNumberOfBandwidthViolatedRequests()
