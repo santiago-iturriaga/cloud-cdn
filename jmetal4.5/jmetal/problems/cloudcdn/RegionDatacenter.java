@@ -27,6 +27,10 @@ public class RegionDatacenter {
 		loadTransferCostFuction(transferCostFunction);
 	}
 
+	public int getMaxVMType() {
+		return maxVmType;
+	}
+	
 	public int getRegDctId() {
 		return regDctId;
 	}

@@ -3,15 +3,23 @@
  */
 package jmetal.problems.cloudcdn.greedy.routing;
 
+import java.util.ArrayList;
 import jmetal.core.Solution;
 import jmetal.problems.cloudcdn.CloudCDN_SO;
+import jmetal.problems.cloudcdn.RegionDatacenter;
 import jmetal.problems.cloudcdn.Trafico;
 import jmetal.util.JMException;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
 
-public class SimpleRR extends RoutingAlgorithm {
-	public SimpleRR(CloudCDN_SO problem) {
+public class Cheapest extends RoutingAlgorithm {
+	private ArrayList<RegionDatacenter> priorityList;
+
+	public Cheapest(CloudCDN_SO problem) {
 		super(problem);
+
+		priorityList = new ArrayList<RegionDatacenter>(
+				problem.getRegionesDatacenters());
+		priorityList.sort(new CheapestComparator());
 	}
 
 	public void Compute(Solution solution, int startTime, int endTime) {
@@ -20,7 +28,6 @@ public class SimpleRR extends RoutingAlgorithm {
 
 			int arrival = 0, day = 0, minuteOfDay = 0;
 			int current_day = 0;
-			int current_dc = 0;
 			int best_dc;
 
 			Boolean assigned;
@@ -44,14 +51,13 @@ public class SimpleRR extends RoutingAlgorithm {
 
 					if (day == current_day) {
 						assigned = false;
-						best_dc = current_dc;
+						best_dc = 0;
 
-						int offset;
-						for (offset = 0; offset < problem_
+						for (int offset = 0; offset < problem_
 								.getRegionesDatacenters().size() && !assigned; offset++) {
+
 							int j;
-							j = (current_dc + offset)
-									% problem_.getRegionesDatacenters().size();
+							j = priorityList.get(offset).getRegDctId();
 
 							if (CloudCDNSolutionType.GetDocumentVariables(
 									solution, j).getValue(t.getDocId()) == 1) {
@@ -98,10 +104,7 @@ public class SimpleRR extends RoutingAlgorithm {
 							}
 						}
 
-						if (assigned) {
-							current_dc = (current_dc + offset + 1)
-									% problem_.getRegionesDatacenters().size();
-						} else {
+						if (!assigned) {
 							totalRequests_[best_dc]++;
 
 							totalTrafficAmount_[best_dc] += problem_
@@ -124,9 +127,6 @@ public class SimpleRR extends RoutingAlgorithm {
 								violatedQos_ += diffqos;
 								numberOfQoSViolatedRequests_++;
 							}
-
-							current_dc = (best_dc + 1)
-									% problem_.getRegionesDatacenters().size();
 						}
 					} else {
 						current_day = day;
