@@ -42,6 +42,7 @@ public class Carga {
 	static final public Boolean DEBUG = true;
 	static final public Boolean DEBUG_HEU1 = true;
 	static final public Boolean DEBUG_HEU2 = true;
+	static final public Boolean DEBUG_CALCULAR_COSTO = true;
 	
 	
 
@@ -86,6 +87,9 @@ public class Carga {
 	public static void main(String args[]) {
 		carga();
 		heuristica2() ;
+		
+		System.out.println("calcularCosto=" + calcularCosto());
+		
 	}
 	
 	//* aleatoria*//
@@ -114,38 +118,16 @@ public class Carga {
 		datacenterTrafico = new Integer[cantidadTrafico];
 			
 		for (int j = 0;j<cantidadTrafico;j++){
-		//agarro el primero que tengo el archivo
+		//agarro el primero que tenga el archivo
 			for (int i = 0;i<cantidadDatacenters;i++){
-					if (datacenterDocumentos[i][j]){
-						datacenterMaquinas[i][j] = i;
+					if (datacenterDocumentos[i][trafico[j].getDocId()]){
+						datacenterTrafico[j] = i;
 					}
 			}
 		}
 		
 		
-		Double costo = 0.0;
-		
-		//costo de storage
-		for (int i = 0;i<cantidadDatacenters;i++){
-			Double bytesEnElDC = 0.0;			
-			for(int j = 0;j<cantidadDocumentos;j++){
-				if (datacenterDocumentos[i][j]){
-					bytesEnElDC += documentos[j].getDocSize();
-				}
-			}
 			
-			if (DEBUG_HEU2) {
-				System.out.println("bytesEnElDC" + i + "=" +  bytesEnElDC);
-			}
-			
-		}
-		
-		
-		
-		if (DEBUG_HEU2) {
-				System.out.println("****** COMENZANDO ETAPA1 *******");
-		}
-		
 	}
 	
 	//* por etapas *//
@@ -377,7 +359,7 @@ regionesUsuarios[j].getRegId()
 					System.out.println(linea);	
 					
 			    }
-				System.out.println("FIN");	
+				System.out.println("FIN" + NOMBRE_ARCHIVO_DE_QOS);	
 			}
 			
 			cantidadQos = lineasArchivo.size();
@@ -633,6 +615,49 @@ regionesUsuarios[j].getRegId()
 		return lineas;
 	}
 	
+	static public Double calcularCosto() {
+
+		Double costo = 0.0;
+
+		// costo de storage
+		for (int i = 0; i < cantidadDatacenters; i++) {
+			Double bytesEnElDC = 0.0;
+			Double terasEnElDC = 0.0;
+			for (int j = 0; j < cantidadDocumentos; j++) {
+				if (datacenterDocumentos[i][j]) {
+					bytesEnElDC += documentos[j].getDocSize();
+				}
+			}
+
+			// por ahora me quedo con el precio mas chico
+			terasEnElDC = bytesEnElDC / 1024 / 1024 / 1024;
+
+			if (DEBUG_CALCULAR_COSTO) {
+				System.out.println("bytesEnElDC" + i + "=" + bytesEnElDC);
+				System.out.println("En teras" + i + "=" + terasEnElDC);
+			}
+
+			// TODO: estoy tomando siempre el costo por giga, falta hacer el
+			// calculo
+			costo += terasEnElDC
+					* datacenters[i].storageCost.getPares()[0].getPrice();
+
+		}
+		
+		Double costoStorage = costo;
+		if (DEBUG_CALCULAR_COSTO) {
+			System.out.println("costoStorage = " + costoStorage);
+			
+		}
+		
+		
+
+	
+		
+		
+		return costo;
+
+	}
 	
 	//** CLASES AUXILIARES **//
 	

@@ -10,7 +10,7 @@ import java.util.LinkedList;
 public class Carga {
 
 	// configuraciones 1
-	static final public String DIRECTORIO_DE_INSTANCIAS = "./instancias/";
+	static final public String DIRECTORIO_DE_INSTANCIAS = "../instancias";
 	static final public String SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS = " ";
 	static final public String SEPARADOR_DE_VALORES_FUNCION = "\\|";
 	static final public String NOMBRE_ARCHIVO_DE_DOCUMENTOS = "docs.video";
@@ -69,7 +69,7 @@ public class Carga {
     static Integer cantidadDatacenters = 0;
 	
 	
-	//solución
+	//soluciï¿½n
 	
 	//fila datacenter 
 	//columna documentos
@@ -117,14 +117,14 @@ public class Carga {
 		//agarro el primero que tengo el archivo
 			for (int i = 0;i<cantidadDatacenters;i++){
 					if (datacenterDocumentos[i][j]){
-						datacenterMaquinas[i][j] = i;
+						datacenterTrafico[i][j] = i;
 					}
 			}
 		}
 		
 		
 		Double costo = 0.0;
-		/*
+		
 		//costo de storage
 		for (int i = 0;i<cantidadDatacenters;i++){
 			Double bytesEnElDC = 0.0;			
@@ -140,7 +140,7 @@ public class Carga {
 			
 		}
 		
-		*/
+		
 		
 		if (DEBUG_HEU2) {
 				System.out.println("****** COMENZANDO ETAPA1 *******");
@@ -377,7 +377,7 @@ regionesUsuarios[j].getRegId()
 					System.out.println(linea);	
 					
 			    }
-				System.out.println("FIN");	
+				System.out.println("FIN" + NOMBRE_ARCHIVO_DE_QOS);	
 			}
 			
 			cantidadQos = lineasArchivo.size();
