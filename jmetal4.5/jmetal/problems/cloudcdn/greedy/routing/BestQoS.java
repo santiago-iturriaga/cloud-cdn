@@ -4,6 +4,7 @@
 package jmetal.problems.cloudcdn.greedy.routing;
 
 import java.util.ArrayList;
+
 import jmetal.core.Solution;
 import jmetal.problems.cloudcdn.CloudCDN_SO;
 import jmetal.problems.cloudcdn.RegionDatacenter;
@@ -37,6 +38,12 @@ public class BestQoS extends RoutingAlgorithm {
 			int arrival = 0, day = 0, minuteOfDay = 0;
 			int current_day = 0;
 			int best_dc;
+			int best_dc_violations;
+
+			double videoSlotSize = 320.0 / 8.0 * 60.0 / (1024.0 * 1024.0); // GB
+																			// per
+																			// minute
+																			// required
 
 			Boolean assigned;
 			Trafico t;
@@ -60,6 +67,10 @@ public class BestQoS extends RoutingAlgorithm {
 					if (day == current_day) {
 						assigned = false;
 						best_dc = 0;
+						best_dc_violations = Integer.MAX_VALUE;
+
+						int numSlots = (int) Math.ceil(t.getDocSize()
+								/ videoSlotSize);
 
 						for (int offset = 0; offset < problem_
 								.getRegionesDatacenters().size() && !assigned; offset++) {
@@ -72,13 +83,24 @@ public class BestQoS extends RoutingAlgorithm {
 								// The current DC has a copy of the required
 								// document.
 
-								if ((bandwidthConstraint_[j][minuteOfDay]
-										+ t.getDocSize() < maxGBPerMin_[j])
-										&& (problem_.getQoS(t.getRegUsrId(), j)
-												.getQosMetric() <= problem_
-												.getRegionesUsuarios()
-												.get(t.getRegUsrId())
-												.getQoSThreshold())) {
+								int violatedSlots = 0;
+
+								for (int l = 0; l < numSlots; l++) {
+									if ((bandwidthConstraint_[j][(minuteOfDay + l)
+											% (24 * 60)]
+											+ videoSlotSize > maxGBPerMin_[j])
+											|| (problem_.getQoS(
+													t.getRegUsrId(), j)
+													.getQosMetric() > problem_
+													.getRegionesUsuarios()
+													.get(t.getRegUsrId())
+													.getQoSThreshold())) {
+
+										violatedSlots++;
+									}
+								}
+
+								if (violatedSlots == 0) {
 									// The current DC has enough bandwidth to
 									// satisfy the request, and satisfies the
 									// QoS
@@ -92,21 +114,16 @@ public class BestQoS extends RoutingAlgorithm {
 									totalTrafficAmount_[j] += problem_
 											.getTrafico().get(i).getDocSize();
 
-									bandwidthConstraint_[j][minuteOfDay] += bandwidthConstraint_[j][minuteOfDay]
-											+ problem_.getTrafico().get(i)
-													.getDocSize();
+									for (int l = 0; l < numSlots; l++) {
+										bandwidthConstraint_[j][(minuteOfDay + l)
+												% (24 * 60)] += videoSlotSize;
+									}
 
 									assigned = true;
 								} else {
-									if ((bandwidthConstraint_[j][minuteOfDay] < bandwidthConstraint_[best_dc][minuteOfDay])
-											&& (problem_.getQoS(
-													t.getRegUsrId(), j)
-													.getQosMetric() <= problem_
-													.getRegionesUsuarios()
-													.get(t.getRegUsrId())
-													.getQoSThreshold())) {
-
+									if (best_dc_violations > violatedSlots) {
 										best_dc = j;
+										best_dc_violations = violatedSlots;
 									}
 								}
 							}
@@ -118,8 +135,10 @@ public class BestQoS extends RoutingAlgorithm {
 							totalTrafficAmount_[best_dc] += problem_
 									.getTrafico().get(i).getDocSize();
 
-							bandwidthConstraint_[best_dc][minuteOfDay] += bandwidthConstraint_[best_dc][minuteOfDay]
-									+ problem_.getTrafico().get(i).getDocSize();
+							for (int l = 0; l < numSlots; l++) {
+								bandwidthConstraint_[best_dc][(minuteOfDay + l)
+										% (24 * 60)] += videoSlotSize;
+							}
 
 							totalQos_ += problem_.getRegionesUsuarios()
 									.get(t.getRegUsrId()).getQoSThreshold();

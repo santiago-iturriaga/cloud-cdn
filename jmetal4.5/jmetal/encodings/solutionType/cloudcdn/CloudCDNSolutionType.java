@@ -48,25 +48,23 @@ public class CloudCDNSolutionType extends SolutionType {
 			for (int var_dc = 0; var_dc < customProblem_
 					.getRegionesDatacenters().size(); var_dc++) {
 				for (int var_hr = 0; var_hr < 24; var_hr++) {
-					/*
-					 * variables[var] = new ArrayInt(
-					 * customProblem.getMaquinas().size(),
-					 * customProblem.getNumberOfVMTypesLowerLimits(),
-					 * customProblem.getNumberOfVMTypesUpperLimits());
-					 */
-
-					double[] vmTypesUpperLimits_ = new double[customProblem_
-							.getMaquinas().size()];
-
-					for (int i = 0; i < customProblem_.getMaquinas().size(); i++) {
-						vmTypesUpperLimits_[i] = 1;
-					}
-
-					variables[getVMVarIndex(var_dc, var_hr)] = new ArrayInt(
-							customProblem_.getMaquinas().size(),
+					variables[getVMVarIndex(var_dc, var_hr)] = new ArrayInt(customProblem_.getMaquinas()
+							.size(),
 							customProblem_.getNumberOfVMTypesLowerLimits(),
-							customProblem_.getNumberOfVMTypesUpperLimits(),
-							vmTypesUpperLimits_);
+							customProblem_.getNumberOfVMTypesUpperLimits());
+
+//					double[] vmTypesUpperLimits_ = new double[customProblem_
+//							.getMaquinas().size()];
+//
+//					for (int i = 0; i < customProblem_.getMaquinas().size(); i++) {
+//						vmTypesUpperLimits_[i] = 1;
+//					}
+//
+//					variables[getVMVarIndex(var_dc, var_hr)] = new ArrayInt(
+//							customProblem_.getMaquinas().size(),
+//							customProblem_.getNumberOfVMTypesLowerLimits(),
+//							customProblem_.getNumberOfVMTypesUpperLimits(),
+//							vmTypesUpperLimits_);
 				}
 			}
 

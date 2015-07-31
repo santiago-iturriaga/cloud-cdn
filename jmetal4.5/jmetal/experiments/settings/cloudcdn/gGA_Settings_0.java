@@ -40,7 +40,7 @@ import java.util.Properties;
 /**
  * Settings class of algorithm NSGA-II (real encoding)
  */
-public class gGA_Settings extends Settings {
+public class gGA_Settings_0 extends Settings {
 	public int populationSize_;
 	public int maxEvaluations_;
 	public double mutationProbability_;
@@ -51,7 +51,7 @@ public class gGA_Settings extends Settings {
 	/**
 	 * Constructor
 	 */
-	public gGA_Settings(String problem, Object[] problemParams) {
+	public gGA_Settings_0(String problem, Object[] problemParams) {
 		super(problem);
 
 		try {

@@ -288,8 +288,9 @@ public class CloudCDN_SO extends Problem {
 		double machineCost = 0.0;
 		double trafficCost = 0.0;
 
-		System.out.println(">> [INFO] Routing algorithm: " + routingAlgorithm_.getClass().toString());
-		
+		System.out.println(">> [INFO] Routing algorithm: "
+				+ routingAlgorithm_.getClass().toString());
+
 		System.out.println(">> [INFO] Expected fitness: "
 				+ solution.getObjective(0) + " [Penalty: "
 				+ solution.getOverallConstraintViolation() + "]");
@@ -752,15 +753,20 @@ public class CloudCDN_SO extends Problem {
 	 * @throws JMException
 	 */
 	public void evaluateConstraints(Solution solution) throws JMException {
-		double[] constraint = new double[this.getNumberOfConstraints()];
-
 		routingAlgorithm_.Compute(solution, 0, totalTrainingSecs);
 
-		solution.setNumberOfViolatedConstraint(routingAlgorithm_
-				.getNumberOfBandwidthViolatedRequests()
-				+ routingAlgorithm_.getNumberOfQoSViolatedRequests());
-		solution.setOverallConstraintViolation(routingAlgorithm_
-				.getTotalViolatedBandwidth()
-				+ routingAlgorithm_.getViolatedQoS());
+		if (routingAlgorithm_.getRatioQoS() >= 0.90) {
+			solution.setNumberOfViolatedConstraint(routingAlgorithm_
+					.getNumberOfBandwidthViolatedRequests());
+			solution.setOverallConstraintViolation(routingAlgorithm_
+					.getTotalViolatedBandwidth());
+		} else {
+			solution.setNumberOfViolatedConstraint(routingAlgorithm_
+					.getNumberOfBandwidthViolatedRequests()
+					+ routingAlgorithm_.getNumberOfQoSViolatedRequests());
+			solution.setOverallConstraintViolation(routingAlgorithm_
+					.getTotalViolatedBandwidth()
+					+ routingAlgorithm_.getViolatedQoS());
+		}
 	}
 }

@@ -40,7 +40,7 @@ import java.util.Properties;
 /**
  * Settings class of algorithm NSGA-II (real encoding)
  */
-public class gGA_Settings extends Settings {
+public class gGA_Settings_1 extends Settings {
 	public int populationSize_;
 	public int maxEvaluations_;
 	public double mutationProbability_;
@@ -51,7 +51,7 @@ public class gGA_Settings extends Settings {
 	/**
 	 * Constructor
 	 */
-	public gGA_Settings(String problem, Object[] problemParams) {
+	public gGA_Settings_1(String problem, Object[] problemParams) {
 		super(problem);
 
 		try {
@@ -61,7 +61,7 @@ public class gGA_Settings extends Settings {
 			e.printStackTrace();
 		}
 		// Default experiments.settings
-		populationSize_ = 50;
+		populationSize_ = 200;
 		//maxEvaluations_ = 250;
 		//maxEvaluations_ = 2500;
 		maxEvaluations_ = 10000;
@@ -71,7 +71,7 @@ public class gGA_Settings extends Settings {
 		//mutationProbability_ = 1.0 / problem_.getNumberOfBits();
 		mutationProbability_ = 1000.0 / problem_.getNumberOfBits();
 		
-		crossoverProbability_ = 0.9;
+		crossoverProbability_ = 0.7;
 		
 		mutationDistributionIndex_ = 20.0;
 		crossoverDistributionIndex_ = 20.0;

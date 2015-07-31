@@ -56,8 +56,19 @@ public class CloudCDNBestQoSStudy extends Experiment {
 		try {
 			Object[] problemParams = { "CloudCDNSolutionType", "test/", 0,
 					"BestQoS" };
-			algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings(
+
+			/*algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings_0(
+					problemName, problemParams).configure();*/
+			algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings_1(
 					problemName, problemParams).configure();
+			/*algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings_2(
+					problemName, problemParams).configure();*/
+			/*algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings_3(
+					problemName, problemParams).configure();*/
+			/*algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings_4(
+					problemName, problemParams).configure();*/
+			/*algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings_5(
+					problemName, problemParams).configure();*/
 		} catch (IllegalArgumentException ex) {
 			Logger.getLogger(CloudCDNBestQoSStudy.class.getName()).log(
 					Level.SEVERE, null, ex);
