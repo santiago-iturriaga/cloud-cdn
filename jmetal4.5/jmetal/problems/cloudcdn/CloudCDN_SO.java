@@ -28,6 +28,7 @@ import jmetal.util.PseudoRandom;
 public class CloudCDN_SO extends Problem {
 	private static final long serialVersionUID = -6970983090454693518L;
 	static final public Boolean DEBUG = true;
+	static final public Double QOS_THRESHOLD = 0.95;
 
 	static final public Integer CANTIDAD_MAXIMA_DE_DOCUMENTOS = 100000;
 	static final public Integer CANTIDAD_MAXIMA_DE_REGIONES = 100;
@@ -233,6 +234,22 @@ public class CloudCDN_SO extends Problem {
 	public QoS getQoS(int regUsr, int regDC) {
 		return qoS_.get(regUsr).get(regDC);
 	}
+	
+	public int TotalSimTimeSecs() {
+		return totalSimTimeSecs;
+	}
+	
+	public double TotalSimTimeMonths() {
+		return totalSimTimeMonths;
+	}
+
+	public int TotalTrainingSecs() {
+		return totalTrainingSecs;
+	}
+	
+	public double TotalTrainingMonths() {
+		return totalTrainingMonths;
+	}	
 
 	public int getTotalNumVM(Solution solution) {
 		int total = 0;
@@ -337,7 +354,7 @@ public class CloudCDN_SO extends Problem {
 								routingAlgorithm_.getTrafficAmount()[i]);
 			}
 
-			if (routingAlgorithm_.getRatioQoS() >= 0.90) {
+			if (routingAlgorithm_.getRatioQoS() >= QOS_THRESHOLD) {
 				solution.setNumberOfViolatedConstraint(routingAlgorithm_
 						.getNumberOfBandwidthViolatedRequests());
 				solution.setOverallConstraintViolation(routingAlgorithm_
@@ -422,7 +439,7 @@ public class CloudCDN_SO extends Problem {
 								routingAlgorithm_.getTrafficAmount()[i]);
 			}
 
-			if (routingAlgorithm_.getRatioQoS() >= 0.90) {
+			if (routingAlgorithm_.getRatioQoS() >= QOS_THRESHOLD) {
 				solution.setNumberOfViolatedConstraint(routingAlgorithm_
 						.getNumberOfBandwidthViolatedRequests());
 				solution.setOverallConstraintViolation(routingAlgorithm_
