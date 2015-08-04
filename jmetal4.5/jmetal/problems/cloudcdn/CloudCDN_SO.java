@@ -77,17 +77,22 @@ public class CloudCDN_SO extends Problem {
 	double totalSimTimeMonths;
 	double totalSimTimeDays;
 
-	int totalTrainingSecs;
-	double totalTrainingHours;
-	double totalTrainingDays;
-	double totalTrainingMonths;
+	int startTrainingSecs, endTrainingSecs;
+	double startTrainingHours, endTrainingHours;
+	double startTrainingDays, endTrainingDays;
+	double startTrainingMonths, endTrainingMonths;
+
+	int startEvalSecs, endEvalSecs;
+	double startEvalHours, endEvalHours;
+	double startEvalDays, endEvalDays;
+	double startEvalMonths, endEvalMonths;
 
 	public CloudCDN_SO(String solutionType) {
-		this(solutionType, "test/", 0, "RandomRouting");
+		this(solutionType, "test/", 0, "RandomRouting", false);
 	}
 
 	public CloudCDN_SO(String solutionType, String pathName,
-			int instanceNumber, String routingAlgorithm) {
+			int instanceNumber, String routingAlgorithm, boolean twophase) {
 		try {
 			readProblem(pathName, instanceNumber);
 		} catch (IOException e) {
@@ -172,11 +177,48 @@ public class CloudCDN_SO extends Problem {
 		totalSimTimeHours = totalSimTimeSecs / (60.0 * 60.0);
 		totalSimTimeDays = totalSimTimeHours / 24.0;
 		totalSimTimeMonths = totalSimTimeDays / 30.0;
-
-		totalTrainingSecs = totalSimTimeSecs / 2;
-		totalTrainingHours = totalSimTimeHours / 2.0;
-		totalTrainingDays = totalSimTimeDays / 2.0;
-		totalTrainingMonths = totalSimTimeMonths / 2.0;
+		
+		if (twophase) {
+			startEvalSecs = totalSimTimeSecs / 2;
+			startEvalHours = totalSimTimeHours / 2.0;
+			startEvalDays = totalSimTimeDays / 2.0;
+			startEvalMonths = totalSimTimeMonths / 2.0;
+			
+			endEvalSecs = totalSimTimeSecs;
+			endEvalHours = totalSimTimeHours;
+			endEvalDays = totalSimTimeDays;
+			endEvalMonths = totalSimTimeMonths;
+			
+			startTrainingSecs = 0;
+			startTrainingHours = 0;
+			startTrainingDays = 0;
+			startTrainingMonths = 0;
+			
+			endTrainingSecs = totalSimTimeSecs / 2;
+			endTrainingHours = totalSimTimeHours / 2.0;
+			endTrainingDays = totalSimTimeDays / 2.0;
+			endTrainingMonths = totalSimTimeMonths / 2.0;
+		} else {
+			startEvalSecs = 0;
+			startEvalHours = 0;
+			startEvalDays = 0;
+			startEvalMonths = 0;
+			
+			endEvalSecs = totalSimTimeSecs;
+			endEvalHours = totalSimTimeHours;
+			endEvalDays = totalSimTimeDays;
+			endEvalMonths = totalSimTimeMonths;
+			
+			startTrainingSecs = 0;
+			startTrainingHours = 0;
+			startTrainingDays = 0;
+			startTrainingMonths = 0;
+			
+			endTrainingSecs = totalSimTimeSecs;
+			endTrainingHours = totalSimTimeHours;
+			endTrainingDays = totalSimTimeDays;
+			endTrainingMonths = totalSimTimeMonths;
+		}
 	}
 
 	public double[] getNumberOfContentsLowerLimits() {
@@ -234,23 +276,31 @@ public class CloudCDN_SO extends Problem {
 	public QoS getQoS(int regUsr, int regDC) {
 		return qoS_.get(regUsr).get(regDC);
 	}
-	
+
 	public int TotalSimTimeSecs() {
 		return totalSimTimeSecs;
 	}
-	
+
 	public double TotalSimTimeMonths() {
 		return totalSimTimeMonths;
 	}
 
-	public int TotalTrainingSecs() {
-		return totalTrainingSecs;
+	public int StartTrainingSecs() {
+		return startTrainingSecs;
+	}
+
+	public int EndTrainingSecs() {
+		return endTrainingSecs;
 	}
 	
-	public double TotalTrainingMonths() {
-		return totalTrainingMonths;
-	}	
+	public double StartTrainingMonths() {
+		return startTrainingMonths;
+	}
 
+	public double EndTrainingMonths() {
+		return endTrainingMonths;
+	}
+	
 	public int getTotalNumVM(Solution solution) {
 		int total = 0;
 
@@ -345,8 +395,7 @@ public class CloudCDN_SO extends Problem {
 				}
 			}
 
-			routingAlgorithm_.Compute(solution, totalTrainingSecs,
-					totalSimTimeSecs);
+			routingAlgorithm_.Compute(solution, startEvalSecs, endEvalSecs);
 
 			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
 				trafficCost += getRegionesDatacenters().get(i)
@@ -368,8 +417,8 @@ public class CloudCDN_SO extends Problem {
 						+ routingAlgorithm_.getViolatedQoS());
 			}
 
-			fitness = (storageCost * totalTrainingMonths) + (machineCost)
-					+ (trafficCost * totalTrainingMonths);
+			fitness = (storageCost * (endEvalMonths-startEvalMonths)) + (machineCost)
+					+ (trafficCost * (endEvalMonths-startEvalMonths));
 		} catch (JMException e) {
 			e.printStackTrace();
 			fitness = Double.MAX_VALUE;
@@ -431,7 +480,7 @@ public class CloudCDN_SO extends Problem {
 				}
 			}
 
-			routingAlgorithm_.Compute(solution, 0, totalTrainingSecs);
+			routingAlgorithm_.Compute(solution, startTrainingSecs, endTrainingSecs);
 
 			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
 				trafficCost += getRegionesDatacenters().get(i)
@@ -453,8 +502,8 @@ public class CloudCDN_SO extends Problem {
 						+ routingAlgorithm_.getViolatedQoS());
 			}
 
-			fitness = (storageCost * totalTrainingMonths) + (machineCost)
-					+ (trafficCost * totalTrainingMonths);
+			fitness = (storageCost * (endTrainingMonths-startTrainingMonths)) + (machineCost)
+					+ (trafficCost * (endTrainingMonths-startTrainingMonths));
 		} catch (JMException e) {
 			e.printStackTrace();
 			fitness = Double.MAX_VALUE;
@@ -770,7 +819,7 @@ public class CloudCDN_SO extends Problem {
 	 * @throws JMException
 	 */
 	public void evaluateConstraints(Solution solution) throws JMException {
-		routingAlgorithm_.Compute(solution, 0, totalTrainingSecs);
+		routingAlgorithm_.Compute(solution, startTrainingSecs, endTrainingSecs);
 
 		if (routingAlgorithm_.getRatioQoS() >= 0.90) {
 			solution.setNumberOfViolatedConstraint(routingAlgorithm_

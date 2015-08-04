@@ -22,6 +22,7 @@
 package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 
 import jmetal.core.*;
+import jmetal.experiments.greedy.CloudCDNSimpleRR_RandGreedy;
 import jmetal.problems.cloudcdn.CloudCDN_SO;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
@@ -87,13 +88,19 @@ public class gGA extends Algorithm {
 		// Create the initial population
 		Solution newIndividual;
 		for (int i = 0; i < populationSize; i++) {
-			newIndividual = new Solution(problem_);
+			if (i == 0) {
+				newIndividual = (new CloudCDNSimpleRR_RandGreedy())
+						.BuildSolution(problem_);
+			} else {
+				newIndividual = new Solution(problem_);
+			}
 			problem_.evaluate(newIndividual);
 
 			System.out.println(">> Init " + i + " => "
-					+ newIndividual.getObjective(0)
-					+ " [#VM: " + ((CloudCDN_SO)problem_).getTotalNumVM(newIndividual) + "]"
-					+ " [Penalty: "	+ newIndividual.getOverallConstraintViolation() + "]");
+					+ newIndividual.getObjective(0) + " [#VM: "
+					+ ((CloudCDN_SO) problem_).getTotalNumVM(newIndividual)
+					+ "]" + " [Penalty: "
+					+ newIndividual.getOverallConstraintViolation() + "]");
 
 			evaluations++;
 			population.add(newIndividual);
@@ -104,9 +111,10 @@ public class gGA extends Algorithm {
 		while (evaluations < maxEvaluations) {
 			// if ((evaluations % 10) == 0) {
 			System.out.println(">> #Eval " + evaluations + " best => "
-					+ population.get(0).getObjective(0)
-					+ " [#VM: " + ((CloudCDN_SO)problem_).getTotalNumVM(population.get(0)) + "]"
-					+ " [Penalty: "	+ population.get(0).getOverallConstraintViolation() + "]");			
+					+ population.get(0).getObjective(0) + " [#VM: "
+					+ ((CloudCDN_SO) problem_).getTotalNumVM(population.get(0))
+					+ "]" + " [Penalty: "
+					+ population.get(0).getOverallConstraintViolation() + "]");
 			// }
 
 			// Copy the best two individuals to the offspring population
@@ -150,11 +158,11 @@ public class gGA extends Algorithm {
 			offspringPopulation.clear();
 			population.sort(comparator);
 		} // while
-		
+
 		// Return a population with the best individual
 		SolutionSet resultPopulation = new SolutionSet(2);
 		Solution bestTraining = new Solution(population.get(0));
-		((CloudCDN_SO)problem_).evaluateFinalSolution(population.get(0));
+		((CloudCDN_SO) problem_).evaluateFinalSolution(population.get(0));
 		resultPopulation.add(population.get(0));
 		resultPopulation.add(bestTraining);
 

@@ -68,8 +68,11 @@ public class gGA_Settings extends Settings {
 		//maxEvaluations_ = 25000;
 		
 		//mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+
+		//mutationProbability_ = 1000.0 / problem_.getNumberOfBits();
+		mutationProbability_ = 100.0 / problem_.getNumberOfBits();
+		//mutationProbability_ = 10.0 / problem_.getNumberOfBits();
 		//mutationProbability_ = 1.0 / problem_.getNumberOfBits();
-		mutationProbability_ = 1000.0 / problem_.getNumberOfBits();
 		
 		crossoverProbability_ = 0.9;
 		
