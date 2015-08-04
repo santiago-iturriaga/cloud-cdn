@@ -38,6 +38,9 @@ public class CloudCDNSimpleRR_RandGreedy {
 		CloudCDN_SO problem_ = (CloudCDN_SO) p;
 
 		try {
+			// *********************************************************
+			// Creo una solución totalmente vacía.
+			// *********************************************************
 			Variable[] vars = problem_.getSolutionType().createVariables();
 			Solution current = new Solution(problem_, vars);
 
@@ -57,6 +60,11 @@ public class CloudCDNSimpleRR_RandGreedy {
 				}
 			}
 
+			// *********************************************************
+			// Comienzo con la heurística de alto nivel.
+			// *********************************************************
+			
+			// Inicializo variables y estructuras.
 			int totalBandwidthSlots_ = 24 * 60;
 			double videoSlotSize = 320.0 / 8.0 * 60.0 / (1024.0 * 1024.0); // GB
 																			// per
@@ -95,6 +103,7 @@ public class CloudCDNSimpleRR_RandGreedy {
 			current_day = problem_.getTrafico().get(0).getReqTime()
 					/ (24 * 60 * 60);
 
+			// Loop principal. Itero entre todos los pedidos de videos.
 			for (int i = 0; (i < problem_.getTrafico().size())
 					&& (problem_.getTrafico().get(i).getReqTime() <= problem_
 							.EndTrainingSecs()); i++) {
@@ -116,6 +125,7 @@ public class CloudCDNSimpleRR_RandGreedy {
 					int targetDC;
 					targetDC = -1;
 
+					// Busco el primer datacenter que tenga el documento pedido y que cumpla los requisitos de QoS.
 					for (int candidateDC = 0; candidateDC < problem_
 							.getRegionesDatacenters().size() && targetDC == -1; candidateDC++) {
 
@@ -131,6 +141,7 @@ public class CloudCDNSimpleRR_RandGreedy {
 						}
 					}
 
+					// Si no encontré ningún datacenter en el loop anterior, elijo aleatoriamente alguno que cumpla el QoS y pongo el documento pedido ahí.
 					if (targetDC == -1) {
 						targetDC = PseudoRandom.randInt(0, problem_
 								.getRegionesDatacenters().size() - 1);
@@ -148,6 +159,7 @@ public class CloudCDNSimpleRR_RandGreedy {
 								targetDC).setValue(docId, 1);
 					}
 
+					// Mando el pedido al datacenter seleccionado y acumulo el ancho de banda.
 					totalRequests_[targetDC]++;
 					totalTrafficAmount_[targetDC] += problem_.getTrafico()
 							.get(i).getDocSize();
@@ -157,8 +169,10 @@ public class CloudCDNSimpleRR_RandGreedy {
 								% (24 * 60)] += videoSlotSize;
 					}
 				} else {
+					// Terminó un día entero de tráfico.
 					current_day = day;
 
+					// Actualizo los máximos de tráfico por minuto.
 					for (int m = 0; m < problem_.getRegionesDatacenters()
 							.size(); m++) {
 						for (int n = 0; n < totalBandwidthSlots_; n++) {
@@ -172,6 +186,7 @@ public class CloudCDNSimpleRR_RandGreedy {
 				}
 			}
 
+			// Terminé de iterar. Actualizo los máximos de tráfico por minuto del remanente de pedidos.
 			for (int m = 0; m < problem_.getRegionesDatacenters().size(); m++) {
 				for (int n = 0; n < totalBandwidthSlots_; n++) {
 					if (maxBandwidth_[m][n] < bandwidthConstraint_[m][n]) {
@@ -182,6 +197,7 @@ public class CloudCDNSimpleRR_RandGreedy {
 				}
 			}
 
+			// Calculo la cantidad de VM necesarias en cada hora para poder cumplir con los máximos de tráfico por minuto.
 			for (int m = 0; m < problem_.getRegionesDatacenters().size(); m++) {
 				for (int h = 0; h < 23; h++) {
 					int min_start, min_end;
