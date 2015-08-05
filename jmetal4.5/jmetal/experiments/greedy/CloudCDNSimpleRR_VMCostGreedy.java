@@ -26,13 +26,18 @@ import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
 import jmetal.problems.cloudcdn.CloudCDN_SO;
+import jmetal.problems.cloudcdn.RegionDatacenter;
 import jmetal.problems.cloudcdn.Trafico;
+import jmetal.problems.cloudcdn.greedy.routing.CheapestComparator;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class CloudCDNSimpleRR_RandGreedy {
+public class CloudCDNSimpleRR_VMCostGreedy {
+
+	private boolean PRIORIZE_DOC_ALLOC = false;
 
 	public Solution BuildSolution(Problem p) throws ClassNotFoundException {
 		CloudCDN_SO problem_ = (CloudCDN_SO) p;
@@ -95,6 +100,12 @@ public class CloudCDNSimpleRR_RandGreedy {
 				}
 			}
 
+			ArrayList<RegionDatacenter> priorityList;
+			priorityList = new ArrayList<RegionDatacenter>(
+					problem_.getRegionesDatacenters());
+			priorityList
+					.sort(new CloudCDNSimpleRR_VMCostGreedyComparator(false));
+
 			int arrival = 0;
 			int day = 0;
 			int minuteOfDay = 0;
@@ -127,40 +138,54 @@ public class CloudCDNSimpleRR_RandGreedy {
 
 					// Busco el primer datacenter que tenga el documento pedido
 					// y que cumpla los requisitos de QoS.
-					for (int candidateDC = 0; candidateDC < problem_
-							.getRegionesDatacenters().size() && targetDC == -1; candidateDC++) {
+					for (int index = 0; index < priorityList.size()
+							&& targetDC == -1; index++) {
+						int candidateDC;
+						candidateDC = priorityList.get(index).getRegId();
 
-						if ((CloudCDNSolutionType.GetDocumentVariables(current,
-								candidateDC).getValue(docId) == 1)
-								&& problem_
-										.getQoS(t.getRegUsrId(), candidateDC)
-										.getQosMetric() <= problem_
-										.getRegionesUsuarios()
-										.get(t.getRegUsrId()).getQoSThreshold()) {
+						if (problem_.getQoS(t.getRegUsrId(), candidateDC)
+								.getQosMetric() <= problem_
+								.getRegionesUsuarios().get(t.getRegUsrId())
+								.getQoSThreshold()) {
 
-							targetDC = candidateDC;
+							if (PRIORIZE_DOC_ALLOC) {
+								if (CloudCDNSolutionType.GetDocumentVariables(
+										current, candidateDC).getValue(docId) == 1) {
+
+									targetDC = candidateDC;
+								}
+							} else {
+								CloudCDNSolutionType.GetDocumentVariables(
+										current, candidateDC)
+										.setValue(docId, 1);
+
+								targetDC = candidateDC;
+							}
 						}
 					}
 
 					// Si no encontré ningún datacenter en el loop anterior,
-					// elijo aleatoriamente alguno que cumpla el QoS y pongo el
-					// documento pedido ahí.
+					// ubico el documento en el datacenter más barato que que cumpla el QoS
 					if (targetDC == -1) {
-						targetDC = PseudoRandom.randInt(0, problem_
-								.getRegionesDatacenters().size() - 1);
+						for (int index = 0; index < priorityList.size()
+								&& targetDC == -1; index++) {
 
-						while (problem_.getQoS(t.getRegUsrId(), targetDC)
-								.getQosMetric() > problem_
-								.getRegionesUsuarios().get(t.getRegUsrId())
-								.getQoSThreshold()) {
+							int candidateDC;
+							candidateDC = priorityList.get(index).getRegDctId();
+
+							double qos;
+							qos = problem_.getQoS(t.getRegUsrId(), candidateDC).getQosMetric();
 							
-							targetDC++;
-							targetDC = targetDC
-									% problem_.getRegionesDatacenters().size();
+							double threshold;
+							threshold = problem_.getRegionesUsuarios().get(t.getRegUsrId()).getQoSThreshold();
+							
+							if (qos <= threshold) {
+								targetDC = candidateDC;
+								
+								CloudCDNSolutionType.GetDocumentVariables(current,
+										candidateDC).setValue(docId, 1);
+							}
 						}
-
-						CloudCDNSolutionType.GetDocumentVariables(current,
-								targetDC).setValue(docId, 1);
 					}
 
 					// Mando el pedido al datacenter seleccionado y acumulo el
@@ -255,7 +280,7 @@ public class CloudCDNSimpleRR_RandGreedy {
 		CloudCDN_SO problem_ = new CloudCDN_SO("CloudCDNSolutionType", "test/",
 				0, "SimpleRR", false);
 
-		Solution current = (new CloudCDNSimpleRR_RandGreedy())
+		Solution current = (new CloudCDNSimpleRR_VMCostGreedy())
 				.BuildSolution(problem_);
 
 		problem_.evaluate(current);

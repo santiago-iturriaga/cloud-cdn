@@ -62,9 +62,11 @@ public class gGA_Settings extends Settings {
 		}
 		// Default experiments.settings
 		populationSize_ = 50;
+		//maxEvaluations_ = 50;
 		//maxEvaluations_ = 250;
-		//maxEvaluations_ = 2500;
-		maxEvaluations_ = 10000;
+		maxEvaluations_ = 1000;
+		//maxEvaluations_ = 5000;
+		//maxEvaluations_ = 10000;
 		//maxEvaluations_ = 25000;
 		
 		//mutationProbability_ = 1.0 / problem_.getNumberOfVariables();

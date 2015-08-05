@@ -28,8 +28,10 @@ import jmetal.util.PseudoRandom;
 public class CloudCDN_SO extends Problem {
 	private static final long serialVersionUID = -6970983090454693518L;
 	static final public Boolean DEBUG = true;
-	static final public Double QOS_THRESHOLD = 0.95;
-
+	static final public Double QOS_THRESHOLD = 1.0;
+	static final public double ALPHA = 1.2;
+	static final public double DOC_SIZE_AMP = 140.0;
+	
 	static final public Integer CANTIDAD_MAXIMA_DE_DOCUMENTOS = 100000;
 	static final public Integer CANTIDAD_MAXIMA_DE_REGIONES = 100;
 	static final public Integer CANTIDAD_MAXIMA_DE_REGIONES_DATACENTERS = 50;
@@ -177,23 +179,23 @@ public class CloudCDN_SO extends Problem {
 		totalSimTimeHours = totalSimTimeSecs / (60.0 * 60.0);
 		totalSimTimeDays = totalSimTimeHours / 24.0;
 		totalSimTimeMonths = totalSimTimeDays / 30.0;
-		
+
 		if (twophase) {
 			startEvalSecs = totalSimTimeSecs / 2;
 			startEvalHours = totalSimTimeHours / 2.0;
 			startEvalDays = totalSimTimeDays / 2.0;
 			startEvalMonths = totalSimTimeMonths / 2.0;
-			
+
 			endEvalSecs = totalSimTimeSecs;
 			endEvalHours = totalSimTimeHours;
 			endEvalDays = totalSimTimeDays;
 			endEvalMonths = totalSimTimeMonths;
-			
+
 			startTrainingSecs = 0;
 			startTrainingHours = 0;
 			startTrainingDays = 0;
 			startTrainingMonths = 0;
-			
+
 			endTrainingSecs = totalSimTimeSecs / 2;
 			endTrainingHours = totalSimTimeHours / 2.0;
 			endTrainingDays = totalSimTimeDays / 2.0;
@@ -203,17 +205,17 @@ public class CloudCDN_SO extends Problem {
 			startEvalHours = 0;
 			startEvalDays = 0;
 			startEvalMonths = 0;
-			
+
 			endEvalSecs = totalSimTimeSecs;
 			endEvalHours = totalSimTimeHours;
 			endEvalDays = totalSimTimeDays;
 			endEvalMonths = totalSimTimeMonths;
-			
+
 			startTrainingSecs = 0;
 			startTrainingHours = 0;
 			startTrainingDays = 0;
 			startTrainingMonths = 0;
-			
+
 			endTrainingSecs = totalSimTimeSecs;
 			endTrainingHours = totalSimTimeHours;
 			endTrainingDays = totalSimTimeDays;
@@ -292,7 +294,7 @@ public class CloudCDN_SO extends Problem {
 	public int EndTrainingSecs() {
 		return endTrainingSecs;
 	}
-	
+
 	public double StartTrainingMonths() {
 		return startTrainingMonths;
 	}
@@ -300,7 +302,7 @@ public class CloudCDN_SO extends Problem {
 	public double EndTrainingMonths() {
 		return endTrainingMonths;
 	}
-	
+
 	public int getTotalNumVM(Solution solution) {
 		int total = 0;
 
@@ -363,6 +365,8 @@ public class CloudCDN_SO extends Problem {
 				+ solution.getOverallConstraintViolation() + "]");
 
 		try {
+			System.out.println(">> Storage >>");
+			
 			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
 				double dataSize = 0.0;
 
@@ -373,17 +377,26 @@ public class CloudCDN_SO extends Problem {
 					}
 				}
 
+				System.out.println("DC " + i + " = " + dataSize + " GB");
+				
 				storageCost += getRegionesDatacenters().get(i)
 						.computeStorageCost(dataSize);
 			}
 
+			System.out.println(">> VM >>");
+			
 			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
+				int total_horas;
+				total_horas = 0;
+				
 				for (int h = 0; h < 24; h++) {
 					for (int j = 0; j < getMaquinas().size(); j++) {
 						int numVM;
 						numVM = CloudCDNSolutionType.GetVMVariables(solution,
 								i, h).getValue(j);
 
+						total_horas += numVM;
+						
 						double priceVM;
 						priceVM = getRegionesDatacenters().get(i)
 								.computeVMCost(j);
@@ -393,17 +406,24 @@ public class CloudCDN_SO extends Problem {
 						}
 					}
 				}
+				
+				System.out.println("DC " + i + " = " + total_horas + " hours");
 			}
 
 			routingAlgorithm_.Compute(solution, startEvalSecs, endEvalSecs);
 
+			System.out.println(">> Traffic >>");
+			
 			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
 				trafficCost += getRegionesDatacenters().get(i)
 						.computeTransferCost(
 								routingAlgorithm_.getTrafficAmount()[i]);
+				
+				System.out.println("DC " + i + " = " + routingAlgorithm_.getTrafficAmount()[i] + " GB");
 			}
 
-			if (routingAlgorithm_.getRatioQoS() >= QOS_THRESHOLD) {
+			if ((QOS_THRESHOLD != 1.0)
+					&& (routingAlgorithm_.getRatioQoS() >= QOS_THRESHOLD)) {
 				solution.setNumberOfViolatedConstraint(routingAlgorithm_
 						.getNumberOfBandwidthViolatedRequests());
 				solution.setOverallConstraintViolation(routingAlgorithm_
@@ -417,8 +437,9 @@ public class CloudCDN_SO extends Problem {
 						+ routingAlgorithm_.getViolatedQoS());
 			}
 
-			fitness = (storageCost * (endEvalMonths-startEvalMonths)) + (machineCost)
-					+ (trafficCost * (endEvalMonths-startEvalMonths));
+			fitness = (storageCost * (endEvalMonths - startEvalMonths))
+					+ (machineCost)
+					+ (trafficCost * (endEvalMonths - startEvalMonths));
 		} catch (JMException e) {
 			e.printStackTrace();
 			fitness = Double.MAX_VALUE;
@@ -480,12 +501,16 @@ public class CloudCDN_SO extends Problem {
 				}
 			}
 
-			routingAlgorithm_.Compute(solution, startTrainingSecs, endTrainingSecs);
+			routingAlgorithm_.Compute(solution, startTrainingSecs,
+					endTrainingSecs);
 
+			double traffic;
+			
 			for (int i = 0; i < getRegionesDatacenters().size(); i++) {
+				traffic = routingAlgorithm_.getTrafficAmount()[i];
+				
 				trafficCost += getRegionesDatacenters().get(i)
-						.computeTransferCost(
-								routingAlgorithm_.getTrafficAmount()[i]);
+						.computeTransferCost(traffic);
 			}
 
 			if (routingAlgorithm_.getRatioQoS() >= QOS_THRESHOLD) {
@@ -502,8 +527,9 @@ public class CloudCDN_SO extends Problem {
 						+ routingAlgorithm_.getViolatedQoS());
 			}
 
-			fitness = (storageCost * (endTrainingMonths-startTrainingMonths)) + (machineCost)
-					+ (trafficCost * (endTrainingMonths-startTrainingMonths));
+			fitness = (storageCost * (endTrainingMonths - startTrainingMonths))
+					+ (machineCost)
+					+ (trafficCost * (endTrainingMonths - startTrainingMonths));
 		} catch (JMException e) {
 			e.printStackTrace();
 			fitness = Double.MAX_VALUE;
@@ -529,7 +555,7 @@ public class CloudCDN_SO extends Problem {
 
 			for (String linea : lineasArchivo) {
 				double docSizeGB;
-				docSizeGB = Double.valueOf((linea
+				docSizeGB = DOC_SIZE_AMP * Double.valueOf((linea
 						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1])
 						/ (1024 * 1024 * 1024);
 
@@ -629,9 +655,6 @@ public class CloudCDN_SO extends Problem {
 				}
 			}
 
-			double alpha;
-			alpha = 1.0;
-
 			ArrayList<Double> qosMedian = new ArrayList<Double>();
 			for (int i = 0; i < qoS_.size(); i++) {
 				ArrayList<Integer> aux;
@@ -642,7 +665,7 @@ public class CloudCDN_SO extends Problem {
 				}
 
 				aux.sort(null);
-				qosMedian.add(((int) aux.get(aux.size() / 2)) * alpha);
+				qosMedian.add(((int) aux.get(aux.size() / 2)) * ALPHA);
 			}
 
 			// ** CARGANDO REGIONES USUARIOS **//
@@ -680,7 +703,7 @@ public class CloudCDN_SO extends Problem {
 
 			for (String linea : lineasArchivo) {
 				double docSizeGB;
-				docSizeGB = Double.valueOf((linea
+				docSizeGB = DOC_SIZE_AMP * Double.valueOf((linea
 						.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])
 						/ (1024 * 1024 * 1024);
 
@@ -821,7 +844,7 @@ public class CloudCDN_SO extends Problem {
 	public void evaluateConstraints(Solution solution) throws JMException {
 		routingAlgorithm_.Compute(solution, startTrainingSecs, endTrainingSecs);
 
-		if (routingAlgorithm_.getRatioQoS() >= 0.90) {
+		if ((QOS_THRESHOLD != 1.0) && (routingAlgorithm_.getRatioQoS() >= QOS_THRESHOLD)) {
 			solution.setNumberOfViolatedConstraint(routingAlgorithm_
 					.getNumberOfBandwidthViolatedRequests());
 			solution.setOverallConstraintViolation(routingAlgorithm_

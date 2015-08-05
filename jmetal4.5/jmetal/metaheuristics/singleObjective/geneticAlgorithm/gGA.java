@@ -23,6 +23,7 @@ package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 
 import jmetal.core.*;
 import jmetal.experiments.greedy.CloudCDNSimpleRR_RandGreedy;
+import jmetal.experiments.greedy.CloudCDNSimpleRR_VMCostGreedy;
 import jmetal.problems.cloudcdn.CloudCDN_SO;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
@@ -89,6 +90,9 @@ public class gGA extends Algorithm {
 		Solution newIndividual;
 		for (int i = 0; i < populationSize; i++) {
 			if (i == 0) {
+				newIndividual = (new CloudCDNSimpleRR_VMCostGreedy())
+						.BuildSolution(problem_);
+			} else if (i < 10) {
 				newIndividual = (new CloudCDNSimpleRR_RandGreedy())
 						.BuildSolution(problem_);
 			} else {

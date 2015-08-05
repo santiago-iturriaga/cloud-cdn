@@ -55,7 +55,7 @@ public class CloudCDNCheapestStudy extends Experiment {
 			Algorithm[] algorithm) throws ClassNotFoundException {
 		try {
 			Object[] problemParams = { "CloudCDNSolutionType", "test/", 0,
-					"Cheapest" };
+					"Cheapest", false };
 			algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings(
 					problemName, problemParams).configure();
 		} catch (IllegalArgumentException ex) {
