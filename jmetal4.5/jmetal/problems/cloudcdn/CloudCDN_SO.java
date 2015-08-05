@@ -29,7 +29,7 @@ public class CloudCDN_SO extends Problem {
 	private static final long serialVersionUID = -6970983090454693518L;
 	static final public Boolean DEBUG = true;
 	static final public Double QOS_THRESHOLD = 1.0;
-	static final public double ALPHA = 1.2;
+	static final public double ALPHA = 0.9;
 	static final public double DOC_SIZE_AMP = 140.0;
 	
 	static final public Integer CANTIDAD_MAXIMA_DE_DOCUMENTOS = 100000;

@@ -141,7 +141,7 @@ public class CloudCDNSimpleRR_VMCostGreedy {
 					for (int index = 0; index < priorityList.size()
 							&& targetDC == -1; index++) {
 						int candidateDC;
-						candidateDC = priorityList.get(index).getRegId();
+						candidateDC = priorityList.get(index).getRegDctId();
 
 						if (problem_.getQoS(t.getRegUsrId(), candidateDC)
 								.getQosMetric() <= problem_
