@@ -107,9 +107,11 @@ public class gGA_Settings extends Settings {
 		parameters = new HashMap();
 		parameters.put("probability", crossoverProbability_);
 		parameters.put("distributionIndex", crossoverDistributionIndex_);
+		/*crossover = CrossoverFactory.getCrossoverOperator(
+				"cloudcdn.HUXCrossover", parameters);*/
 		crossover = CrossoverFactory.getCrossoverOperator(
-				"cloudcdn.HUXCrossover", parameters);
-
+				"cloudcdn.SinglePointCrossover", parameters);
+		
 		parameters = new HashMap();
 		parameters.put("probability", mutationProbability_);
 		parameters.put("distributionIndex", mutationDistributionIndex_);

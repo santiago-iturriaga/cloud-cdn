@@ -1,8 +1,6 @@
 package jmetal.problems.cloudcdn.greedy.routing;
 
 import jmetal.core.Solution;
-import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
-import jmetal.problems.cloudcdn.CloudCDN_SO;
 import jmetal.problems.cloudcdn.CloudCDN_base;
 import jmetal.util.JMException;
 

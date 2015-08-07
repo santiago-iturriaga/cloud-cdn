@@ -29,10 +29,7 @@ import jmetal.problems.cloudcdn.CloudCDN_SO;
 import jmetal.problems.cloudcdn.CloudCDN_base;
 import jmetal.problems.cloudcdn.RegionDatacenter;
 import jmetal.problems.cloudcdn.Trafico;
-import jmetal.problems.cloudcdn.greedy.routing.CheapestComparator;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
