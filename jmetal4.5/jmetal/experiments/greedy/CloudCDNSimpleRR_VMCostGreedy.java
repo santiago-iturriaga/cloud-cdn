@@ -26,6 +26,7 @@ import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
 import jmetal.problems.cloudcdn.CloudCDN_SO;
+import jmetal.problems.cloudcdn.CloudCDN_base;
 import jmetal.problems.cloudcdn.RegionDatacenter;
 import jmetal.problems.cloudcdn.Trafico;
 import jmetal.problems.cloudcdn.greedy.routing.CheapestComparator;
@@ -37,10 +38,10 @@ import java.util.ArrayList;
 
 public class CloudCDNSimpleRR_VMCostGreedy {
 
-	private boolean PRIORIZE_DOC_ALLOC = false;
+	private boolean PRIORIZE_DOC_ALLOC = true;
 
 	public Solution BuildSolution(Problem p) throws ClassNotFoundException {
-		CloudCDN_SO problem_ = (CloudCDN_SO) p;
+		CloudCDN_base problem_ = (CloudCDN_base) p;
 
 		try {
 			// *********************************************************
@@ -56,11 +57,13 @@ public class CloudCDNSimpleRR_VMCostGreedy {
 				}
 			}
 
-			for (int dc = 0; dc < problem_.getRegionesDatacenters().size(); dc++) {
-				for (int t = 0; t < 24; t++) {
-					for (int vm = 0; vm < problem_.getMaquinas().size(); vm++) {
-						CloudCDNSolutionType.GetVMVariables(current, dc, t)
-								.setValue(vm, 0);
+			if (problem_.getSolutionType().getClass().equals(CloudCDNSolutionType.class)) {
+				for (int dc = 0; dc < problem_.getRegionesDatacenters().size(); dc++) {
+					for (int t = 0; t < 24; t++) {
+						for (int vm = 0; vm < problem_.getMaquinas().size(); vm++) {
+							CloudCDNSolutionType.GetVMVariables(current, dc, t)
+									.setValue(vm, 0);
+						}
 					}
 				}
 			}
@@ -165,7 +168,8 @@ public class CloudCDNSimpleRR_VMCostGreedy {
 					}
 
 					// Si no encontré ningún datacenter en el loop anterior,
-					// ubico el documento en el datacenter más barato que que cumpla el QoS
+					// ubico el documento en el datacenter más barato que que
+					// cumpla el QoS
 					if (targetDC == -1) {
 						for (int index = 0; index < priorityList.size()
 								&& targetDC == -1; index++) {
@@ -174,16 +178,19 @@ public class CloudCDNSimpleRR_VMCostGreedy {
 							candidateDC = priorityList.get(index).getRegDctId();
 
 							double qos;
-							qos = problem_.getQoS(t.getRegUsrId(), candidateDC).getQosMetric();
-							
+							qos = problem_.getQoS(t.getRegUsrId(), candidateDC)
+									.getQosMetric();
+
 							double threshold;
-							threshold = problem_.getRegionesUsuarios().get(t.getRegUsrId()).getQoSThreshold();
-							
+							threshold = problem_.getRegionesUsuarios()
+									.get(t.getRegUsrId()).getQoSThreshold();
+
 							if (qos <= threshold) {
 								targetDC = candidateDC;
-								
-								CloudCDNSolutionType.GetDocumentVariables(current,
-										candidateDC).setValue(docId, 1);
+
+								CloudCDNSolutionType.GetDocumentVariables(
+										current, candidateDC)
+										.setValue(docId, 1);
 							}
 						}
 					}
@@ -216,53 +223,57 @@ public class CloudCDNSimpleRR_VMCostGreedy {
 				}
 			}
 
-			// Terminé de iterar. Actualizo los máximos de tráfico por minuto
-			// del remanente de pedidos.
-			for (int m = 0; m < problem_.getRegionesDatacenters().size(); m++) {
-				for (int n = 0; n < totalBandwidthSlots_; n++) {
-					if (maxBandwidth_[m][n] < bandwidthConstraint_[m][n]) {
-						maxBandwidth_[m][n] = bandwidthConstraint_[m][n];
-					}
-
-					bandwidthConstraint_[m][n] = 0;
-				}
-			}
-
-			// Calculo la cantidad de VM necesarias en cada hora para poder
-			// cumplir con los máximos de tráfico por minuto.
-			for (int m = 0; m < problem_.getRegionesDatacenters().size(); m++) {
-				for (int h = 0; h < 23; h++) {
-					int min_start, min_end;
-					min_start = h * 60;
-					min_end = (h + 1) * 60 - 1;
-
-					double hourlyMax;
-					hourlyMax = 0;
-
-					for (int n = min_start; n < min_end; n++) {
-						if (maxBandwidth_[m][n] > hourlyMax) {
-							hourlyMax = maxBandwidth_[m][n];
+			if (problem_.getSolutionType().getClass().equals(CloudCDNSolutionType.class)) {
+				// Terminé de iterar. Actualizo los máximos de tráfico por
+				// minuto
+				// del remanente de pedidos.
+				for (int m = 0; m < problem_.getRegionesDatacenters().size(); m++) {
+					for (int n = 0; n < totalBandwidthSlots_; n++) {
+						if (maxBandwidth_[m][n] < bandwidthConstraint_[m][n]) {
+							maxBandwidth_[m][n] = bandwidthConstraint_[m][n];
 						}
+
+						bandwidthConstraint_[m][n] = 0;
 					}
+				}
 
-					double remaining_bandwidth;
-					remaining_bandwidth = hourlyMax;
+				// Calculo la cantidad de VM necesarias en cada hora para poder
+				// cumplir con los máximos de tráfico por minuto.
+				for (int m = 0; m < problem_.getRegionesDatacenters().size(); m++) {
+					for (int h = 0; h < 23; h++) {
+						int min_start, min_end;
+						min_start = h * 60;
+						min_end = (h + 1) * 60 - 1;
 
-					int numVMs[] = new int[problem_.getMaquinas().size()];
-					for (int n = problem_.getMaquinas().size() - 1; n >= 0; n--) {
-						numVMs[n] += remaining_bandwidth
-								/ problem_.getMaquinas().get(n)
-										.getBandwidthGBpm();
-						remaining_bandwidth = remaining_bandwidth - numVMs[n];
-					}
+						double hourlyMax;
+						hourlyMax = 0;
 
-					if (remaining_bandwidth > 0) {
-						numVMs[0]++;
-					}
+						for (int n = min_start; n < min_end; n++) {
+							if (maxBandwidth_[m][n] > hourlyMax) {
+								hourlyMax = maxBandwidth_[m][n];
+							}
+						}
 
-					for (int n = 0; n < problem_.getMaquinas().size(); n++) {
-						CloudCDNSolutionType.GetVMVariables(current, m, h)
-								.setValue(n, numVMs[n]);
+						double remaining_bandwidth;
+						remaining_bandwidth = hourlyMax;
+
+						int numVMs[] = new int[problem_.getMaquinas().size()];
+						for (int n = problem_.getMaquinas().size() - 1; n >= 0; n--) {
+							numVMs[n] += remaining_bandwidth
+									/ problem_.getMaquinas().get(n)
+											.getBandwidthGBpm();
+							remaining_bandwidth = remaining_bandwidth
+									- numVMs[n];
+						}
+
+						if (remaining_bandwidth > 0) {
+							numVMs[0]++;
+						}
+
+						for (int n = 0; n < problem_.getMaquinas().size(); n++) {
+							CloudCDNSolutionType.GetVMVariables(current, m, h)
+									.setValue(n, numVMs[n]);
+						}
 					}
 				}
 			}
@@ -277,8 +288,18 @@ public class CloudCDNSimpleRR_VMCostGreedy {
 	public static void main(String[] args) throws JMException, IOException,
 			ClassNotFoundException {
 
+		/*
+		 * CloudCDN_SO problem_ = new CloudCDN_SO("CloudCDNSolutionType",
+		 * "test/", 0, "SimpleRR", false);
+		 */
+
+		/*
+		 * CloudCDN_SO problem_ = new CloudCDN_SO("CloudCDNSolutionType",
+		 * "test/", 0, "BestQoS", false);
+		 */
+
 		CloudCDN_SO problem_ = new CloudCDN_SO("CloudCDNSolutionType", "test/",
-				0, "SimpleRR", false);
+				0, "Cheapest", false);
 
 		Solution current = (new CloudCDNSimpleRR_VMCostGreedy())
 				.BuildSolution(problem_);

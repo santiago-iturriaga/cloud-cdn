@@ -24,6 +24,7 @@ package jmetal.operators.crossover.cloudcdn;
 import jmetal.core.Solution;
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.BinarySolutionType;
+import jmetal.encodings.solutionType.cloudcdn.CloudCDNRRSolutionType;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
 import jmetal.encodings.variable.ArrayInt;
 import jmetal.encodings.variable.Binary;
@@ -46,7 +47,7 @@ public class HUXCrossover extends Crossover {
 	/**
 	 * Valid solution types to apply this operator
 	 */
-	private static final List VALID_TYPES = Arrays.asList(CloudCDNSolutionType.class);
+	private static final List VALID_TYPES = Arrays.asList(CloudCDNSolutionType.class, CloudCDNRRSolutionType.class);
 
 	private Double probability_ = null;
 

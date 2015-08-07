@@ -26,6 +26,7 @@ import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
 import jmetal.problems.cloudcdn.CloudCDN_SO;
+import jmetal.problems.cloudcdn.CloudCDN_base;
 import jmetal.problems.cloudcdn.Trafico;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
@@ -35,7 +36,7 @@ import java.io.IOException;
 public class CloudCDNSimpleRR_RandGreedy {
 
 	public Solution BuildSolution(Problem p) throws ClassNotFoundException {
-		CloudCDN_SO problem_ = (CloudCDN_SO) p;
+		CloudCDN_base problem_ = (CloudCDN_base) p;
 
 		try {
 			// *********************************************************
@@ -51,11 +52,14 @@ public class CloudCDNSimpleRR_RandGreedy {
 				}
 			}
 
-			for (int dc = 0; dc < problem_.getRegionesDatacenters().size(); dc++) {
-				for (int t = 0; t < 24; t++) {
-					for (int vm = 0; vm < problem_.getMaquinas().size(); vm++) {
-						CloudCDNSolutionType.GetVMVariables(current, dc, t)
-								.setValue(vm, 0);
+			if (problem_.getSolutionType().getClass()
+					.equals(CloudCDNSolutionType.class)) {
+				for (int dc = 0; dc < problem_.getRegionesDatacenters().size(); dc++) {
+					for (int t = 0; t < 24; t++) {
+						for (int vm = 0; vm < problem_.getMaquinas().size(); vm++) {
+							CloudCDNSolutionType.GetVMVariables(current, dc, t)
+									.setValue(vm, 0);
+						}
 					}
 				}
 			}
@@ -153,7 +157,7 @@ public class CloudCDNSimpleRR_RandGreedy {
 								.getQosMetric() > problem_
 								.getRegionesUsuarios().get(t.getRegUsrId())
 								.getQoSThreshold()) {
-							
+
 							targetDC++;
 							targetDC = targetDC
 									% problem_.getRegionesDatacenters().size();
@@ -203,41 +207,45 @@ public class CloudCDNSimpleRR_RandGreedy {
 				}
 			}
 
-			// Calculo la cantidad de VM necesarias en cada hora para poder
-			// cumplir con los máximos de tráfico por minuto.
-			for (int m = 0; m < problem_.getRegionesDatacenters().size(); m++) {
-				for (int h = 0; h < 23; h++) {
-					int min_start, min_end;
-					min_start = h * 60;
-					min_end = (h + 1) * 60 - 1;
+			if (problem_.getSolutionType().getClass()
+					.equals(CloudCDNSolutionType.class)) {
+				// Calculo la cantidad de VM necesarias en cada hora para poder
+				// cumplir con los máximos de tráfico por minuto.
+				for (int m = 0; m < problem_.getRegionesDatacenters().size(); m++) {
+					for (int h = 0; h < 23; h++) {
+						int min_start, min_end;
+						min_start = h * 60;
+						min_end = (h + 1) * 60 - 1;
 
-					double hourlyMax;
-					hourlyMax = 0;
+						double hourlyMax;
+						hourlyMax = 0;
 
-					for (int n = min_start; n < min_end; n++) {
-						if (maxBandwidth_[m][n] > hourlyMax) {
-							hourlyMax = maxBandwidth_[m][n];
+						for (int n = min_start; n < min_end; n++) {
+							if (maxBandwidth_[m][n] > hourlyMax) {
+								hourlyMax = maxBandwidth_[m][n];
+							}
 						}
-					}
 
-					double remaining_bandwidth;
-					remaining_bandwidth = hourlyMax;
+						double remaining_bandwidth;
+						remaining_bandwidth = hourlyMax;
 
-					int numVMs[] = new int[problem_.getMaquinas().size()];
-					for (int n = problem_.getMaquinas().size() - 1; n >= 0; n--) {
-						numVMs[n] += remaining_bandwidth
-								/ problem_.getMaquinas().get(n)
-										.getBandwidthGBpm();
-						remaining_bandwidth = remaining_bandwidth - numVMs[n];
-					}
+						int numVMs[] = new int[problem_.getMaquinas().size()];
+						for (int n = problem_.getMaquinas().size() - 1; n >= 0; n--) {
+							numVMs[n] += remaining_bandwidth
+									/ problem_.getMaquinas().get(n)
+											.getBandwidthGBpm();
+							remaining_bandwidth = remaining_bandwidth
+									- numVMs[n];
+						}
 
-					if (remaining_bandwidth > 0) {
-						numVMs[0]++;
-					}
+						if (remaining_bandwidth > 0) {
+							numVMs[0]++;
+						}
 
-					for (int n = 0; n < problem_.getMaquinas().size(); n++) {
-						CloudCDNSolutionType.GetVMVariables(current, m, h)
-								.setValue(n, numVMs[n]);
+						for (int n = 0; n < problem_.getMaquinas().size(); n++) {
+							CloudCDNSolutionType.GetVMVariables(current, m, h)
+									.setValue(n, numVMs[n]);
+						}
 					}
 				}
 			}
