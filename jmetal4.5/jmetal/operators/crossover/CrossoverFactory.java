@@ -49,6 +49,8 @@ public class CrossoverFactory {
       return new HUXCrossover(parameters);
     else if (name.equalsIgnoreCase("cloudcdn.HUXCrossover"))
         return new jmetal.operators.crossover.cloudcdn.HUXCrossover(parameters);
+    else if (name.equalsIgnoreCase("cloudcdn.SinglePointCrossover"))
+        return new jmetal.operators.crossover.cloudcdn.SinglePointCrossover(parameters);
     else if (name.equalsIgnoreCase("DifferentialEvolutionCrossover"))
       return new DifferentialEvolutionCrossover(parameters);
     else if (name.equalsIgnoreCase("BLXAlphaCrossover"))

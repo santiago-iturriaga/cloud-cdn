@@ -24,16 +24,9 @@ package jmetal.experiments.studies;
 import jmetal.core.Algorithm;
 import jmetal.experiments.Experiment;
 import jmetal.experiments.Settings;
-import jmetal.experiments.settings.AbYSS_Settings;
-import jmetal.experiments.settings.MOCell_Settings;
-import jmetal.experiments.settings.NSGAII_Settings;
-import jmetal.experiments.settings.SPEA2_Settings;
-import jmetal.experiments.settings.gGA_Settings;
-import jmetal.experiments.util.Friedman;
 import jmetal.util.JMException;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,7 +34,7 @@ import java.util.logging.Logger;
  * Example of experiment. In particular four algorithms are compared when
  * solving four constrained problems.
  */
-public class CloudCDNCheapestStudy extends Experiment {
+public class CloudCDNRRCheapestStudy extends Experiment {
 
 	/**
 	 * Configures the algorithms in each independent run
@@ -54,21 +47,21 @@ public class CloudCDNCheapestStudy extends Experiment {
 	public void algorithmSettings(String problemName, int problemIndex,
 			Algorithm[] algorithm) throws ClassNotFoundException {
 		try {
-			Object[] problemParams = { "CloudCDNSolutionType", "test/", 0,
-					"Cheapest", false };
+			Object[] problemParams = { "CloudCDNRRSolutionType", "test/", 0,
+					"RRCheapest", false };
 			algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings(
 					problemName, problemParams).configure();
 		} catch (IllegalArgumentException ex) {
-			Logger.getLogger(CloudCDNCheapestStudy.class.getName()).log(Level.SEVERE,
+			Logger.getLogger(CloudCDNRRCheapestStudy.class.getName()).log(Level.SEVERE,
 					null, ex);
 		} catch (JMException ex) {
-			Logger.getLogger(CloudCDNCheapestStudy.class.getName()).log(Level.SEVERE,
+			Logger.getLogger(CloudCDNRRCheapestStudy.class.getName()).log(Level.SEVERE,
 					null, ex);
 		}
 	}
 
 	public static void main(String[] args) throws JMException, IOException {
-		CloudCDNCheapestStudy exp = new CloudCDNCheapestStudy();
+		CloudCDNRRCheapestStudy exp = new CloudCDNRRCheapestStudy();
 
 		//exp.experimentName_ = "CloudCDNStudy";
 		exp.experimentName_ = exp.getClass().getSimpleName();
@@ -76,8 +69,8 @@ public class CloudCDNCheapestStudy extends Experiment {
 		// exp.algorithmNameList_ = new String[] { "ElitistES" };
 		exp.algorithmNameList_ = new String[] { "gGA" };
 
-		exp.problemList_ = new String[] { "cloudcdn.CloudCDN_SO" };
-		exp.paretoFrontFile_ = new String[] { "CloudCDN_SO.pf" };
+		exp.problemList_ = new String[] { "cloudcdn.CloudCDN_RRSO" };
+		exp.paretoFrontFile_ = new String[] { "CloudCDN_RRSO.pf" };
 
 		exp.indicatorList_ = new String[] {};
 		// exp.indicatorList_ = new String[] { "EPSILON", "SPREAD", "HV" };

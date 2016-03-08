@@ -62,14 +62,19 @@ public class gGA_Settings extends Settings {
 		}
 		// Default experiments.settings
 		populationSize_ = 50;
+		//maxEvaluations_ = 50;
 		//maxEvaluations_ = 250;
-		//maxEvaluations_ = 2500;
-		maxEvaluations_ = 10000;
+		maxEvaluations_ = 1000;
+		//maxEvaluations_ = 5000;
+		//maxEvaluations_ = 10000;
 		//maxEvaluations_ = 25000;
 		
 		//mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+
+		//mutationProbability_ = 1000.0 / problem_.getNumberOfBits();
+		mutationProbability_ = 100.0 / problem_.getNumberOfBits();
+		//mutationProbability_ = 10.0 / problem_.getNumberOfBits();
 		//mutationProbability_ = 1.0 / problem_.getNumberOfBits();
-		mutationProbability_ = 1000.0 / problem_.getNumberOfBits();
 		
 		crossoverProbability_ = 0.9;
 		
@@ -102,9 +107,11 @@ public class gGA_Settings extends Settings {
 		parameters = new HashMap();
 		parameters.put("probability", crossoverProbability_);
 		parameters.put("distributionIndex", crossoverDistributionIndex_);
+		/*crossover = CrossoverFactory.getCrossoverOperator(
+				"cloudcdn.HUXCrossover", parameters);*/
 		crossover = CrossoverFactory.getCrossoverOperator(
-				"cloudcdn.HUXCrossover", parameters);
-
+				"cloudcdn.SinglePointCrossover", parameters);
+		
 		parameters = new HashMap();
 		parameters.put("probability", mutationProbability_);
 		parameters.put("distributionIndex", mutationDistributionIndex_);

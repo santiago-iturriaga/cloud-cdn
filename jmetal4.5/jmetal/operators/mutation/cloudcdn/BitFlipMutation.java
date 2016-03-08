@@ -22,13 +22,10 @@
 package jmetal.operators.mutation.cloudcdn;
 
 import jmetal.core.Solution;
-import jmetal.encodings.solutionType.BinaryRealSolutionType;
-import jmetal.encodings.solutionType.BinarySolutionType;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
+import jmetal.encodings.solutionType.cloudcdn.CloudCDNRRSolutionType;
 import jmetal.encodings.variable.ArrayInt;
-import jmetal.encodings.variable.Binary;
 import jmetal.operators.mutation.Mutation;
-import jmetal.problems.cloudcdn.CloudCDN_SO;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
@@ -47,7 +44,7 @@ public class BitFlipMutation extends Mutation {
 	 * Valid solution types to apply this operator
 	 */
 	private static final List VALID_TYPES = Arrays
-			.asList(CloudCDNSolutionType.class);
+			.asList(CloudCDNSolutionType.class, CloudCDNRRSolutionType.class);
 
 	private Double mutationProbability_ = null;
 
