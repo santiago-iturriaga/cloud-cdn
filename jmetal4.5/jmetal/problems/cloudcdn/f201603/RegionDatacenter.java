@@ -48,17 +48,17 @@ public class RegionDatacenter {
 	}
 
 	public double computeStorageCost(double dataSize) {
-		//TODO: modificar para considerar escala logarítmica
+		//TODO: modificar para considerar escala logaritmica
 		return this.storagePrice * dataSize;
 	}
 
 	public double computeTransferCost(double dataSize) {
-		//TODO: modificar para considerar escala logarítmica
+		//TODO: modificar para considerar escala logaritmica
 		return this.transferPrice * dataSize;
 	}
 
 	public double computeVMCost(int numVM) {
-		//TODO: modificar para considerar escala logarítmica
+		//TODO: modificar para considerar escala logaritmica
 		return this.vmPrice * numVM;
 	}
 }

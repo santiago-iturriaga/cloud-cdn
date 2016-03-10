@@ -1,3 +1,5 @@
 **/*.class
 **/bin
 **/Debug
+/nbproject/private/
+/build/

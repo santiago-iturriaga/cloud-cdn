@@ -1,48 +1,49 @@
 package jmetal.problems.cloudcdn.f201603;
 
 public class Documento {
-	private int docId;
-	private double docSize;
-	private int numContenidos;
-	private int provId;
 
-	public Documento(int docId, double docSize, int numContenidos, int provId) {
-		super();
-		this.docId = docId;
-		this.docSize = docSize;
-		this.setNumContenidos(numContenidos);
-		this.setProvId(provId);
-	}
+    private int docId;
+    private double docSize;
+    private int numContenidos;
+    private int provId;
 
-	public int getDocId() {
-		return docId;
-	}
+    public Documento(int docId, double docSize, int numContenidos, int provId) {
+        super();
+        this.docId = docId;
+        this.docSize = docSize;
+        this.setNumContenidos(numContenidos);
+        this.setProvId(provId);
+    }
 
-	public void setDocId(int docId) {
-		this.docId = docId;
-	}
+    public int getDocId() {
+        return docId;
+    }
 
-	public double getDocSize() {
-		return docSize;
-	}
+    public void setDocId(int docId) {
+        this.docId = docId;
+    }
 
-	public void setDocSize(double docSize) {
-		this.docSize = docSize;
-	}
+    public double getDocSize() {
+        return docSize;
+    }
 
-	int getProvId() {
-		return provId;
-	}
+    public void setDocSize(double docSize) {
+        this.docSize = docSize;
+    }
 
-	void setProvId(int provId) {
-		this.provId = provId;
-	}
+    int getProvId() {
+        return provId;
+    }
 
-	int getNumContenidos() {
-		return numContenidos;
-	}
+    void setProvId(int provId) {
+        this.provId = provId;
+    }
 
-	void setNumContenidos(int numContenidos) {
-		this.numContenidos = numContenidos;
-	}
+    int getNumContenidos() {
+        return numContenidos;
+    }
+
+    void setNumContenidos(int numContenidos) {
+        this.numContenidos = numContenidos;
+    }
 }
