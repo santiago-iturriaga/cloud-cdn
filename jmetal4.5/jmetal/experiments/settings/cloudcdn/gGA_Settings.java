@@ -18,7 +18,6 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package jmetal.experiments.settings.cloudcdn;
 
 import jmetal.core.Algorithm;
@@ -36,98 +35,100 @@ import jmetal.util.JMException;
 
 import java.util.HashMap;
 import java.util.Properties;
+import jmetal.metaheuristics.singleObjective.geneticAlgorithm.ssGA;
 
 /**
  * Settings class of algorithm NSGA-II (real encoding)
  */
 public class gGA_Settings extends Settings {
-	public int populationSize_;
-	public int maxEvaluations_;
-	public double mutationProbability_;
-	public double crossoverProbability_;
-	public double mutationDistributionIndex_;
-	public double crossoverDistributionIndex_;
 
-	/**
-	 * Constructor
-	 */
-	public gGA_Settings(String problem, Object[] problemParams) {
-		super(problem);
+    public int populationSize_;
+    public int maxEvaluations_;
+    public double mutationProbability_;
+    public double crossoverProbability_;
+    public double mutationDistributionIndex_;
+    public double crossoverDistributionIndex_;
 
-		try {
-			problem_ = (new ProblemFactory()).getProblem(problemName_,
-					problemParams);
-		} catch (JMException e) {
-			e.printStackTrace();
-		}
-		// Default experiments.settings
-		populationSize_ = 50;
-		//maxEvaluations_ = 50;
-		//maxEvaluations_ = 250;
-		maxEvaluations_ = 1000;
-		//maxEvaluations_ = 5000;
-		//maxEvaluations_ = 10000;
-		//maxEvaluations_ = 25000;
-		
-		//mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    /**
+     * Constructor
+     */
+    public gGA_Settings(String problem, Object[] problemParams) {
+        super(problem);
 
-		//mutationProbability_ = 1000.0 / problem_.getNumberOfBits();
-		mutationProbability_ = 1.0 / problem_.getNumberOfBits();
-		//mutationProbability_ = 10.0 / problem_.getNumberOfBits();
-		//mutationProbability_ = 1.0 / problem_.getNumberOfBits();
-		
-		crossoverProbability_ = 0.9;
-		
-		mutationDistributionIndex_ = 20.0;
-		crossoverDistributionIndex_ = 20.0;
-	} // NSGAII_Settings
+        try {
+            problem_ = (new ProblemFactory()).getProblem(problemName_,
+                    problemParams);
+        } catch (JMException e) {
+            e.printStackTrace();
+        }
+        // Default experiments.settings
+        populationSize_ = 50;
+        //maxEvaluations_ = 50;
+        //maxEvaluations_ = 250;
+        maxEvaluations_ = 1000;
+        //maxEvaluations_ = 5000;
+        //maxEvaluations_ = 10000;
+        //maxEvaluations_ = 25000;
 
-	/**
-	 * Configure NSGAII with default parameter experiments.settings
-	 * 
-	 * @return A NSGAII algorithm object
-	 * @throws jmetal.util.JMException
-	 */
-	public Algorithm configure() throws JMException {
-		Algorithm algorithm;
-		Selection selection;
-		Crossover crossover;
-		Mutation mutation;
+        //mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+        //mutationProbability_ = 1000.0 / problem_.getNumberOfBits();
+        mutationProbability_ = 1.0 / problem_.getNumberOfBits();
+        //mutationProbability_ = 10.0 / problem_.getNumberOfBits();
+        //mutationProbability_ = 1.0 / problem_.getNumberOfBits();
 
-		HashMap parameters; // Operator parameters
+        crossoverProbability_ = 0.9;
 
-		// Creating the algorithm. There are two choices: NSGAII and its steady-
-		algorithm = new gGA(problem_);
+        mutationDistributionIndex_ = 20.0;
+        crossoverDistributionIndex_ = 20.0;
+    } // NSGAII_Settings
 
-		// Algorithm parameters
-		algorithm.setInputParameter("populationSize", populationSize_);
-		algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+    /**
+     * Configure NSGAII with default parameter experiments.settings
+     *
+     * @return A NSGAII algorithm object
+     * @throws jmetal.util.JMException
+     */
+    public Algorithm configure() throws JMException {
+        Algorithm algorithm;
+        Selection selection;
+        Crossover crossover;
+        Mutation mutation;
 
-		// Mutation and Crossover for Real codification
-		parameters = new HashMap();
-		parameters.put("probability", crossoverProbability_);
-		parameters.put("distributionIndex", crossoverDistributionIndex_);
-		/*crossover = CrossoverFactory.getCrossoverOperator(
+        HashMap parameters; // Operator parameters
+
+        // Creating the algorithm. There are two choices: NSGAII and its steady-
+        //algorithm = new gGA(problem_);
+        algorithm = new ssGA(problem_);
+
+        // Algorithm parameters
+        algorithm.setInputParameter("populationSize", populationSize_);
+        algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+
+        // Mutation and Crossover for Real codification
+        parameters = new HashMap();
+        parameters.put("probability", crossoverProbability_);
+        parameters.put("distributionIndex", crossoverDistributionIndex_);
+        /*crossover = CrossoverFactory.getCrossoverOperator(
 				"cloudcdn.HUXCrossover", parameters);*/
-		crossover = CrossoverFactory.getCrossoverOperator(
-				"cloudcdn.SinglePointCrossover", parameters);
-		
-		parameters = new HashMap();
-		parameters.put("probability", mutationProbability_);
-		parameters.put("distributionIndex", mutationDistributionIndex_);
-		mutation = MutationFactory.getMutationOperator(
-				"cloudcdn.BitFlipMutation", parameters);
+        crossover = CrossoverFactory.getCrossoverOperator(
+                "cloudcdn.SinglePointCrossoverf201603", parameters);
 
-		// Selection Operator
-		parameters = null;
-		selection = SelectionFactory.getSelectionOperator("BinaryTournament2",
-				parameters);
+        parameters = new HashMap();
+        parameters.put("probability", mutationProbability_);
+        parameters.put("distributionIndex", mutationDistributionIndex_);
+        mutation = MutationFactory.getMutationOperator(
+                "cloudcdn.BitFlipMutationf201603", parameters);
 
-		// Add the operators to the algorithm
-		algorithm.addOperator("crossover", crossover);
-		algorithm.addOperator("mutation", mutation);
-		algorithm.addOperator("selection", selection);
+        // Selection Operator
+        parameters = null;
+        selection = SelectionFactory.getSelectionOperator("BinaryTournament2",
+                parameters);
 
-		return algorithm;
-	} // configure
+        // Add the operators to the algorithm
+        algorithm.addOperator("crossover", crossover);
+        algorithm.addOperator("mutation", mutation);
+        algorithm.addOperator("selection", selection);
+
+        return algorithm;
+    } // configure
 }

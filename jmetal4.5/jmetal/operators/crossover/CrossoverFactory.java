@@ -18,7 +18,6 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package jmetal.operators.crossover;
 
 import jmetal.util.Configuration;
@@ -30,35 +29,38 @@ import java.util.HashMap;
  * Class implementing a factory for crossover operators.
  */
 public class CrossoverFactory {
-    
-  /**
-   * Gets a crossover operator through its name.
-   * @param name Name of the operator
-   * @return The operator
-   */
-  public static Crossover getCrossoverOperator(String name, HashMap parameters) throws JMException {
-    if (name.equalsIgnoreCase("SBXCrossover"))
-      return new SBXCrossover(parameters);
-    else if (name.equalsIgnoreCase("SinglePointCrossover"))
-        return new SinglePointCrossover(parameters);
-    else if (name.equalsIgnoreCase("PMXCrossover"))
-      return new PMXCrossover(parameters);
-    else if (name.equalsIgnoreCase("TwoPointsCrossover"))
-      return new TwoPointsCrossover(parameters);
-    else if (name.equalsIgnoreCase("HUXCrossover"))
-      return new HUXCrossover(parameters);
-    else if (name.equalsIgnoreCase("cloudcdn.HUXCrossover"))
-        return new jmetal.operators.crossover.cloudcdn.HUXCrossover(parameters);
-    else if (name.equalsIgnoreCase("cloudcdn.SinglePointCrossover"))
-        return new jmetal.operators.crossover.cloudcdn.SinglePointCrossover(parameters);
-    else if (name.equalsIgnoreCase("DifferentialEvolutionCrossover"))
-      return new DifferentialEvolutionCrossover(parameters);
-    else if (name.equalsIgnoreCase("BLXAlphaCrossover"))
-      return new BLXAlphaCrossover(parameters);
-    else {
-      Configuration.logger_.severe("CrossoverFactory.getCrossoverOperator. " +
-          "Operator '" + name + "' not found ");
-      throw new JMException("Exception in " + name + ".getCrossoverOperator()") ;
-    } // else        
-  } // getCrossoverOperator
+
+    /**
+     * Gets a crossover operator through its name.
+     *
+     * @param name Name of the operator
+     * @return The operator
+     */
+    public static Crossover getCrossoverOperator(String name, HashMap parameters) throws JMException {
+        if (name.equalsIgnoreCase("SBXCrossover")) {
+            return new SBXCrossover(parameters);
+        } else if (name.equalsIgnoreCase("SinglePointCrossover")) {
+            return new SinglePointCrossover(parameters);
+        } else if (name.equalsIgnoreCase("PMXCrossover")) {
+            return new PMXCrossover(parameters);
+        } else if (name.equalsIgnoreCase("TwoPointsCrossover")) {
+            return new TwoPointsCrossover(parameters);
+        } else if (name.equalsIgnoreCase("HUXCrossover")) {
+            return new HUXCrossover(parameters);
+        } else if (name.equalsIgnoreCase("cloudcdn.HUXCrossover")) {
+            return new jmetal.operators.crossover.cloudcdn.HUXCrossover(parameters);
+        } else if (name.equalsIgnoreCase("cloudcdn.SinglePointCrossover")) {
+            return new jmetal.operators.crossover.cloudcdn.SinglePointCrossover(parameters);
+        } else if (name.equalsIgnoreCase("cloudcdn.SinglePointCrossoverf201603")) {
+            return new jmetal.operators.crossover.cloudcdn.SinglePointCrossoverf201603(parameters);
+        } else if (name.equalsIgnoreCase("DifferentialEvolutionCrossover")) {
+            return new DifferentialEvolutionCrossover(parameters);
+        } else if (name.equalsIgnoreCase("BLXAlphaCrossover")) {
+            return new BLXAlphaCrossover(parameters);
+        } else {
+            Configuration.logger_.severe("CrossoverFactory.getCrossoverOperator. "
+                    + "Operator '" + name + "' not found ");
+            throw new JMException("Exception in " + name + ".getCrossoverOperator()");
+        } // else        
+    } // getCrossoverOperator
 } // CrossoverFactory

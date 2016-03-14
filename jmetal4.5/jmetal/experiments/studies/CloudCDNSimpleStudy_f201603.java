@@ -18,7 +18,6 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package jmetal.experiments.studies;
 
 import jmetal.core.Algorithm;
@@ -43,84 +42,82 @@ import java.util.logging.Logger;
  */
 public class CloudCDNSimpleStudy_f201603 extends Experiment {
 
-	/**
-	 * Configures the algorithms in each independent run
-	 * 
-	 * @param problemName
-	 *            The problem to solve
-	 * @param problemIndex
-	 * @throws ClassNotFoundException
-	 */
-	public void algorithmSettings(String problemName, int problemIndex,
-			Algorithm[] algorithm) throws ClassNotFoundException {
-		try {
-			Object[] problemParams = { "CloudCDNSolutionf201603Type", "test/", 0,
-					"SimpleRR", false };
-			algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings(
-					problemName, problemParams).configure();
-		} catch (IllegalArgumentException ex) {
-			Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
-					Level.SEVERE, null, ex);
-		} catch (JMException ex) {
-			Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
-					Level.SEVERE, null, ex);
-		}
-	}
+    /**
+     * Configures the algorithms in each independent run
+     *
+     * @param problemName The problem to solve
+     * @param problemIndex
+     * @throws ClassNotFoundException
+     */
+    public void algorithmSettings(String problemName, int problemIndex,
+            Algorithm[] algorithm) throws ClassNotFoundException {
+        try {
+            Object[] problemParams = {"CloudCDNSolutionf201603Type", "test/", 0,
+                "SimpleRR"};
+            algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings(
+                    problemName, problemParams).configure();
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        } catch (JMException ex) {
+            Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
 
-	public static void main(String[] args) throws JMException, IOException {
-		CloudCDNSimpleStudy_f201603 exp = new CloudCDNSimpleStudy_f201603();
+    public static void main(String[] args) throws JMException, IOException {
+        CloudCDNSimpleStudy_f201603 exp = new CloudCDNSimpleStudy_f201603();
 
-		// exp.experimentName_ = "CloudCDNStudy";
-		exp.experimentName_ = exp.getClass().getSimpleName();
+        // exp.experimentName_ = "CloudCDNStudy";
+        exp.experimentName_ = exp.getClass().getSimpleName();
 
-		// exp.algorithmNameList_ = new String[] { "ElitistES" };
-		exp.algorithmNameList_ = new String[] { "gGA" };
+        // exp.algorithmNameList_ = new String[] { "ElitistES" };
+        //exp.algorithmNameList_ = new String[]{"gGA"};
+        exp.algorithmNameList_ = new String[]{"ssGA"};
 
-		exp.problemList_ = new String[] { "cloudcdn.CloudCDN_MP" };
-		exp.paretoFrontFile_ = new String[] { "CloudCDN_MP.pf" };
+        exp.problemList_ = new String[]{"cloudcdn.f201603.CloudCDN_MP"};
+        exp.paretoFrontFile_ = new String[]{"CloudCDN_MP.pf"};
 
-		exp.indicatorList_ = new String[] {};
-		// exp.indicatorList_ = new String[] { "EPSILON", "SPREAD", "HV" };
+        exp.indicatorList_ = new String[]{};
+        // exp.indicatorList_ = new String[] { "EPSILON", "SPREAD", "HV" };
 
-		int numberOfAlgorithms = exp.algorithmNameList_.length;
+        int numberOfAlgorithms = exp.algorithmNameList_.length;
 
-		exp.experimentBaseDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/"
-				+ exp.experimentName_;
-		exp.paretoFrontDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/data/paretoFronts";
-		exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
-		exp.independentRuns_ = 1;
+        exp.experimentBaseDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/"
+                + exp.experimentName_;
+        exp.paretoFrontDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/data/paretoFronts";
+        exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
+        exp.independentRuns_ = 1;
 
-		exp.initExperiment();
+        exp.initExperiment();
 
-		// Run the experiments
-		//int numberOfThreads;
-		exp.runExperiment(1);
-		// exp.runExperiment(numberOfThreads = 4);
+        // Run the experiments
+        //int numberOfThreads;
+        exp.runExperiment(1);
+        // exp.runExperiment(numberOfThreads = 4);
 
-		exp.generateQualityIndicators();
+        exp.generateQualityIndicators();
 
-		// Applying Friedman test
-		/*
+        // Applying Friedman test
+        /*
 		 * Friedman test = new Friedman(exp); test.executeTest("EPSILON");
 		 * test.executeTest("HV"); test.executeTest("SPREAD");
-		 */
+         */
+        // Generate latex tables
+        exp.generateLatexTables();
 
-		// Generate latex tables
-		exp.generateLatexTables();
-
-		// Configure the R scripts to be generated
+        // Configure the R scripts to be generated
 //		int rows;
 //		int columns;
 //		String prefix;
 //		String[] problems;
 //		boolean notch;
-
-		// Configuring scripts for ZDT
-		/*
+        // Configuring scripts for ZDT
+        /*
 		 * rows = 2; columns = 2; prefix = new String("Constrained"); problems =
 		 * new String[] { "CloudCDN_SO" }; exp.generateRBoxplotScripts(rows,
 		 * columns, problems, prefix, notch = false, exp);
 		 * exp.generateRWilcoxonScripts(problems, prefix, exp);
-		 */
-	}
+         */
+    }
 }

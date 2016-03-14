@@ -18,7 +18,6 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package jmetal.operators.mutation;
 
 import jmetal.util.Configuration;
@@ -30,31 +29,33 @@ import java.util.HashMap;
  * Class implementing a factory for Mutation objects.
  */
 public class MutationFactory {
-  
-  /**
-   * Gets a crossover operator through its name.
-   * @param name of the operator
-   * @return the operator
-   * @throws JMException 
-   */
-  public static Mutation getMutationOperator(String name, HashMap parameters) throws JMException{
- 
-    if (name.equalsIgnoreCase("PolynomialMutation"))
-      return new PolynomialMutation(parameters);
-    else if (name.equalsIgnoreCase("BitFlipMutation"))
-      return new BitFlipMutation(parameters);
-    else if (name.equalsIgnoreCase("NonUniformMutation"))
-      return new NonUniformMutation(parameters);
-    else if (name.equalsIgnoreCase("SwapMutation"))
-      return new SwapMutation(parameters);
-    else if (name.equalsIgnoreCase("cloudcdn.BitFlipMutation"))
-        return new jmetal.operators.mutation.cloudcdn.BitFlipMutation(parameters);
-    else
-    {
-      Configuration.logger_.severe("Operator '" + name + "' not found ");
-      Class cls = java.lang.String.class;
-      String name2 = cls.getName() ;    
-      throw new JMException("Exception in " + name2 + ".getMutationOperator()") ;
-    }        
-  } // getMutationOperator
+
+    /**
+     * Gets a crossover operator through its name.
+     *
+     * @param name of the operator
+     * @return the operator
+     * @throws JMException
+     */
+    public static Mutation getMutationOperator(String name, HashMap parameters) throws JMException {
+
+        if (name.equalsIgnoreCase("PolynomialMutation")) {
+            return new PolynomialMutation(parameters);
+        } else if (name.equalsIgnoreCase("BitFlipMutation")) {
+            return new BitFlipMutation(parameters);
+        } else if (name.equalsIgnoreCase("NonUniformMutation")) {
+            return new NonUniformMutation(parameters);
+        } else if (name.equalsIgnoreCase("SwapMutation")) {
+            return new SwapMutation(parameters);
+        } else if (name.equalsIgnoreCase("cloudcdn.BitFlipMutation")) {
+            return new jmetal.operators.mutation.cloudcdn.BitFlipMutation(parameters);
+        } else if (name.equalsIgnoreCase("cloudcdn.BitFlipMutationf201603")) {
+            return new jmetal.operators.mutation.cloudcdn.BitFlipMutationf201603(parameters);
+        } else {
+            Configuration.logger_.severe("Operator '" + name + "' not found ");
+            Class cls = java.lang.String.class;
+            String name2 = cls.getName();
+            throw new JMException("Exception in " + name2 + ".getMutationOperator()");
+        }
+    } // getMutationOperator
 } // MutationFactory

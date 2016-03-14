@@ -9,11 +9,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNRRSolutionType;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionType;
+import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionf201603Type;
+import jmetal.experiments.studies.CloudCDNSimpleStudy_f201603;
 import jmetal.problems.cloudcdn.f201603.Documento;
 import jmetal.problems.cloudcdn.f201603.QoS;
 import jmetal.problems.cloudcdn.f201603.Region;
@@ -33,15 +37,17 @@ public class CloudCDN_MP extends Problem {
 
     static final public long serialVersionUID = -6970983090454693518L;
     static final public Boolean DEBUG = true;
-    static final public double DOC_SIZE_AMP = 1.0; // Amplifies the document size
+    static final public double DOC_SIZE_AMP = 10.0; // Amplifies the document size
+    static final public Integer MAX_DOCUMENTS = 100; // Limita la cantidad de contenidos sin importar la instancia
 
     static final public Integer SECONDS_PER_TIMESTEP = 1;
     static final public Double CONTENT_SIZE = 1.3; // KS = 1.3 MB
     static final public Integer MAX_PROVIDER_TRANSFER = 3; // PN = 3 contents uploaded per time step
     static final public Integer STORAGE_RENTING_TIME = 3600 * 24 * 30; // Storage costs are considered monthly
     static final public Integer VM_RENTING_TIME = 3600 / SECONDS_PER_TIMESTEP; // CT = VMs are rented for 1 hour
-    static final public Integer VM_PROCESSING = 100; // CR = VMs may serve up to 100 requests simultaneously
-    static final public Integer TIME_HORIZON = 3600 * 24; // 1 day
+    static final public Integer VM_PROCESSING = 50; // CR = VMs may serve up to VM_PROCESSING requests simultaneously
+    static final public Integer TIME_HORIZON = 3600 * 1; // 1 hous
+    //static final public Integer TIME_HORIZON = 3600 * 24; // 1 day
 
     static final public Integer CANTIDAD_MAXIMA_DE_DOCUMENTOS = 30000;
     static final public Integer CANTIDAD_MAXIMA_DE_REGIONES = 10;
@@ -54,24 +60,24 @@ public class CloudCDN_MP extends Problem {
 
     static final public String NOMBRE_ARCHIVO_DE_DOCUMENTOS = "docs.0";
     static final public String NOMBRE_ARCHIVO_DE_REGIONES = "reg.0";
-    static final public String NOMBRE_ARCHIVO_DE_DATACENTERS = "dc.0";
+    static final public String NOMBRE_ARCHIVO_DE_DATACENTERS = "dc.1";
     static final public String NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS = "reg_users.0";
     static final public String NOMBRE_ARCHIVO_DE_TRAFICO = "workload.0";
     static final public String NOMBRE_ARCHIVO_DE_QOS = "qos.0";
 
     protected Integer num_provedores_;
 
-    protected ArrayList<Documento> documentos_ = new ArrayList<Documento>(
+    protected ArrayList<Documento> documentos_ = new ArrayList<>(
             CANTIDAD_MAXIMA_DE_DOCUMENTOS);
-    protected ArrayList<Region> regiones_ = new ArrayList<Region>(
+    protected ArrayList<Region> regiones_ = new ArrayList<>(
             CANTIDAD_MAXIMA_DE_REGIONES);
-    protected ArrayList<RegionDatacenter> regionesDatacenters_ = new ArrayList<RegionDatacenter>(
+    protected ArrayList<RegionDatacenter> regionesDatacenters_ = new ArrayList<>(
             CANTIDAD_MAXIMA_DE_REGIONES_DATACENTERS);
-    protected ArrayList<RegionUsuario> regionesUsuarios_ = new ArrayList<RegionUsuario>(
+    protected ArrayList<RegionUsuario> regionesUsuarios_ = new ArrayList<>(
             CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
-    protected ArrayList<Trafico> trafico_ = new ArrayList<Trafico>(
+    protected ArrayList<Trafico> trafico_ = new ArrayList<>(
             CANTIDAD_MAXIMA_DE_TRAFICO);
-    protected ArrayList<ArrayList<QoS>> qoS_ = new ArrayList<ArrayList<QoS>>(
+    protected ArrayList<ArrayList<QoS>> qoS_ = new ArrayList<>(
             CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
 
     protected int totalSimTimeSecs;
@@ -79,14 +85,17 @@ public class CloudCDN_MP extends Problem {
     protected double totalSimTimeMonths;
     protected double totalSimTimeDays;
 
+    protected int MAX_TRAFFIC_CONGESTION = 0;
+    
     protected double[] RILowerLimits_;
     protected double[] RIUpperLimits_;
 
-    public CloudCDN_MP(String solutionType, String pathName, int instanceNumber) {
+    public CloudCDN_MP(String solutionType, String pathName, int instanceNumber, String routingAlgorithm) throws JMException {
         try {
             readProblem(pathName, instanceNumber);
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
+            throw new JMException(e.getMessage());
         }
 
         regiones_.trimToSize();
@@ -95,14 +104,16 @@ public class CloudCDN_MP extends Problem {
         trafico_.trimToSize();
         qoS_.trimToSize();
 
-        try {
-            if (solutionType.compareTo("CloudCDNSolutionf201603Type") == 0) {
-                solutionType_ = new CloudCDNSolutionType(this);
-            } else {
-                throw new JMException("Solution type invalid");
+        if (solutionType.compareTo("CloudCDNSolutionf201603Type") == 0) {
+            try {
+                solutionType_ = new CloudCDNSolutionf201603Type(this);
+            } catch (Exception e) {
+                Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
+                throw new JMException(e.getMessage());
             }
-        } catch (JMException e) {
-            e.printStackTrace();
+
+        } else {
+            throw new JMException("Solution type invalid");
         }
 
         totalSimTimeSecs = getTrafico().get(getTrafico().size() - 1).reqTime;
@@ -126,10 +137,12 @@ public class CloudCDN_MP extends Problem {
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
             RILowerLimits_[i] = 0.0;
         }
+        
+        int upperVMLimit = (int) Math.ceil(MAX_TRAFFIC_CONGESTION / VM_PROCESSING);
 
         RIUpperLimits_ = new double[getRegionesDatacenters().size()];
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
-            RIUpperLimits_[i] = 10.0;
+            RIUpperLimits_[i] = upperVMLimit; // TODO arreglar el tope máximo de VM
         }
 
         //if (routingAlgorithm.compareTo("RRCheapest") == 0) {
@@ -192,7 +205,7 @@ public class CloudCDN_MP extends Problem {
             }
 
             // ** CARGANDO DOCUMENTOS **//
-            num_provedores_ = 1; // Temporalmente fijado en 1
+            num_provedores_ = 1; // TODO Incluir ID de provider en la instancia. Temporalmente fijado en 1
 
             Collection<String> lineasArchivo = null;
             Path path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_DOCUMENTOS);
@@ -205,11 +218,15 @@ public class CloudCDN_MP extends Problem {
                                 .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1])
                         / (1024 * 1024);
 
-                int numContenidos = (int) Math.ceil(docSizeMB / CONTENT_SIZE);
+                int numContenidos;
+                numContenidos = (int) Math.ceil(docSizeMB / CONTENT_SIZE);
 
-                documentos_.add(new Documento(Integer.valueOf((linea
-                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
-                        docSizeMB, numContenidos, 1)); // Prov. ID es siempre 1
+                int docId;
+                docId = Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]);
+
+                if (docId < MAX_DOCUMENTS) {
+                    documentos_.add(new Documento(docId, docSizeMB, numContenidos, 1)); // Prov. ID es siempre 1
+                }
             }
 
             if (DEBUG) {
@@ -344,23 +361,22 @@ public class CloudCDN_MP extends Problem {
                 int docId;
 
                 docId = Integer.valueOf((linea
-                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]);
+                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]) % MAX_DOCUMENTS;
 
                 /*
-                // Ignoro el requested doc size y asumo que siempre se pide todo el doc.
+                // TODO Ignoro el requested doc size y asumo que siempre se pide el doc completo.
                 
                 double docSizeGB;
                 docSizeGB = DOC_SIZE_AMP
                         * Double.valueOf((linea
                                 .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])
                         / (1024 * 1024 * 1024);
-                */
-                
+                 */
                 int reqTime = (Integer.valueOf((linea
                         .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0])) % TIME_HORIZON;
 
-                for (int i=0; (i<getDocumentos().get(docId).getNumContenidos()) && (reqTime+i<TIME_HORIZON); i++) {
-                    trafficHistogram[reqTime+i]++;
+                for (int i = 0; (i < getDocumentos().get(docId).getNumContenidos()) && (reqTime + i < TIME_HORIZON); i++) {
+                    trafficHistogram[reqTime + i]++;
                 }
 
                 aux = new Trafico(
@@ -375,13 +391,12 @@ public class CloudCDN_MP extends Problem {
 
             trafico_.sort(new TraficoComparator());
 
-            int maxCongestion = 0;
-            for (int i=0; i<TIME_HORIZON; i++) {
-                if (maxCongestion < trafficHistogram[i]) {
-                    maxCongestion = trafficHistogram[i];
+            for (int i = 0; i < TIME_HORIZON; i++) {
+                if (MAX_TRAFFIC_CONGESTION < trafficHistogram[i]) {
+                    MAX_TRAFFIC_CONGESTION = trafficHistogram[i];
                 }
             }
-            
+
             if (DEBUG) {
                 System.out.println("IMPRIMIENDO TRAFICO (top 10): ");
                 for (int j = 0; j < trafico_.size() && j < 10; j++) {
@@ -392,9 +407,7 @@ public class CloudCDN_MP extends Problem {
                 }
             }
         } catch (Exception e) {
-            System.err.println("readProblem(): error when reading data file "
-                    + e);
-            e.printStackTrace();
+            Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
             System.exit(1);
         }
     }
@@ -426,14 +439,14 @@ public class CloudCDN_MP extends Problem {
             return lineas;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
         } finally {
-            try {
-                if (null != fr) {
+            if (fr != null) {
+                try {
                     fr.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (Exception e2) {
-                e2.printStackTrace();
             }
         }
         return lineas;

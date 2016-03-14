@@ -8,50 +8,50 @@ import jmetal.encodings.variable.ArrayInt;
 import jmetal.problems.cloudcdn.CloudCDN_SO;
 
 public class CloudCDNSolutionType extends SolutionType {
-	CloudCDN_SO customProblem_;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param problem
-	 *            Problem to solve
-	 */
-	public CloudCDNSolutionType(Problem problem) {
-		super(problem);
+    CloudCDN_SO customProblem_;
 
-		customProblem_ = (CloudCDN_SO) problem;
-	} // Constructor
+    /**
+     * Constructor
+     *
+     * @param problem Problem to solve
+     */
+    public CloudCDNSolutionType(Problem problem) {
+        super(problem);
 
-	public int getVMVarIndex(int dc, int hour) {
-		return getVMVarIndex(customProblem_, dc, hour);
-	}
+        customProblem_ = (CloudCDN_SO) problem;
+    } // Constructor
 
-	public static int getVMVarIndex(CloudCDN_SO customProblem, int dc, int hour) {
-		return customProblem.getRegionesDatacenters().size() + dc * 24 + hour;
-	}
+    public int getVMVarIndex(int dc, int hour) {
+        return getVMVarIndex(customProblem_, dc, hour);
+    }
 
-	/**
-	 * Creates the variables of the solution
-	 */
-	public Variable[] createVariables() {
-		if (problem_.getClass().equals(CloudCDN_SO.class)) {
-			Variable[] variables = new Variable[problem_.getNumberOfVariables()];
+    public static int getVMVarIndex(CloudCDN_SO customProblem, int dc, int hour) {
+        return customProblem.getRegionesDatacenters().size() + dc * 24 + hour;
+    }
 
-			for (int var = 0; var < customProblem_.getRegionesDatacenters()
-					.size(); var++) {
-				variables[var] = new ArrayInt(customProblem_.getDocumentos()
-						.size(),
-						customProblem_.getNumberOfContentsLowerLimits(),
-						customProblem_.getNumberOfContentsUpperLimits());
-			}
+    /**
+     * Creates the variables of the solution
+     */
+    public Variable[] createVariables() {
+        if (problem_.getClass().equals(CloudCDN_SO.class)) {
+            Variable[] variables = new Variable[problem_.getNumberOfVariables()];
 
-			for (int var_dc = 0; var_dc < customProblem_
-					.getRegionesDatacenters().size(); var_dc++) {
-				for (int var_hr = 0; var_hr < 24; var_hr++) {
-					variables[getVMVarIndex(var_dc, var_hr)] = new ArrayInt(customProblem_.getMaquinas()
-							.size(),
-							customProblem_.getNumberOfVMTypesLowerLimits(),
-							customProblem_.getNumberOfVMTypesUpperLimits());
+            for (int var = 0; var < customProblem_.getRegionesDatacenters()
+                    .size(); var++) {
+                variables[var] = new ArrayInt(customProblem_.getDocumentos()
+                        .size(),
+                        customProblem_.getNumberOfContentsLowerLimits(),
+                        customProblem_.getNumberOfContentsUpperLimits());
+            }
+
+            for (int var_dc = 0; var_dc < customProblem_
+                    .getRegionesDatacenters().size(); var_dc++) {
+                for (int var_hr = 0; var_hr < 24; var_hr++) {
+                    variables[getVMVarIndex(var_dc, var_hr)] = new ArrayInt(customProblem_.getMaquinas()
+                            .size(),
+                            customProblem_.getNumberOfVMTypesLowerLimits(),
+                            customProblem_.getNumberOfVMTypesUpperLimits());
 
 //					double[] vmTypesUpperLimits_ = new double[customProblem_
 //							.getMaquinas().size()];
@@ -65,24 +65,24 @@ public class CloudCDNSolutionType extends SolutionType {
 //							customProblem_.getNumberOfVMTypesLowerLimits(),
 //							customProblem_.getNumberOfVMTypesUpperLimits(),
 //							vmTypesUpperLimits_);
-				}
-			}
+                }
+            }
 
-			return variables;
-		} else {
-			System.out
-					.println("[ERROR] Invalid problem type (not CloudCDN_SO problem). Skipping variable initialization.");
-			return null;
-		}
-	} // createVariables
+            return variables;
+        } else {
+            System.out
+                    .println("[ERROR] Invalid problem type (not CloudCDN_SO problem). Skipping variable initialization.");
+            return null;
+        }
+    } // createVariables
 
-	public static ArrayInt GetDocumentVariables(Solution solution, int dc) {
-		return (ArrayInt) solution.getDecisionVariables()[dc];
-	}
+    public static ArrayInt GetDocumentVariables(Solution solution, int dc) {
+        return (ArrayInt) solution.getDecisionVariables()[dc];
+    }
 
-	public static ArrayInt GetVMVariables(Solution solution, int dc, int hour) {
-		CloudCDN_SO customProblem = (CloudCDN_SO) solution.getProblem();
-		return (ArrayInt) solution.getDecisionVariables()[getVMVarIndex(
-				customProblem, dc, hour)];
-	}
+    public static ArrayInt GetVMVariables(Solution solution, int dc, int hour) {
+        CloudCDN_SO customProblem = (CloudCDN_SO) solution.getProblem();
+        return (ArrayInt) solution.getDecisionVariables()[getVMVarIndex(
+                customProblem, dc, hour)];
+    }
 }

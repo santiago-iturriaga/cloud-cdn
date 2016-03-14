@@ -1,11 +1,14 @@
 package jmetal.encodings.solutionType.cloudcdn;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.SolutionType;
 import jmetal.core.Variable;
 import jmetal.encodings.variable.ArrayInt;
 import jmetal.encodings.variable.Binary;
+import jmetal.experiments.studies.CloudCDNSimpleStudy_f201603;
 import jmetal.problems.cloudcdn.f201603.CloudCDN_MP;
 import jmetal.util.JMException;
 
@@ -37,7 +40,8 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
 
             return variables;
         } else {
-            System.out.println("[ERROR] Invalid problem type (not CloudCDN_SO problem). Skipping variable initialization.");
+            Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
+                    Level.SEVERE, "Invalid problem type (not CloudCDN_SO problem). Skipping variable initialization.");
             return null;
         }
     } // createVariables
