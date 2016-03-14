@@ -18,14 +18,9 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 
 import jmetal.core.*;
-import jmetal.experiments.greedy.CloudCDNSimpleRR_RandGreedy;
-import jmetal.experiments.greedy.CloudCDNSimpleRR_VMCostGreedy;
-import jmetal.problems.cloudcdn.CloudCDN_SO;
-import jmetal.problems.cloudcdn.CloudCDN_base;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
 
@@ -36,138 +31,112 @@ import java.util.Comparator;
  */
 public class gGA extends Algorithm {
 
-	/**
-	 *
-	 * Constructor Create a new GGA instance.
-	 * 
-	 * @param problem
-	 *            Problem to solve.
-	 */
-	public gGA(Problem problem) {
-		super(problem);
-	} // GGA
+    /**
+     *
+     * Constructor Create a new GGA instance.
+     *
+     * @param problem Problem to solve.
+     */
+    public gGA(Problem problem) {
+        super(problem);
+    } // GGA
 
-	/**
-	 * Execute the GGA algorithm
-	 * 
-	 * @throws JMException
-	 */
-	public SolutionSet execute() throws JMException, ClassNotFoundException {
-		int populationSize;
-		int maxEvaluations;
-		int evaluations;
+    /**
+     * Execute the GGA algorithm
+     *
+     * @throws JMException
+     */
+    public SolutionSet execute() throws JMException, ClassNotFoundException {
+        int populationSize;
+        int maxEvaluations;
+        int evaluations;
 
-		SolutionSet population;
-		SolutionSet offspringPopulation;
+        SolutionSet population;
+        SolutionSet offspringPopulation;
 
-		Operator mutationOperator;
-		Operator crossoverOperator;
-		Operator selectionOperator;
+        Operator mutationOperator;
+        Operator crossoverOperator;
+        Operator selectionOperator;
 
-		Comparator comparator;
-		// comparator = new ObjectiveComparator(0); // Single objective
-		// comparator
-		comparator = new jmetal.util.comparators.cloudcdn.OverallConstraintViolationComparator(
-				0); // Single objective comparator
+        Comparator comparator;
+        comparator = new ObjectiveComparator(0); // Single objective comparator
 
-		// Read the params
-		populationSize = ((Integer) this.getInputParameter("populationSize"))
-				.intValue();
-		maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations"))
-				.intValue();
+        // Read the params
+        populationSize = ((Integer) this.getInputParameter("populationSize")).intValue();
+        maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
 
-		// Initialize the variables
-		population = new SolutionSet(populationSize);
-		offspringPopulation = new SolutionSet(populationSize);
+        // Initialize the variables
+        population = new SolutionSet(populationSize);
+        offspringPopulation = new SolutionSet(populationSize);
 
-		evaluations = 0;
+        evaluations = 0;
 
-		// Read the operators
-		mutationOperator = this.operators_.get("mutation");
-		crossoverOperator = this.operators_.get("crossover");
-		selectionOperator = this.operators_.get("selection");
+        // Read the operators
+        mutationOperator = this.operators_.get("mutation");
+        crossoverOperator = this.operators_.get("crossover");
+        selectionOperator = this.operators_.get("selection");
 
-		// Create the initial population
-		Solution newIndividual;
-		for (int i = 0; i < populationSize; i++) {
-			if (i == 0) {
-				newIndividual = (new CloudCDNSimpleRR_VMCostGreedy())
-						.BuildSolution(problem_);
-			} else if (i < 10) {
-				newIndividual = (new CloudCDNSimpleRR_RandGreedy())
-						.BuildSolution(problem_);
-			} else {
-				newIndividual = new Solution(problem_);
-			}
-			problem_.evaluate(newIndividual);
+        // Create the initial population
+        Solution newIndividual;
+        for (int i = 0; i < populationSize; i++) {
+            newIndividual = new Solution(problem_);
+            problem_.evaluate(newIndividual);
+            evaluations++;
+            population.add(newIndividual);
+        } //for       
 
-			System.out.println(">> Init " + i + " => "
-					+ newIndividual.getObjective(0) + " [Penalty: "
-					+ newIndividual.getOverallConstraintViolation() + "]");
+        // Sort population
+        population.sort(comparator);
+        while (evaluations < maxEvaluations) {
+            if ((evaluations % 10) == 0) {
+                System.out.println(evaluations + ": " + population.get(0).getObjective(0));
+            } //
 
-			evaluations++;
-			population.add(newIndividual);
-		} // for
+            // Copy the best two individuals to the offspring population
+            offspringPopulation.add(new Solution(population.get(0)));
+            offspringPopulation.add(new Solution(population.get(1)));
 
-		// Sort population
-		population.sort(comparator);
-		while (evaluations < maxEvaluations) {
-			// if ((evaluations % 10) == 0) {
-			System.out.println(">> #Eval " + evaluations + " best => "
-					+ population.get(0).getObjective(0) + " [Penalty: "
-					+ population.get(0).getOverallConstraintViolation() + "]");
-			// }
+            // Reproductive cycle
+            for (int i = 0; i < (populationSize / 2 - 1); i++) {
+                // Selection
+                Solution[] parents = new Solution[2];
 
-			// Copy the best two individuals to the offspring population
-			offspringPopulation.add(new Solution(population.get(0)));
-			offspringPopulation.add(new Solution(population.get(1)));
+                parents[0] = (Solution) selectionOperator.execute(population);
+                parents[1] = (Solution) selectionOperator.execute(population);
 
-			// Reproductive cycle
-			for (int i = 0; i < (populationSize / 2 - 1); i++) {
-				// Selection
-				Solution[] parents = new Solution[2];
+                // Crossover
+                Solution[] offspring = (Solution[]) crossoverOperator.execute(parents);
 
-				parents[0] = (Solution) selectionOperator.execute(population);
-				parents[1] = (Solution) selectionOperator.execute(population);
+                // Mutation
+                mutationOperator.execute(offspring[0]);
+                mutationOperator.execute(offspring[1]);
 
-				// Crossover
-				Solution[] offspring = (Solution[]) crossoverOperator
-						.execute(parents);
+                // Evaluation of the new individual
+                problem_.evaluate(offspring[0]);
+                problem_.evaluate(offspring[1]);
 
-				// Mutation
-				mutationOperator.execute(offspring[0]);
-				mutationOperator.execute(offspring[1]);
+                evaluations += 2;
 
-				// Evaluation of the new individual
-				problem_.evaluate(offspring[0]);
-				problem_.evaluate(offspring[1]);
+                // Replacement: the two new individuals are inserted in the offspring
+                //                population
+                offspringPopulation.add(offspring[0]);
+                offspringPopulation.add(offspring[1]);
+            } // for
 
-				evaluations += 2;
+            // The offspring population becomes the new current population
+            population.clear();
+            for (int i = 0; i < populationSize; i++) {
+                population.add(offspringPopulation.get(i));
+            }
+            offspringPopulation.clear();
+            population.sort(comparator);
+        } // while
 
-				// Replacement: the two new individuals are inserted in the
-				// offspring
-				// population
-				offspringPopulation.add(offspring[0]);
-				offspringPopulation.add(offspring[1]);
-			} // for
+        // Return a population with the best individual
+        SolutionSet resultPopulation = new SolutionSet(1);
+        resultPopulation.add(population.get(0));
 
-			// The offspring population becomes the new current population
-			population.clear();
-			for (int i = 0; i < populationSize; i++) {
-				population.add(offspringPopulation.get(i));
-			}
-			offspringPopulation.clear();
-			population.sort(comparator);
-		} // while
-
-		// Return a population with the best individual
-		SolutionSet resultPopulation = new SolutionSet(2);
-		Solution bestTraining = new Solution(population.get(0));
-		((CloudCDN_base) problem_).evaluateFinalSolution(population.get(0));
-		resultPopulation.add(population.get(0));
-		resultPopulation.add(bestTraining);
-
-		System.out.println("Evaluations: " + evaluations);
-		return resultPopulation;
-	} // execute
+        System.out.println("Evaluations: " + evaluations);
+        return resultPopulation;
+    } // execute
 } // gGA

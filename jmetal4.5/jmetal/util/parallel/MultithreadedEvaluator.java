@@ -117,7 +117,6 @@ public class MultithreadedEvaluator implements IParallelEvaluator {
     try {
       future = executor_.invokeAll(taskList_);
     } catch (InterruptedException e1) {
-      // TODO Auto-generated catch block
       e1.printStackTrace();
     }
     List<Solution> solutionList = new Vector<Solution>() ;
@@ -128,10 +127,8 @@ public class MultithreadedEvaluator implements IParallelEvaluator {
         solution = result.get();
         solutionList.add(solution) ;
       } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       } catch (ExecutionException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }

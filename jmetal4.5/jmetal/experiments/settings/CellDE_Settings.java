@@ -57,7 +57,6 @@ public class CellDE_Settings extends Settings{
     try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
     }      
 

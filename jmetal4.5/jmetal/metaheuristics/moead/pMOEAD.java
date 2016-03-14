@@ -150,10 +150,8 @@ public class pMOEAD extends Algorithm implements Runnable {
 			barrier_.await();
 			//System.out.println("Running: " + id_ ) ;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (BrokenBarrierException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

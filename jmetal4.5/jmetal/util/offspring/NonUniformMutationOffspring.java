@@ -45,7 +45,6 @@ public class NonUniformMutationOffspring extends Offspring {
 		try {
 			mutation_.execute(res);
 		} catch (JMException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return res;

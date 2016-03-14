@@ -82,7 +82,6 @@ public class WFG1 extends WFG {
     try {
       y = t3(y);
     } catch (JMException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     y = t4(y,k_,M_);

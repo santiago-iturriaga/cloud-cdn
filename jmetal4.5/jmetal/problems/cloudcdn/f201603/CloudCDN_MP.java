@@ -25,6 +25,8 @@ import jmetal.problems.cloudcdn.f201603.RegionDatacenter;
 import jmetal.problems.cloudcdn.f201603.RegionUsuario;
 import jmetal.problems.cloudcdn.f201603.Trafico;
 import jmetal.problems.cloudcdn.f201603.TraficoComparator;
+import jmetal.problems.cloudcdn.f201603.greedy.CheapestNetwork;
+import jmetal.problems.cloudcdn.f201603.greedy.VMAllocation;
 import jmetal.problems.cloudcdn.greedy.routing.RRCheapest;
 import jmetal.problems.cloudcdn.greedy.routing.RoutingAlgorithm;
 import jmetal.util.JMException;
@@ -90,6 +92,9 @@ public class CloudCDN_MP extends Problem {
     protected double[] RILowerLimits_;
     protected double[] RIUpperLimits_;
 
+    protected CheapestNetwork router = null;
+    protected VMAllocation allocator = null;
+    
     public CloudCDN_MP(String solutionType, String pathName, int instanceNumber, String routingAlgorithm) throws JMException {
         try {
             readProblem(pathName, instanceNumber);
@@ -142,9 +147,10 @@ public class CloudCDN_MP extends Problem {
 
         RIUpperLimits_ = new double[getRegionesDatacenters().size()];
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
-            RIUpperLimits_[i] = upperVMLimit; // TODO arreglar el tope máximo de VM
+            RIUpperLimits_[i] = upperVMLimit;
         }
 
+        // TODO: configurar el algoritmo greedy para la evaluación
         //if (routingAlgorithm.compareTo("RRCheapest") == 0) {
         //	routingAlgorithm_ = new RRCheapest(this);
         //}
@@ -453,7 +459,14 @@ public class CloudCDN_MP extends Problem {
     }
 
     @Override
-    public void evaluate(Solution solution) throws JMException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void evaluate(Solution solution) throws JMException {       
+        int[] trafficRouting;
+        trafficRouting = router.Route(solution);
+        
+        int[] vmAllocation;
+        vmAllocation = allocator.Allocate(trafficRouting);
+        
+        solution.setFitness(0);
+        solution.setObjective(0, 0);
     }
 }

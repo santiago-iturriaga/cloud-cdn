@@ -129,7 +129,6 @@ public class RunExperiment extends Thread {
 					experiment_.algorithmSettings(problemName, problemId,
 							algorithm);
 				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
@@ -160,7 +159,6 @@ public class RunExperiment extends Thread {
 					try {
 						resultFront = algorithm[alg].execute();
 					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				} catch (JMException ex) {
