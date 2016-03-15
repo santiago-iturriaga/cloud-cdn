@@ -30,6 +30,7 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
     /**
      * Creates the variables of the solution
      */
+    @Override
     public Variable[] createVariables() {
         if (problem_.getClass().equals(CloudCDN_MP.class)) {
             Variable[] variables = new Variable[problem_.getNumberOfVariables()];
@@ -46,10 +47,6 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
         }
     } // createVariables
 
-    public int getDCDocIndex(int dcId, int docId) {
-        return getDCDocIndex(customProblem_, dcId, docId);
-    }
-
     public static int getDCDocIndex(CloudCDN_MP customProblem, int dcId, int docId) {
         return customProblem.getRegionesDatacenters().size() * dcId + docId;
     }
@@ -58,8 +55,8 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
         return (Binary) solution.getDecisionVariables()[1];
     }
 
-    public static boolean IsDocStored(Solution solution, int docId) {
-        return GetDocStorageVariables(solution).getIth(docId);
+    public static boolean IsDocStored(CloudCDN_MP customProblem, Solution solution, int dcId, int docId) {
+        return GetDocStorageVariables(solution).getIth(getDCDocIndex(customProblem, dcId, docId));
     }
 
     public static ArrayInt GetRIVariables(Solution solution) {
@@ -68,5 +65,9 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
 
     public static int GetRIDCCount(Solution solution, int dcId) throws JMException {
         return GetRIVariables(solution).getValue(dcId);
+    }
+
+    public static void SetDocStored(CloudCDN_MP customProblem, Solution solution, int dcId, int docId, boolean status) {
+        GetDocStorageVariables(solution).setIth(getDCDocIndex(customProblem, dcId, docId), status);
     }
 }
