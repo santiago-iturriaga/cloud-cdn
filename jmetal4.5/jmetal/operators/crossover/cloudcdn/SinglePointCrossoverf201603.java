@@ -154,7 +154,7 @@ public class SinglePointCrossoverf201603 extends Crossover {
                         // First decision variable is integer
                         ArrayInt parent1Int = (ArrayInt) parent1.getDecisionVariables()[0];
                         ArrayInt parent2Int = (ArrayInt) parent2.getDecisionVariables()[0];
-
+t
                         int crossoverPoint = PseudoRandom.randInt(0, parent1Int.getLength() - 1);
                         int valueX1;
                         int valueX2;
