@@ -121,8 +121,8 @@ public class CloudCDN_MP extends Problem {
         //numberOfVariables_ = documentos_.size() * regionesDatacenters_.size(); // flat encoding
         //numberOfVariables_ = documentos_.size(); // document oriented encoding
         //numberOfVariables_ = regionesDatacenters_.size(); // datacenter oriented encoding
-        numberOfObjectives_ = 1;
-        numberOfConstraints_ = 1;
+        numberOfObjectives_ = 2;
+        numberOfConstraints_ = 0;
         problemName_ = "CloudCDN_MP";
 
         length_ = new int[numberOfVariables_];

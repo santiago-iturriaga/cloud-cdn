@@ -54,7 +54,10 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         try {
             Object[] problemParams = {"CloudCDNSolutionf201603Type", "test/", 0,
                 "Cheapest"};
-            algorithm[0] = new jmetal.experiments.settings.cloudcdn.gGA_Settings(
+
+            //algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(
+            //        problemName, problemParams).configure();
+            algorithm[0] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
                     problemName, problemParams).configure();
         } catch (IllegalArgumentException ex) {
             Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
@@ -71,9 +74,8 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         // exp.experimentName_ = "CloudCDNStudy";
         exp.experimentName_ = exp.getClass().getSimpleName();
 
-        // exp.algorithmNameList_ = new String[] { "ElitistES" };
-        //exp.algorithmNameList_ = new String[]{"gGA"};
-        exp.algorithmNameList_ = new String[]{"ssGA"};
+        //exp.algorithmNameList_ = new String[]{"SMSEMOA"};
+        exp.algorithmNameList_ = new String[]{"NSGAII"};
 
         exp.problemList_ = new String[]{"cloudcdn.f201603.CloudCDN_MP"};
         exp.paretoFrontFile_ = new String[]{"CloudCDN_MP.pf"};
