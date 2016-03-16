@@ -5,8 +5,13 @@
  */
 package jmetal.problems.cloudcdn.f201603.greedy;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jmetal.core.Solution;
+import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionf201603Type;
 import jmetal.problems.cloudcdn.f201603.CloudCDN_MP;
 import jmetal.problems.cloudcdn.f201603.Trafico;
+import jmetal.util.JMException;
 
 /**
  *
@@ -20,9 +25,7 @@ public class VMAllocation {
         problem_ = problem;
     }
 
-    public int[] Allocate(int[] routing) {
-        int[] allocation = new int[problem_.getRegionesDatacenters().size()];
-
+    public void Allocate(Solution solution, int[] routing, int[] reservedAllocation, int[] onDemandAllocation) {
         //Algoritmo de allocation muy simple
         //TODO: implementar algoritmo de VM allocation avanzado
         int[][] vmNeeded;
@@ -33,6 +36,8 @@ public class VMAllocation {
 
         int lowerBound;
         lowerBound = 0;
+
+        int neededVMs;
 
         for (int req = 0; req < problem_.getTrafico().size(); req++) {
             Trafico traff;
@@ -56,15 +61,25 @@ public class VMAllocation {
                         vmOverflow[i][j] = 0;
                     }
 
-                    allocation[i] += Math.ceil(maxDemand / problem_.VM_PROCESSING);
+                    int rentedVMs;
+                    try {
+                        rentedVMs = CloudCDNSolutionf201603Type.GetRIVariables(solution).getValue(i);
+                    } catch (JMException ex) {
+                        Logger.getLogger(VMAllocation.class.getName()).log(Level.SEVERE, null, ex);
+                        rentedVMs = 0;
+                    }
+
+                    neededVMs = (int) Math.ceil(maxDemand / problem_.VM_PROCESSING);
+                    reservedAllocation[i] += Math.min(rentedVMs, neededVMs);
+                    onDemandAllocation[i] += Math.max(0, neededVMs - rentedVMs);
                 }
 
                 while (currStep > problem_.VM_RENTING_STEPS) {
                     lowerBound += problem_.VM_RENTING_STEPS;
                     currStep = currStep - problem_.VM_RENTING_STEPS;
-                }   
+                }
             }
-            
+
             for (int len = 0; len < traff.getNumContenidos(); len++) {
                 if (currStep + len < problem_.VM_RENTING_STEPS) {
                     vmNeeded[routing[req]][currStep + len]++;
@@ -73,7 +88,5 @@ public class VMAllocation {
                 }
             }
         }
-
-        return allocation;
     }
 }

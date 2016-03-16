@@ -1,12 +1,9 @@
 package jmetal.problems.cloudcdn.f201603;
 
-import java.util.Comparator;
-
 public class Trafico {
-
     int reqTime;
     int docId;
-    double docSize; // GB
+    double docSize;
     int numContenidos;
     int regUsrId;
 

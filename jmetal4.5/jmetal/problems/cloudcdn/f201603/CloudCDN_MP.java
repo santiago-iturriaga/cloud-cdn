@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionf201603Type;
+import jmetal.encodings.variable.Binary;
 import jmetal.problems.cloudcdn.f201603.greedy.CheapestNetwork;
 import jmetal.problems.cloudcdn.f201603.greedy.VMAllocation;
 import jmetal.util.JMException;
@@ -67,8 +69,9 @@ public class CloudCDN_MP extends Problem {
             CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
     protected ArrayList<Trafico> trafico_ = new ArrayList<>(
             CANTIDAD_MAXIMA_DE_TRAFICO);
-    protected ArrayList<ArrayList<QoS>> qoS_ = new ArrayList<>(
-            CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
+
+    //protected ArrayList<ArrayList<QoS>> qoS_ = new ArrayList<>(CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
+    protected ArrayList<HashMap<Integer, QoS>> qoS_ = new ArrayList<>(CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
 
     protected int totalSimTimeSecs;
     protected double totalSimTimeHours;
@@ -166,7 +169,7 @@ public class CloudCDN_MP extends Problem {
         return trafico_;
     }
 
-    public ArrayList<ArrayList<QoS>> getQoS() {
+    public ArrayList<HashMap<Integer, QoS>> getQoS() {
         return qoS_;
     }
 
@@ -298,13 +301,13 @@ public class CloudCDN_MP extends Problem {
                         .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
                         Integer.valueOf((linea
                                 .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
-                        Integer.valueOf((linea
+                        Double.valueOf((linea
                                 .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]));
 
                 if (q.regUsrId >= qoS_.size()) {
-                    qoS_.add(new ArrayList());
+                    qoS_.add(new HashMap<Integer, QoS>());
                 }
-                qoS_.get(q.regUsrId).add(q);
+                qoS_.get(q.regUsrId).put(q.regDcId, q);
             }
 
             if (DEBUG) {
@@ -312,7 +315,7 @@ public class CloudCDN_MP extends Problem {
                 for (int j = 0; j < qoS_.size(); j++) {
                     for (int i = 0; i < qoS_.get(j).size(); i++) {
                         System.out.println(qoS_.get(j).get(i).getRegUsrId()
-                                + " " + qoS_.get(j).get(i).getRegDocId() + " "
+                                + " " + qoS_.get(j).get(i).getRegDcId() + " "
                                 + qoS_.get(j).get(i).getQosMetric());
                     }
                 }
@@ -452,23 +455,64 @@ public class CloudCDN_MP extends Problem {
     }
 
     private double computeNetworkCost(int[] trafficSummary) {
-        //TODO: implementar computeNetworkCost
-        return 0.0;
+        double totalCost = 0.0;
+
+        for (int i = 0; i < getRegionesDatacenters().size(); i++) {
+            totalCost += trafficSummary[i] * getRegionesDatacenters().get(i).transferPrice;
+        }
+        totalCost = totalCost * CONTENT_SIZE;
+
+        return totalCost;
     }
 
     private double computeStorageCost(Solution solution) {
-        //TODO: implementar computeStorageCost
-        return 0.0;
+        int dcCount = getRegionesDatacenters().size();
+        int[] storageContents = new int[dcCount];
+        Binary storageVariables = CloudCDNSolutionf201603Type.GetDocStorageVariables(solution);
+
+        for (int docId = 0; docId < getDocumentos().size(); docId++) {
+            Documento aux;
+            aux = getDocumentos().get(docId);
+
+            int varIdx;
+
+            for (int dcId = 0; dcId < getRegionesDatacenters().size(); dcId++) {
+                varIdx = CloudCDNSolutionf201603Type.GetDCDocIndex(dcCount, dcId, docId);
+
+                if (storageVariables.getIth(varIdx)) {
+                    storageContents[dcId] += aux.getNumContenidos();
+                }
+            }
+        }
+
+        double storageCost = 0.0;
+        for (int i = 0; i < getRegionesDatacenters().size(); i++) {
+            storageCost += storageContents[i] * getRegionesDatacenters().get(i).storagePrice;
+        }
+
+        return storageCost;
     }
 
-    private double computeComputingCost(int[] computingSummary) {
-        //TODO: implementar computeComputingCost
-        return 0.0;
+    private double computeComputingCost(int[] reservedAllocation, int[] onDemandAllocation) {
+        double totalCost = 0.0;
+
+        for (int i = 0; i < getRegionesDatacenters().size(); i++) {
+            totalCost += (getRegionesDatacenters().get(i).vmPrice / 2) * reservedAllocation[i]
+                    + getRegionesDatacenters().get(i).vmPrice * onDemandAllocation[i];
+        }
+
+        return totalCost;
     }
 
     private double computeQoS(int[] trafficRouting) {
-        //TODO: implementar computeQoS
-        return 0.0;
+        double totalQoS = 0;
+
+        for (int i = 0; i < getTrafico().size(); i++) {
+            totalQoS += getTrafico().get(i).numContenidos
+                    * getQoS().get(getTrafico().get(i).regUsrId).get(trafficRouting[i]).qosMetric;
+        }
+
+        return totalQoS;
     }
 
     @Override
@@ -476,16 +520,15 @@ public class CloudCDN_MP extends Problem {
         try {
             int[] trafficRouting = new int[getTrafico().size()];
             int[] trafficSummary = new int[getRegionesDatacenters().size()];
-
             router.Route(solution, trafficRouting, trafficSummary);
 
-            int[] computingSummary;
-            computingSummary = allocator.Allocate(trafficRouting);
+            int[] reservedAllocation = new int[getRegionesDatacenters().size()];
+            int[] onDemandAllocation = new int[getRegionesDatacenters().size()];
+            allocator.Allocate(solution, trafficRouting, reservedAllocation, onDemandAllocation);
 
             double networkCost = computeNetworkCost(trafficSummary);
             double storageCost = computeStorageCost(solution);
-            double computingCost = computeComputingCost(computingSummary);
-
+            double computingCost = computeComputingCost(reservedAllocation, onDemandAllocation);
             double qos = computeQoS(trafficRouting);
 
             // Single objective: only cost aware
@@ -493,7 +536,10 @@ public class CloudCDN_MP extends Problem {
 
             // Multi objective: cost and qos aware
             solution.setObjective(0, networkCost + storageCost + computingCost);
-            solution.setObjective(1, qos);
+
+            if (solution.getNumberOfObjectives() > 1) {
+                solution.setObjective(1, qos);
+            }
         } catch (Exception e) {
             Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
             throw new JMException(e.getMessage());

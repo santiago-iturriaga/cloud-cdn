@@ -91,9 +91,10 @@ public class BitFlipMutationf201603 extends Mutation {
                 for (int j = 0; j < ((ArrayInt) solution.getDecisionVariables()[0]).getLength(); j++) {
                     if (PseudoRandom.randDouble() < probability) {
                         int value = PseudoRandom.randInt(
-                                (int) solution.getDecisionVariables()[0].getLowerBound(),
-                                (int) solution.getDecisionVariables()[0].getUpperBound());
-                        solution.getDecisionVariables()[0].setValue(value);
+                                (int) ((ArrayInt) solution.getDecisionVariables()[0]).getLowerBound(j),
+                                (int) ((ArrayInt) solution.getDecisionVariables()[0]).getUpperBound(j));
+
+                        ((ArrayInt) solution.getDecisionVariables()[0]).setValue(j, value);
                     }
                 }
                 // Seconds decision variable is boolean
