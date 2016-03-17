@@ -23,16 +23,9 @@ package jmetal.experiments.studies;
 import jmetal.core.Algorithm;
 import jmetal.experiments.Experiment;
 import jmetal.experiments.Settings;
-import jmetal.experiments.settings.AbYSS_Settings;
-import jmetal.experiments.settings.MOCell_Settings;
-import jmetal.experiments.settings.NSGAII_Settings;
-import jmetal.experiments.settings.SPEA2_Settings;
-import jmetal.experiments.settings.gGA_Settings;
-import jmetal.experiments.util.Friedman;
 import jmetal.util.JMException;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,20 +42,21 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
      * @param problemIndex
      * @throws ClassNotFoundException
      */
+    @Override
     public void algorithmSettings(String problemName, int problemIndex,
             Algorithm[] algorithm) throws ClassNotFoundException {
         try {
-            Object[] problemParams = {"CloudCDNSolutionf201603Type", "test/", 0,
-                "Cheapest"};
+            Object[] problemParams;
+            
+            //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "CheapestNetwork"};
+            problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "CheapestComputing"};
+            //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "RoundRobin"};
 
-            //algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(
-            //        problemName, problemParams).configure();
-            algorithm[0] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
+            algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(
                     problemName, problemParams).configure();
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
-                    Level.SEVERE, null, ex);
-        } catch (JMException ex) {
+            //algorithm[0] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
+            //        problemName, problemParams).configure();
+        } catch (IllegalArgumentException | JMException ex) {
             Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -74,14 +68,14 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         // exp.experimentName_ = "CloudCDNStudy";
         exp.experimentName_ = exp.getClass().getSimpleName();
 
-        //exp.algorithmNameList_ = new String[]{"SMSEMOA"};
-        exp.algorithmNameList_ = new String[]{"NSGAII"};
+        exp.algorithmNameList_ = new String[]{"SMSEMOA"};
+        //exp.algorithmNameList_ = new String[]{"NSGAII"};
 
         exp.problemList_ = new String[]{"cloudcdn.f201603.CloudCDN_MP"};
         exp.paretoFrontFile_ = new String[]{"CloudCDN_MP.pf"};
 
         exp.indicatorList_ = new String[]{};
-        // exp.indicatorList_ = new String[] { "EPSILON", "SPREAD", "HV" };
+        //exp.indicatorList_ = new String[] { "EPSILON", "SPREAD", "HV" };
 
         int numberOfAlgorithms = exp.algorithmNameList_.length;
 

@@ -35,6 +35,7 @@ import jmetal.util.JMException;
 
 import java.util.HashMap;
 import java.util.Properties;
+import jmetal.metaheuristics.smsemoa.FastSMSEMOA;
 
 /**
  * Settings class of algorithm SMSEMOA
@@ -61,7 +62,7 @@ public class SMSEMOA_f201603_Settings extends Settings {
             e.printStackTrace();
         }
         populationSize_ = 100;
-        maxEvaluations_ = 5000;
+        maxEvaluations_ = 1000;
         //maxEvaluations_ = 25000;
         mutationProbability_ = 1.0 / problem_.getNumberOfBits();
         crossoverProbability_ = 0.9;
@@ -86,7 +87,8 @@ public class SMSEMOA_f201603_Settings extends Settings {
         HashMap parameters; // Operator parameters
 
         // Creating the algorithm. 
-        algorithm = new SMSEMOA(problem_);
+        //algorithm = new SMSEMOA(problem_);
+        algorithm = new FastSMSEMOA(problem_);
 
         // Algorithm parameters
         algorithm.setInputParameter("populationSize", populationSize_);

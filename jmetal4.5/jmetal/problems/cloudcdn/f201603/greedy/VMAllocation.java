@@ -18,11 +18,13 @@ import jmetal.util.JMException;
  * @author santiago
  */
 public class VMAllocation {
-
+    private final int[] zeroes;
+    
     private CloudCDN_MP problem_;
 
     public VMAllocation(CloudCDN_MP problem) {
-        problem_ = problem;
+        this.zeroes = new int[problem_.VM_RENTING_STEPS];
+        this.problem_ = problem;
     }
 
     public void Allocate(Solution solution, int[] routing, int[] reservedAllocation, int[] onDemandAllocation) {
@@ -33,7 +35,7 @@ public class VMAllocation {
 
         int[][] vmOverflow;
         vmOverflow = new int[problem_.getRegionesDatacenters().size()][problem_.VM_RENTING_STEPS];
-
+        
         int lowerBound;
         lowerBound = 0;
 
@@ -51,15 +53,14 @@ public class VMAllocation {
                     int maxDemand;
                     maxDemand = 0;
 
-                    // TODO: mejorar la eficiencia de esta parte (usar arraycopy)
-                    // http://docs.oracle.com/javase/7/docs/api/java/lang/System.html
                     for (int j = 0; j < problem_.VM_RENTING_STEPS; j++) {
                         if (vmNeeded[i][j] > maxDemand) {
                             maxDemand = vmNeeded[i][j];
                         }
-                        vmNeeded[i][j] = vmOverflow[i][j];
-                        vmOverflow[i][j] = 0;
                     }
+                    
+                    System.arraycopy(vmOverflow[i], 0, vmNeeded[i], 0, problem_.VM_RENTING_STEPS);
+                    System.arraycopy(zeroes, 0, vmOverflow[i], 0, problem_.VM_RENTING_STEPS);
 
                     int rentedVMs;
                     try {

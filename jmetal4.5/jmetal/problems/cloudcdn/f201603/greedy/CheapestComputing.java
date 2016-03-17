@@ -11,24 +11,24 @@ import jmetal.core.Solution;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionf201603Type;
 import jmetal.problems.cloudcdn.f201603.CloudCDN_MP;
 import jmetal.problems.cloudcdn.f201603.RegionDatacenter;
-import jmetal.problems.cloudcdn.f201603.RegionDatacenterNetworkCheapestComparator;
+import jmetal.problems.cloudcdn.f201603.RegionDatacenterComptuingCheapestComparator;
 
 /**
  *
  * @author santiago
  */
-public class CheapestNetwork implements IGreedyRouting {
+public class CheapestComputing implements IGreedyRouting {
 
     private final CloudCDN_MP problem_;
 
-    public CheapestNetwork(CloudCDN_MP problem) {
+    public CheapestComputing(CloudCDN_MP problem) {
         problem_ = problem;
     }
 
     @Override
     public boolean Route(Solution solution, int[] trafficRouting, int[] routingSummary) {
         ArrayList<RegionDatacenter> sortedDC = new ArrayList<>(problem_.getRegionesDatacenters());
-        sortedDC.sort(new RegionDatacenterNetworkCheapestComparator());
+        sortedDC.sort(new RegionDatacenterComptuingCheapestComparator());
 
         for (int i = 0; i < problem_.getTrafico().size(); i++) {
             int docId;
@@ -66,7 +66,7 @@ public class CheapestNetwork implements IGreedyRouting {
         cache = new HashMap<>();
 
         ArrayList<RegionDatacenter> sortedDC = new ArrayList<>(problem_.getRegionesDatacenters());
-        sortedDC.sort(new RegionDatacenterNetworkCheapestComparator());
+        sortedDC.sort(new RegionDatacenterComptuingCheapestComparator());
 
         for (int i = 0; i < problem_.getTrafico().size(); i++) {
             int docId;

@@ -1,64 +1,65 @@
 package jmetal.problems.cloudcdn.f201603;
 
 public class RegionDatacenter {
-	int regDctId;
-	String regNombre;
-	int regId;
 
-	// These costs are for every time step
-	double vmPrice;
-	double storagePrice;
-	double transferPrice;
+    int regDctId;
+    String regNombre;
+    int regId;
 
-	public RegionDatacenter(int regDctId, String regNombre, int regId,
-			double storagePrice, double transferPrice, double vmPrice) {
-		super();
-		
-		this.regDctId = regDctId;
-		this.regNombre = regNombre;
-		this.regId = regId;
+    // These costs are for every time step
+    double vmPrice;
+    double storagePrice;
+    double transferPrice;
 
-		this.vmPrice = vmPrice;
-		this.storagePrice = storagePrice;
-		this.transferPrice = transferPrice;
-	}
+    public RegionDatacenter(int regDctId, String regNombre, int regId,
+            double storagePrice, double transferPrice, double vmPrice) {
+        super();
 
-	public int getRegDctId() {
-		return regDctId;
-	}
+        this.regDctId = regDctId;
+        this.regNombre = regNombre;
+        this.regId = regId;
 
-	public void setRegDctId(int regDctId) {
-		this.regDctId = regDctId;
-	}
+        this.vmPrice = vmPrice;
+        this.storagePrice = storagePrice;
+        this.transferPrice = transferPrice;
+    }
 
-	public String getRegNombre() {
-		return regNombre;
-	}
+    public int getRegDctId() {
+        return regDctId;
+    }
 
-	public void setRegNombre(String regNombre) {
-		this.regNombre = regNombre;
-	}
+    public void setRegDctId(int regDctId) {
+        this.regDctId = regDctId;
+    }
 
-	public int getRegId() {
-		return regId;
-	}
+    public String getRegNombre() {
+        return regNombre;
+    }
 
-	public void setRegId(int regId) {
-		this.regId = regId;
-	}
+    public void setRegNombre(String regNombre) {
+        this.regNombre = regNombre;
+    }
 
-	public double computeStorageCost(double dataSize) {
-		//TODO: modificar para considerar escala logaritmica
-		return this.storagePrice * dataSize;
-	}
+    public int getRegId() {
+        return regId;
+    }
 
-	public double computeTransferCost(double dataSize) {
-		//TODO: modificar para considerar escala logaritmica
-		return this.transferPrice * dataSize;
-	}
+    public void setRegId(int regId) {
+        this.regId = regId;
+    }
 
-	public double computeVMCost(int numVM) {
-		//TODO: modificar para considerar escala logaritmica
-		return this.vmPrice * numVM;
-	}
+    public double computeStorageCost(double dataSize) {
+        //TODO: modificar para considerar escala logaritmica
+        return this.storagePrice * dataSize;
+    }
+
+    public double computeTransferCost(double dataSize) {
+        //TODO: modificar para considerar escala logaritmica
+        return this.transferPrice * dataSize;
+    }
+
+    public double computeVMCost(int numVM) {
+        //TODO: modificar para considerar escala logaritmica
+        return this.vmPrice * numVM;
+    }
 }

@@ -17,7 +17,10 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionf201603Type;
 import jmetal.encodings.variable.Binary;
+import jmetal.problems.cloudcdn.f201603.greedy.CheapestComputing;
 import jmetal.problems.cloudcdn.f201603.greedy.CheapestNetwork;
+import jmetal.problems.cloudcdn.f201603.greedy.IGreedyRouting;
+import jmetal.problems.cloudcdn.f201603.greedy.RoundRobin;
 import jmetal.problems.cloudcdn.f201603.greedy.VMAllocation;
 import jmetal.util.JMException;
 
@@ -83,7 +86,7 @@ public class CloudCDN_MP extends Problem {
     protected double[] RILowerLimits_;
     protected double[] RIUpperLimits_;
 
-    protected CheapestNetwork router = null;
+    protected IGreedyRouting router = null;
     protected VMAllocation allocator = null;
 
     public CloudCDN_MP(String solutionType, String pathName, int instanceNumber, String routingAlgorithm) throws JMException {
@@ -141,11 +144,19 @@ public class CloudCDN_MP extends Problem {
             RIUpperLimits_[i] = upperVMLimit;
         }
 
-        // TODO: configurar el algoritmo greedy para la evaluación
-        //if (routingAlgorithm.compareTo("RRCheapest") == 0) {
-        //	routingAlgorithm_ = new RRCheapest(this);
-        //}
-        router = new CheapestNetwork(this);
+        if (routingAlgorithm.compareTo("CheapestNetwork") == 0) {
+            System.out.println("Greedy routing: CheapestNetwork");
+            router = new CheapestNetwork(this);
+        } else if (routingAlgorithm.compareTo("CheapestComputing") == 0) {
+            System.out.println("Greedy routing: CheapestComputing");
+            router = new CheapestComputing(this);
+        } else if (routingAlgorithm.compareTo("RoundRobin") == 0) {
+            System.out.println("Greedy routing: RoundRobin");
+            router = new RoundRobin(this);
+        } else {
+            throw new JMException("Unknown routing algorithm.");
+        }
+        
         allocator = new VMAllocation(this);
     }
 

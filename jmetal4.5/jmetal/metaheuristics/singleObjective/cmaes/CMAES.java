@@ -210,7 +210,7 @@ public class CMAES extends Algorithm {
     for (int iNk = 0; iNk < populationSize; iNk++) {
 
       for (int i = 0; i < N; i++) {
-        //TODO: Check the correctness of this random (http://en.wikipedia.org/wiki/CMA-ES)
+        //Check the correctness of this random (http://en.wikipedia.org/wiki/CMA-ES)
         artmp[i] = diagD[i] * rand.nextGaussian();
       }
       for (int i = 0; i < N; i++) {

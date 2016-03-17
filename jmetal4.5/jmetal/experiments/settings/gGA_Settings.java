@@ -94,14 +94,12 @@ public class gGA_Settings extends Settings {
 		// Mutation and Crossover for Real codification
 		parameters = new HashMap();
 		parameters.put("probability", crossoverProbability_);
-		//TODO: para que sirve?
 		//parameters.put("distributionIndex", crossoverDistributionIndex_);
 		crossover = CrossoverFactory.getCrossoverOperator("cloudcdn.HUXCrossover",
 				parameters);
 
 		parameters = new HashMap();
 		parameters.put("probability", mutationProbability_);
-		//TODO: para que sirve?
 		//parameters.put("distributionIndex", mutationDistributionIndex_);
 		mutation = MutationFactory.getMutationOperator("cloudcdn.BitFlipMutation",
 				parameters);
