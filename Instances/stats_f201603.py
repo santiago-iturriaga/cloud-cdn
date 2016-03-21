@@ -60,6 +60,7 @@ def main(args):
             workload_stats = []
             for i in range(max_v_id):
                 workload_stats.append(0)
+            workload_stats.append(0)
 
             print(len(workload_stats))
 
@@ -71,10 +72,10 @@ def main(args):
                     w_orig = int(w_split[3])
                     w_d_id = int(w_split[1])
 
-                    workload_stats[w_d_id-1] = workload_stats[w_d_id-1] + 1
+                    workload_stats[w_d_id] = workload_stats[w_d_id] + 1
 
             with open("{0}.stats".format(get_filename(dim,inst,'workload')), 'w') as workload_out:
-                for i in range(max_v_id):
+                for i in range(len(workload_stats)):
                     workload_out.write("{0} {1}\n".format(i,workload_stats[i]))
     return 0
 

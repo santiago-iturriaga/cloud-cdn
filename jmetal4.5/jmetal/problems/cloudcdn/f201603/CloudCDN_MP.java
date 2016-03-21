@@ -133,7 +133,7 @@ public class CloudCDN_MP extends Problem {
 
         length_ = new int[numberOfVariables_];
         length_[0] = getRegionesDatacenters().size();
-        length_[1] = getRegionesDatacenters().size() * getDocumentos().size();
+        length_[1] = getRegionesDatacenters().size() * (int) Math.ceil((double) getDocumentos().size() / 100.0);
 
         RILowerLimits_ = new double[getRegionesDatacenters().size()];
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
@@ -159,7 +159,7 @@ public class CloudCDN_MP extends Problem {
         } else {
             throw new JMException("Unknown routing algorithm.");
         }
-        
+
         allocator = new VMAllocation(this);
     }
 
@@ -219,7 +219,7 @@ public class CloudCDN_MP extends Problem {
 
             // ** CARGANDO DOCUMENTOS **//
             double totalStorageControl = 0.0;
-            
+
             Collection<String> lineasArchivo;
             Path path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_DOCUMENTOS);
             lineasArchivo = leerArchivo(path.toString());
@@ -232,18 +232,18 @@ public class CloudCDN_MP extends Problem {
                         / (1024 * 1024);
 
                 totalStorageControl += docSizeMB;
-                
+
                 int numContenidos;
-                numContenidos = (int) Math.ceil(docSizeMB / CONTENT_SIZE_MB);
+                numContenidos = (int) Math.ceil((double) docSizeMB / (double) CONTENT_SIZE_MB);
 
                 int docId;
                 docId = Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]);
-                
+
                 int provId;
                 provId = Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]);
 
                 if (docId < MAX_DOCUMENTS) {
-                    documentos_.add(new Documento(docId, docSizeMB, numContenidos, provId)); // Prov. ID es siempre 1
+                    documentos_.add(new Documento(docId, docSizeMB, numContenidos, provId));
                 }
             }
 
@@ -379,7 +379,7 @@ public class CloudCDN_MP extends Problem {
             lineasArchivo = leerArchivo(path.toString());
 
             double totalTrafficControl = 0.0;
-            
+
             for (String linea : lineasArchivo) {
                 for (int j = 0; j < TRAFF_AMP; j++) {
                     Trafico aux;
@@ -405,7 +405,7 @@ public class CloudCDN_MP extends Problem {
                     }
 
                     totalTrafficControl += getDocumentos().get(docId).getDocSize();
-                    
+
                     aux = new Trafico(
                             reqTimeStep,
                             docId,
@@ -492,7 +492,7 @@ public class CloudCDN_MP extends Problem {
         return totalCost;
     }
 
-    private double computeStorageCost(Solution solution) {
+    private double computeStorageCost(Solution solution, double[] storageComplementSummary) {
         int dcCount = getRegionesDatacenters().size();
         int[] storageContents = new int[dcCount];
         Binary storageVariables = CloudCDNSolutionf201603Type.GetDocStorageVariables(solution);
@@ -514,7 +514,8 @@ public class CloudCDN_MP extends Problem {
 
         double storageCost = 0.0;
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
-            storageCost += storageContents[i] * getRegionesDatacenters().get(i).storagePrice;
+            storageCost += (storageContents[i] + storageComplementSummary[i])
+                    * getRegionesDatacenters().get(i).storagePrice;
         }
 
         return storageCost;
@@ -548,14 +549,15 @@ public class CloudCDN_MP extends Problem {
         try {
             int[] trafficRouting = new int[getTrafico().size()];
             int[] trafficSummary = new int[getRegionesDatacenters().size()];
-            router.Route(solution, trafficRouting, trafficSummary);
+            double[] storageComplementSummary = new double[getRegionesDatacenters().size()];
+            router.Route(solution, trafficRouting, trafficSummary, storageComplementSummary);
 
             int[] reservedAllocation = new int[getRegionesDatacenters().size()];
             int[] onDemandAllocation = new int[getRegionesDatacenters().size()];
             allocator.Allocate(solution, trafficRouting, reservedAllocation, onDemandAllocation);
 
             double networkCost = computeNetworkCost(trafficSummary);
-            double storageCost = computeStorageCost(solution);
+            double storageCost = computeStorageCost(solution, storageComplementSummary);
             double computingCost = computeComputingCost(solution, reservedAllocation, onDemandAllocation);
             double qos = computeQoS(trafficRouting);
 

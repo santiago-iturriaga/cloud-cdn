@@ -48,11 +48,15 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
     } // createVariables
 
     public static int GetDCDocIndex(int dcCount, int dcId, int docId) {
-        return dcCount * dcId + docId;
+        return dcCount * docId + dcId;
     }
 
     public static Binary GetDocStorageVariables(Solution solution) {
         return (Binary) solution.getDecisionVariables()[1];
+    }
+    
+    public static boolean IsDocConsidered(CloudCDN_MP customProblem, Solution solution, int docId) {
+        return GetDocStorageVariables(solution).bits_.length() < GetDCDocIndex(customProblem.getLength(1), 0, docId);
     }
 
     public static boolean IsDocStored(CloudCDN_MP customProblem, Solution solution, int dcId, int docId) {

@@ -13,6 +13,6 @@ import jmetal.core.Solution;
  */
 public interface IGreedyRouting {
 
-    boolean Route(Solution solution, int[] trafficRouting, int[] routingSummary);
+    boolean Route(Solution solution, int[] trafficRouting, int[] routingSummary, double[] storageComplementSummary);
     
 }
