@@ -8,11 +8,14 @@ public class RegionDatacenter {
 
     // These costs are for every time step
     double vmPrice;
+    double vmResPrice;
+    double vmResUpfrontPrice;
     double storagePrice;
     double transferPrice;
 
     public RegionDatacenter(int regDctId, String regNombre, int regId,
-            double storagePrice, double transferPrice, double vmPrice) {
+            double storagePrice, double transferPrice, double vmPrice,
+            double vmResPrice, double vmResUpfrontPrice) {
         super();
 
         this.regDctId = regDctId;
@@ -20,6 +23,8 @@ public class RegionDatacenter {
         this.regId = regId;
 
         this.vmPrice = vmPrice;
+        this.vmResPrice = vmResPrice;
+        this.vmResUpfrontPrice = vmResUpfrontPrice;
         this.storagePrice = storagePrice;
         this.transferPrice = transferPrice;
     }
@@ -61,5 +66,15 @@ public class RegionDatacenter {
     public double computeVMCost(int numVM) {
         //TODO: modificar para considerar escala logaritmica
         return this.vmPrice * numVM;
+    }
+    
+    public double computeResVMCost(int numVM) {
+        //TODO: modificar para considerar escala logaritmica
+        return this.vmResPrice * numVM;
+    }
+    
+    public double computeResUpfrontVMCost(int numVM) {
+        //TODO: modificar para considerar escala logaritmica
+        return this.vmResUpfrontPrice * numVM;
     }
 }

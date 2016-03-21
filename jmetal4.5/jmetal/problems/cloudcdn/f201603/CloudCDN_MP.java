@@ -33,15 +33,18 @@ public class CloudCDN_MP extends Problem {
     static final public Boolean DEBUG = true;
 
     static final public double DOC_SIZE_AMP = 10.0; // Amplifies the document size
-    static final public int TRAFF_AMP = 4; // Aplifies the traffic xTRAFF_AMP times
-    static final public int MAX_DOCUMENTS = 100; // Limita la cantidad de contenidos sin importar la instancia
+    static final public int TRAFF_AMP = 1; // Aplifies the traffic xTRAFF_AMP times
+    static final public int MAX_DOCUMENTS = Integer.MAX_VALUE; // Limita la cantidad de contenidos sin importar la instancia
 
-    static final public Double CONTENT_SIZE = 1.3; // KS = 1.3 MB
-    static final public int VM_PROCESSING = 50; // CR = VMs may serve up to VM_PROCESSING requests simultaneously
+    static final public Double CONTENT_SIZE_MB = 2.0; // CONTENT_SIZE_MB = 2 MB
+    // CR = VMs may serve up to VM_PROCESSING requests simultaneously
+    //static final public int VM_PROCESSING = 512; // Amount theoretically served by 1GB ethernet connection
+    static final public int VM_PROCESSING = 256;
 
     static final public int SECONDS_PER_TIMESTEP = 1;
     static final public int STORAGE_RENTING_STEPS = 3600 * 24 * 30 / SECONDS_PER_TIMESTEP; // Storage costs are considered monthly
     static final public int VM_RENTING_STEPS = 3600 / SECONDS_PER_TIMESTEP; // VMs are rented for 1 hour
+    static final public int VM_RENTING_UPFRONT_STEPS = 3600 * 24 * 365 / SECONDS_PER_TIMESTEP; // VMs are rented for 1 hour
     static final public int TIME_HORIZON = 3600 * 4 / SECONDS_PER_TIMESTEP; // 4 hours
 
     static final public int CANTIDAD_MAXIMA_DE_DOCUMENTOS = 30000;
@@ -215,8 +218,8 @@ public class CloudCDN_MP extends Problem {
             }
 
             // ** CARGANDO DOCUMENTOS **//
-            num_provedores_ = 1; // TODO Incluir ID de provider en la instancia. Temporalmente fijado en 1
-
+            double totalStorageControl = 0.0;
+            
             Collection<String> lineasArchivo;
             Path path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_DOCUMENTOS);
             lineasArchivo = leerArchivo(path.toString());
@@ -228,14 +231,19 @@ public class CloudCDN_MP extends Problem {
                                 .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1])
                         / (1024 * 1024);
 
+                totalStorageControl += docSizeMB;
+                
                 int numContenidos;
-                numContenidos = (int) Math.ceil(docSizeMB / CONTENT_SIZE);
+                numContenidos = (int) Math.ceil(docSizeMB / CONTENT_SIZE_MB);
 
                 int docId;
                 docId = Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]);
+                
+                int provId;
+                provId = Integer.valueOf((linea.split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]);
 
                 if (docId < MAX_DOCUMENTS) {
-                    documentos_.add(new Documento(docId, docSizeMB, numContenidos, 1)); // Prov. ID es siempre 1
+                    documentos_.add(new Documento(docId, docSizeMB, numContenidos, provId)); // Prov. ID es siempre 1
                 }
             }
 
@@ -286,7 +294,11 @@ public class CloudCDN_MP extends Problem {
                                 Double.valueOf((linea
                                         .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[4]),
                                 Double.valueOf((linea
-                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[5]) / VM_RENTING_STEPS));
+                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[5]) / VM_RENTING_STEPS,
+                                Double.valueOf((linea
+                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[6]) / VM_RENTING_STEPS,
+                                Double.valueOf((linea
+                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[7]) / VM_RENTING_UPFRONT_STEPS));
             }
 
             if (DEBUG) {
@@ -366,6 +378,8 @@ public class CloudCDN_MP extends Problem {
             path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_TRAFICO);
             lineasArchivo = leerArchivo(path.toString());
 
+            double totalTrafficControl = 0.0;
+            
             for (String linea : lineasArchivo) {
                 for (int j = 0; j < TRAFF_AMP; j++) {
                     Trafico aux;
@@ -390,6 +404,8 @@ public class CloudCDN_MP extends Problem {
                         trafficHistogram[reqTimeStep + i]++;
                     }
 
+                    totalTrafficControl += getDocumentos().get(docId).getDocSize();
+                    
                     aux = new Trafico(
                             reqTimeStep,
                             docId,
@@ -471,7 +487,7 @@ public class CloudCDN_MP extends Problem {
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
             totalCost += trafficSummary[i] * getRegionesDatacenters().get(i).transferPrice;
         }
-        totalCost = totalCost * CONTENT_SIZE;
+        totalCost = totalCost * CONTENT_SIZE_MB;
 
         return totalCost;
     }
@@ -504,12 +520,13 @@ public class CloudCDN_MP extends Problem {
         return storageCost;
     }
 
-    private double computeComputingCost(int[] reservedAllocation, int[] onDemandAllocation) {
+    private double computeComputingCost(Solution solution, int[] reservedAllocation, int[] onDemandAllocation) throws JMException {
         double totalCost = 0.0;
 
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
-            totalCost += (getRegionesDatacenters().get(i).vmPrice / 2) * reservedAllocation[i]
-                    + getRegionesDatacenters().get(i).vmPrice * onDemandAllocation[i];
+            totalCost += (getRegionesDatacenters().get(i).vmResUpfrontPrice * CloudCDNSolutionf201603Type.GetRIDCCount(solution, i))
+                    + (getRegionesDatacenters().get(i).vmResPrice * reservedAllocation[i])
+                    + (getRegionesDatacenters().get(i).vmPrice * onDemandAllocation[i]);
         }
 
         return totalCost;
@@ -539,7 +556,7 @@ public class CloudCDN_MP extends Problem {
 
             double networkCost = computeNetworkCost(trafficSummary);
             double storageCost = computeStorageCost(solution);
-            double computingCost = computeComputingCost(reservedAllocation, onDemandAllocation);
+            double computingCost = computeComputingCost(solution, reservedAllocation, onDemandAllocation);
             double qos = computeQoS(trafficRouting);
 
             // Single objective: only cost aware

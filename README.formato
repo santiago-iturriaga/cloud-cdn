@@ -22,7 +22,8 @@ Formato del archivo: <r user id> <r dc id> <qos metric>
 
 * Archivo de centros de datos.
 Nombre del archivo: dc.<#>
-Formato del archivo: <dc id> <nombre> <r id> <fun. cost storage> <fun. cost transfer>
+[deprecated] Formato del archivo: <dc id> <nombre> <r id> <fun. cost storage> <fun. cost transfer>
+Formato del archivo: <dc id> <nombre> <r id> <storage price> <transfer price> <vm price> <res. vm price> <res. vm upfront>
 
 * Archivo de máquinas virtuales.
 Nombre del archivo: vm.<#>

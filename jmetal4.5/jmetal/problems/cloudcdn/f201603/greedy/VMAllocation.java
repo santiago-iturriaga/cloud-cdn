@@ -70,7 +70,7 @@ public class VMAllocation {
                         rentedVMs = 0;
                     }
 
-                    neededVMs = (int) Math.ceil(maxDemand / problem_.VM_PROCESSING);
+                    neededVMs = (int) Math.ceil((double)maxDemand / (double)problem_.VM_PROCESSING);
                     reservedAllocation[i] += Math.min(rentedVMs, neededVMs);
                     onDemandAllocation[i] += Math.max(0, neededVMs - rentedVMs);
                 }

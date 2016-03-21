@@ -48,8 +48,8 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         try {
             Object[] problemParams;
             
-            //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "CheapestNetwork"};
-            problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "CheapestComputing"};
+            problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "CheapestNetwork"};
+            //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "CheapestComputing"};
             //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "RoundRobin"};
 
             algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(

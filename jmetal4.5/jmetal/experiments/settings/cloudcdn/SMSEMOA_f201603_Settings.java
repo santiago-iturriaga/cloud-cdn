@@ -87,8 +87,8 @@ public class SMSEMOA_f201603_Settings extends Settings {
         HashMap parameters; // Operator parameters
 
         // Creating the algorithm. 
-        //algorithm = new SMSEMOA(problem_);
-        algorithm = new FastSMSEMOA(problem_);
+        algorithm = new SMSEMOA(problem_);
+        //algorithm = new FastSMSEMOA(problem_);
 
         // Algorithm parameters
         algorithm.setInputParameter("populationSize", populationSize_);
