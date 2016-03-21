@@ -26,7 +26,7 @@ public class CheapestComputing implements IGreedyRouting {
     }
 
     @Override
-    public boolean Route(Solution solution, int[] trafficRouting, int[] routingSummary, double[] storageComplementSummary) {
+    public boolean Route(Solution solution, int[] trafficRouting, int[] routingSummary) {
         ArrayList<RegionDatacenter> sortedDC = new ArrayList<>(problem_.getRegionesDatacenters());
         sortedDC.sort(new RegionDatacenterComptuingCheapestComparator());
 
@@ -36,28 +36,23 @@ public class CheapestComputing implements IGreedyRouting {
 
             int dcId;
 
-            if (CloudCDNSolutionf201603Type.IsDocConsidered(problem_, solution, docId)) {
-                dcId = sortedDC.get(0).getRegDctId();
-                storageComplementSummary[dcId] = storageComplementSummary[dcId] + problem_.getDocumentos().get(docId).getDocSize();
-            } else {
-                int cheapestIdx;
-                cheapestIdx = 0;
+            int cheapestIdx;
+            cheapestIdx = 0;
 
-                while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution, sortedDC.get(cheapestIdx).getRegDctId(), docId)) {
-                    cheapestIdx++;
+            while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution, sortedDC.get(cheapestIdx).getRegDctId(), docId)) {
+                cheapestIdx++;
 
-                    if (cheapestIdx >= sortedDC.size()) {
-                        // All documents must be assigned.
-                        // TODO: considerar otras alternativas a la no factibilidad.
-                        cheapestIdx = 0;
-                        CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, sortedDC.get(0).getRegDctId(), docId, true);
+                if (cheapestIdx >= sortedDC.size()) {
+                    // All documents must be assigned.
+                    // TODO: considerar otras alternativas a la no factibilidad.
+                    cheapestIdx = 0;
+                    CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, sortedDC.get(0).getRegDctId(), docId, true);
 
-                        break;
-                    }
+                    break;
                 }
-
-                dcId = sortedDC.get(cheapestIdx).getRegDctId();
             }
+
+            dcId = sortedDC.get(cheapestIdx).getRegDctId();
 
             trafficRouting[i] = dcId;
             routingSummary[dcId]++;

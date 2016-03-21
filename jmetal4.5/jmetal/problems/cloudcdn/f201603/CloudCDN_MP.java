@@ -124,16 +124,13 @@ public class CloudCDN_MP extends Problem {
         totalSimTimeMonths = totalSimTimeDays / 30.0;
 
         numberOfVariables_ = 2;
-        //numberOfVariables_ = documentos_.size() * regionesDatacenters_.size(); // flat encoding
-        //numberOfVariables_ = documentos_.size(); // document oriented encoding
-        //numberOfVariables_ = regionesDatacenters_.size(); // datacenter oriented encoding
         numberOfObjectives_ = 2;
         numberOfConstraints_ = 0;
         problemName_ = "CloudCDN_MP";
 
         length_ = new int[numberOfVariables_];
         length_[0] = getRegionesDatacenters().size();
-        length_[1] = getRegionesDatacenters().size() * (int) Math.ceil((double) getDocumentos().size() / 100.0);
+        length_[1] = getRegionesDatacenters().size() * 100;
 
         RILowerLimits_ = new double[getRegionesDatacenters().size()];
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
@@ -487,13 +484,15 @@ public class CloudCDN_MP extends Problem {
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
             totalCost += trafficSummary[i] * getRegionesDatacenters().get(i).transferPrice;
         }
-        totalCost = totalCost * CONTENT_SIZE_MB;
+        totalCost = (totalCost * CONTENT_SIZE_MB) / 1024;
 
         return totalCost;
     }
 
-    private double computeStorageCost(Solution solution, double[] storageComplementSummary) {
+    private double computeStorageCost(Solution solution) {
         int dcCount = getRegionesDatacenters().size();
+        int docCount = getDocumentos().size();
+        
         int[] storageContents = new int[dcCount];
         Binary storageVariables = CloudCDNSolutionf201603Type.GetDocStorageVariables(solution);
 
@@ -504,7 +503,7 @@ public class CloudCDN_MP extends Problem {
             int varIdx;
 
             for (int dcId = 0; dcId < getRegionesDatacenters().size(); dcId++) {
-                varIdx = CloudCDNSolutionf201603Type.GetDCDocIndex(dcCount, dcId, docId);
+                varIdx = CloudCDNSolutionf201603Type.GetDCDocIndex(dcCount, docCount, dcId, docId);
 
                 if (storageVariables.getIth(varIdx)) {
                     storageContents[dcId] += aux.getNumContenidos();
@@ -514,8 +513,7 @@ public class CloudCDN_MP extends Problem {
 
         double storageCost = 0.0;
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
-            storageCost += (storageContents[i] + storageComplementSummary[i])
-                    * getRegionesDatacenters().get(i).storagePrice;
+            storageCost += storageContents[i] * getRegionesDatacenters().get(i).storagePrice;
         }
 
         return storageCost;
@@ -547,17 +545,16 @@ public class CloudCDN_MP extends Problem {
     @Override
     public void evaluate(Solution solution) throws JMException {
         try {
-            int[] trafficRouting = new int[getTrafico().size()];
+            int[] trafficRouting = new int[getTrafico().size()]; //TODO: eliminar esto! ocupa mucha memoria :(
             int[] trafficSummary = new int[getRegionesDatacenters().size()];
-            double[] storageComplementSummary = new double[getRegionesDatacenters().size()];
-            router.Route(solution, trafficRouting, trafficSummary, storageComplementSummary);
+            router.Route(solution, trafficRouting, trafficSummary);
 
             int[] reservedAllocation = new int[getRegionesDatacenters().size()];
             int[] onDemandAllocation = new int[getRegionesDatacenters().size()];
             allocator.Allocate(solution, trafficRouting, reservedAllocation, onDemandAllocation);
 
-            double networkCost = computeNetworkCost(trafficSummary);
-            double storageCost = computeStorageCost(solution, storageComplementSummary);
+            double networkCost = computeNetworkCost(trafficSummary) * 0.2;
+            double storageCost = computeStorageCost(solution);
             double computingCost = computeComputingCost(solution, reservedAllocation, onDemandAllocation);
             double qos = computeQoS(trafficRouting);
 

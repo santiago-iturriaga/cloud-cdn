@@ -26,7 +26,7 @@ public class RoundRobin implements IGreedyRouting {
         problem_ = problem;
     }
 
-    public boolean Route(Solution solution, int[] trafficRouting, int[] routingSummary, double[] storageComplementSummary) {
+    public boolean Route(Solution solution, int[] trafficRouting, int[] routingSummary) {
         //HashMap<Integer, Integer> cache;
         //cache = new HashMap<>();
 
@@ -39,34 +39,28 @@ public class RoundRobin implements IGreedyRouting {
 
             int dcId;
 
-            if (CloudCDNSolutionf201603Type.IsDocConsidered(problem_, solution, docId)) {
-                dcId = problem_.getRegionesDatacenters().get(currDC).getRegDctId();
-                storageComplementSummary[dcId] = storageComplementSummary[dcId] + problem_.getDocumentos().get(docId).getDocSize();
-                currDC = (currDC + 1) % numDC; 
-            } else {
-                int loopCount;
-                loopCount = 0;
+            int loopCount;
+            loopCount = 0;
 
-                while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution, 
-                        problem_.getRegionesDatacenters().get(currDC).getRegDctId(), docId)) {
-                    
-                    currDC = (currDC + 1) % numDC;
-                    loopCount++;
+            while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution, 
+                    problem_.getRegionesDatacenters().get(currDC).getRegDctId(), docId)) {
 
-                    if (loopCount == numDC) {
-                        // All documents must be assigned.
-                        // TODO: considerar otras alternativas a la no factibilidad.
-                        currDC = PseudoRandom.randInt(0, numDC-1);
-                        CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, 
-                                problem_.getRegionesDatacenters().get(currDC).getRegDctId(), docId, true);
-
-                        break;
-                    }
-                }
-                
-                dcId = problem_.getRegionesDatacenters().get(currDC).getRegDctId();
                 currDC = (currDC + 1) % numDC;
+                loopCount++;
+
+                if (loopCount == numDC) {
+                    // All documents must be assigned.
+                    // TODO: considerar otras alternativas a la no factibilidad.
+                    currDC = PseudoRandom.randInt(0, numDC-1);
+                    CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, 
+                            problem_.getRegionesDatacenters().get(currDC).getRegDctId(), docId, true);
+
+                    break;
+                }
             }
+
+            dcId = problem_.getRegionesDatacenters().get(currDC).getRegDctId();
+            currDC = (currDC + 1) % numDC;
 
             trafficRouting[i] = dcId;
             routingSummary[dcId]++;
