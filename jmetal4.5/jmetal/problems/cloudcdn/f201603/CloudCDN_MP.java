@@ -244,6 +244,8 @@ public class CloudCDN_MP extends Problem {
                 }
             }
 
+            System.out.println("Total storage: " + totalStorageControl + " MB");
+            
             if (DEBUG) {
                 System.out.println("IMPRIMIENDO DOCUMENTOS (TOP 10): ");
                 for (int j = 0; j < documentos_.size() && j < 10; j++) {
@@ -415,6 +417,8 @@ public class CloudCDN_MP extends Problem {
                 }
             }
 
+            System.out.println("Total traffic: " + totalTrafficControl + " MB");
+            
             trafico_.sort(new TraficoComparator());
 
             for (int i = 0; i < TIME_HORIZON; i++) {
@@ -553,7 +557,7 @@ public class CloudCDN_MP extends Problem {
             int[] onDemandAllocation = new int[getRegionesDatacenters().size()];
             allocator.Allocate(solution, trafficRouting, reservedAllocation, onDemandAllocation);
 
-            double networkCost = computeNetworkCost(trafficSummary) * 0.2;
+            double networkCost = computeNetworkCost(trafficSummary);
             double storageCost = computeStorageCost(solution);
             double computingCost = computeComputingCost(solution, reservedAllocation, onDemandAllocation);
             double qos = computeQoS(trafficRouting);

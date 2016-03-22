@@ -14,6 +14,8 @@ import jmetal.util.JMException;
 
 public class CloudCDNSolutionf201603Type extends SolutionType {
 
+    private static final int NUM_BUCKETS = 100;
+    
     CloudCDN_MP customProblem_;
 
     /**
@@ -46,8 +48,8 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
     } // createVariables
 
     public static int GetDCDocIndex(int dcCount, int docCount, int dcId, int docId) {
-        int bucketIdx = (int) Math.floor(((double) docId / (double) docCount) * 100.0);
-        return 100 * dcId + bucketIdx;
+        int bucketIdx = (int) Math.floor(((double) docId / (double) docCount) * NUM_BUCKETS);
+        return NUM_BUCKETS * dcId + bucketIdx;
     }
 
     public static ArrayInt GetRIVariables(Solution solution) {
