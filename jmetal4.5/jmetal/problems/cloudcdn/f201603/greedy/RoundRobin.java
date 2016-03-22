@@ -32,8 +32,8 @@ public class RoundRobin implements IGreedyRouting {
         this.zeroes = new int[problem_.VM_RENTING_STEPS];
     }
 
-    public void Route(Solution solution, int[] routingSummary, Double totalQoS, int[] reservedAllocation, int[] onDemandAllocation) {
-        totalQoS = 0.0;
+    public double Route(Solution solution, int[] routingSummary, int[] reservedAllocation, int[] onDemandAllocation) {
+        double totalQoS = 0.0;
 
         int numDC = problem_.getRegionesDatacenters().size();
         int currDC = 0;
@@ -112,7 +112,7 @@ public class RoundRobin implements IGreedyRouting {
                     try {
                         rentedVMs = CloudCDNSolutionf201603Type.GetRIVariables(solution).getValue(d);
                     } catch (JMException ex) {
-                        Logger.getLogger(VMAllocation.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(RoundRobin.class.getName()).log(Level.SEVERE, null, ex);
                         rentedVMs = 0;
                     }
 
@@ -136,5 +136,7 @@ public class RoundRobin implements IGreedyRouting {
             }
             
         }
+        
+        return totalQoS;
     }
 }

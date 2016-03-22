@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import jmetal.core.Solution;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionf201603Type;
 import jmetal.problems.cloudcdn.f201603.CloudCDN_MP;
+import jmetal.problems.cloudcdn.f201603.QoS;
 import jmetal.problems.cloudcdn.f201603.RegionDatacenter;
 import jmetal.problems.cloudcdn.f201603.RegionDatacenterNetworkCheapestComparator;
 import jmetal.problems.cloudcdn.f201603.Trafico;
@@ -21,12 +22,12 @@ import jmetal.util.JMException;
  *
  * @author santiago
  */
-public class CheapestNetwork implements IGreedyRouting {
+public class BestQoS implements IGreedyRouting {
 
     private final CloudCDN_MP problem_;
     private final int[] zeroes;
 
-    public CheapestNetwork(CloudCDN_MP problem) {
+    public BestQoS(CloudCDN_MP problem) {
         this.problem_ = problem;
         this.zeroes = new int[problem_.VM_RENTING_STEPS];
     }
@@ -34,9 +35,6 @@ public class CheapestNetwork implements IGreedyRouting {
     @Override
     public double Route(Solution solution, int[] routingSummary, int[] reservedAllocation, int[] onDemandAllocation) {
         double totalQoS = 0.0;
-
-        ArrayList<RegionDatacenter> sortedDC = new ArrayList<>(problem_.getRegionesDatacenters());
-        sortedDC.sort(new RegionDatacenterNetworkCheapestComparator());
 
         int[][] vmNeeded;
         vmNeeded = new int[problem_.getRegionesDatacenters().size()][problem_.VM_RENTING_STEPS];
@@ -61,25 +59,29 @@ public class CheapestNetwork implements IGreedyRouting {
 
             int dcId;
 
-            int cheapestIdx;
-            cheapestIdx = 0;
+            ArrayList<QoS> regionQoS = problem_.getSortedQoS(t.getRegUsrId());
+            
+            int bestIdx;
+            bestIdx = 0;
 
-            while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution, sortedDC.get(cheapestIdx).getRegDctId(), docId)) {
-                cheapestIdx++;
+            dcId = regionQoS.get(bestIdx).getRegDcId();
+            
+            while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution, dcId, docId)) {
+                bestIdx++;
 
-                if (cheapestIdx >= sortedDC.size()) {
+                if (bestIdx >= regionQoS.size()) {
                     // All documents must be assigned.
                     // TODO: considerar otras alternativas a la no factibilidad.
-                    cheapestIdx = 0;
-                    CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, sortedDC.get(0).getRegDctId(), docId, true);
-
+                    bestIdx = 0;
+                    dcId = regionQoS.get(0).getRegDcId();
+                    CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, dcId, docId, true);
                     break;
+                } else {
+                    dcId = regionQoS.get(bestIdx).getRegDcId();        
                 }
             }
 
-            dcId = sortedDC.get(cheapestIdx).getRegDctId();
             routingSummary[dcId]++;
-
             totalQoS += t.getNumContenidos() * problem_.getQoS().get(t.getRegUsrId()).get(dcId).getQosMetric();
 
             //
@@ -106,7 +108,7 @@ public class CheapestNetwork implements IGreedyRouting {
                     try {
                         rentedVMs = CloudCDNSolutionf201603Type.GetRIVariables(solution).getValue(d);
                     } catch (JMException ex) {
-                        Logger.getLogger(CheapestNetwork.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(BestQoS.class.getName()).log(Level.SEVERE, null, ex);
                         rentedVMs = 0;
                     }
 

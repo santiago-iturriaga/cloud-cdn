@@ -62,8 +62,9 @@ public class SMSEMOA_f201603_Settings extends Settings {
             e.printStackTrace();
         }
         populationSize_ = 100;
-        maxEvaluations_ = 1000;
-        //maxEvaluations_ = 25000;
+        //maxEvaluations_ = 1000;
+        //maxEvaluations_ = 10000;
+        maxEvaluations_ = 50000;
         mutationProbability_ = 1.0 / problem_.getNumberOfBits();
         crossoverProbability_ = 0.9;
         crossoverDistributionIndex_ = 20.0;

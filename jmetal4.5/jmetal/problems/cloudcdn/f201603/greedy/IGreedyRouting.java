@@ -13,6 +13,6 @@ import jmetal.core.Solution;
  */
 public interface IGreedyRouting {
 
-    void Route(Solution solution, int[] routingSummary, Double totalQoS, int[] reservedAllocation, int[] onDemandAllocation);
+    double Route(Solution solution, int[] routingSummary, int[] reservedAllocation, int[] onDemandAllocation);
     
 }

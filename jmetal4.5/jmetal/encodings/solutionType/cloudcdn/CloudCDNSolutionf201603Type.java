@@ -49,7 +49,8 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
 
     public static int GetDCDocIndex(int dcCount, int docCount, int dcId, int docId) {
         int bucketIdx = (int) Math.floor(((double) docId / (double) docCount) * NUM_BUCKETS);
-        return NUM_BUCKETS * dcId + bucketIdx;
+        //return NUM_BUCKETS * dcId + bucketIdx;
+        return dcCount * bucketIdx + dcId;
     }
 
     public static ArrayInt GetRIVariables(Solution solution) {

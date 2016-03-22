@@ -17,11 +17,11 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionf201603Type;
 import jmetal.encodings.variable.Binary;
+import jmetal.problems.cloudcdn.f201603.greedy.BestQoS;
 import jmetal.problems.cloudcdn.f201603.greedy.CheapestComputing;
 import jmetal.problems.cloudcdn.f201603.greedy.CheapestNetwork;
 import jmetal.problems.cloudcdn.f201603.greedy.IGreedyRouting;
 import jmetal.problems.cloudcdn.f201603.greedy.RoundRobin;
-import jmetal.problems.cloudcdn.f201603.greedy.VMAllocation;
 import jmetal.util.JMException;
 
 /*
@@ -76,7 +76,7 @@ public class CloudCDN_MP extends Problem {
     protected ArrayList<Trafico> trafico_ = new ArrayList<>(
             CANTIDAD_MAXIMA_DE_TRAFICO);
 
-    //protected ArrayList<ArrayList<QoS>> qoS_ = new ArrayList<>(CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
+    protected ArrayList<ArrayList<QoS>> sortedQoS_ = new ArrayList<>(CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
     protected ArrayList<HashMap<Integer, QoS>> qoS_ = new ArrayList<>(CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
 
     protected int totalSimTimeSecs;
@@ -90,7 +90,6 @@ public class CloudCDN_MP extends Problem {
     protected double[] RIUpperLimits_;
 
     protected IGreedyRouting router = null;
-    protected VMAllocation allocator = null;
 
     public CloudCDN_MP(String solutionType, String pathName, int instanceNumber, String routingAlgorithm) throws JMException {
         try {
@@ -153,11 +152,12 @@ public class CloudCDN_MP extends Problem {
         } else if (routingAlgorithm.compareTo("RoundRobin") == 0) {
             System.out.println("Greedy routing: RoundRobin");
             router = new RoundRobin(this);
+        } else if (routingAlgorithm.compareTo("BestQoS") == 0) {
+            System.out.println("Greedy routing: BestQoS");
+            router = new BestQoS(this);
         } else {
             throw new JMException("Unknown routing algorithm.");
         }
-
-        allocator = new VMAllocation(this);
     }
 
     public ArrayList<Documento> getDocumentos() {
@@ -186,6 +186,10 @@ public class CloudCDN_MP extends Problem {
 
     public QoS getQoS(int regUsr, int regDC) {
         return qoS_.get(regUsr).get(regDC);
+    }
+    
+    public ArrayList<QoS> getSortedQoS(int regUsr) {
+        return sortedQoS_.get(regUsr);
     }
 
     public int TotalSimTimeSecs() {
@@ -327,9 +331,20 @@ public class CloudCDN_MP extends Problem {
                 if (q.regUsrId >= qoS_.size()) {
                     qoS_.add(new HashMap<Integer, QoS>());
                 }
+                
                 qoS_.get(q.regUsrId).put(q.regDcId, q);
+   
+                if (q.regUsrId >= sortedQoS_.size()) {
+                    sortedQoS_.add(new ArrayList<QoS>());
+                }
+                
+                sortedQoS_.get(q.regUsrId).add(q);
             }
 
+            for (int i=0; i<sortedQoS_.size(); i++) {
+                sortedQoS_.get(i).sort(new BestQoSComparator());
+            }
+            
             if (DEBUG) {
                 System.out.println("IMPRIMIENDO QOS: ");
                 for (int j = 0; j < qoS_.size(); j++) {
@@ -537,11 +552,11 @@ public class CloudCDN_MP extends Problem {
     @Override
     public void evaluate(Solution solution) throws JMException {
         try {
-            Double totalQoS = 0.0;
+            double totalQoS;
             int[] reservedAllocation = new int[getRegionesDatacenters().size()];
             int[] onDemandAllocation = new int[getRegionesDatacenters().size()];
             int[] trafficSummary = new int[getRegionesDatacenters().size()];
-            router.Route(solution, trafficSummary, totalQoS, reservedAllocation, onDemandAllocation);
+            totalQoS = router.Route(solution, trafficSummary, reservedAllocation, onDemandAllocation);
 
             double networkCost = computeNetworkCost(trafficSummary);
             double storageCost = computeStorageCost(solution);

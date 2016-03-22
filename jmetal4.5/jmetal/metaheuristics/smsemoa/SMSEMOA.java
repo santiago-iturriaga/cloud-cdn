@@ -120,6 +120,10 @@ public class SMSEMOA extends Algorithm {
         while (evaluations < maxEvaluations) {
             if (evaluations % 100 == 0) {
                 System.out.print(evaluations + ", ");
+                
+                if (evaluations % 1000 == 0) {
+                    System.out.println("");
+                }
             }
             
             // select parents
