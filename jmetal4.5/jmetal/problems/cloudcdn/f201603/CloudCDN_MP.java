@@ -243,8 +243,6 @@ public class CloudCDN_MP extends Problem {
                     documentos_.add(new Documento(docId, docSizeMB, numContenidos, provId));
                 }
             }
-
-            System.out.println("Total storage: " + totalStorageControl + " MB");
             
             if (DEBUG) {
                 System.out.println("IMPRIMIENDO DOCUMENTOS (TOP 10): ");
@@ -416,8 +414,6 @@ public class CloudCDN_MP extends Problem {
                     trafico_.add(aux);
                 }
             }
-
-            System.out.println("Total traffic: " + totalTrafficControl + " MB");
             
             trafico_.sort(new TraficoComparator());
 
@@ -436,6 +432,9 @@ public class CloudCDN_MP extends Problem {
                             + trafico_.get(j).getRegUsrId());
                 }
             }
+            
+            System.out.println("Total storage: " + totalStorageControl / 1024 + " GB");
+            System.out.println("Total traffic: " + totalTrafficControl / 1024 + " GB");
         } catch (Exception e) {
             Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
             System.exit(1);
@@ -535,32 +534,18 @@ public class CloudCDN_MP extends Problem {
         return totalCost;
     }
 
-    private double computeQoS(int[] trafficRouting) {
-        double totalQoS = 0;
-
-        for (int i = 0; i < getTrafico().size(); i++) {
-            totalQoS += getTrafico().get(i).numContenidos
-                    * getQoS().get(getTrafico().get(i).regUsrId).get(trafficRouting[i]).qosMetric;
-        }
-
-        return totalQoS;
-    }
-
     @Override
     public void evaluate(Solution solution) throws JMException {
         try {
-            int[] trafficRouting = new int[getTrafico().size()]; //TODO: eliminar esto! ocupa mucha memoria :(
-            int[] trafficSummary = new int[getRegionesDatacenters().size()];
-            router.Route(solution, trafficRouting, trafficSummary);
-
+            Double totalQoS = 0.0;
             int[] reservedAllocation = new int[getRegionesDatacenters().size()];
             int[] onDemandAllocation = new int[getRegionesDatacenters().size()];
-            allocator.Allocate(solution, trafficRouting, reservedAllocation, onDemandAllocation);
+            int[] trafficSummary = new int[getRegionesDatacenters().size()];
+            router.Route(solution, trafficSummary, totalQoS, reservedAllocation, onDemandAllocation);
 
             double networkCost = computeNetworkCost(trafficSummary);
             double storageCost = computeStorageCost(solution);
             double computingCost = computeComputingCost(solution, reservedAllocation, onDemandAllocation);
-            double qos = computeQoS(trafficRouting);
 
             // Single objective: only cost aware
             solution.setFitness(networkCost + storageCost + computingCost);
@@ -569,7 +554,7 @@ public class CloudCDN_MP extends Problem {
             solution.setObjective(0, networkCost + storageCost + computingCost);
 
             if (solution.getNumberOfObjectives() > 1) {
-                solution.setObjective(1, qos);
+                solution.setObjective(1, totalQoS);
             }
         } catch (Exception e) {
             Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
