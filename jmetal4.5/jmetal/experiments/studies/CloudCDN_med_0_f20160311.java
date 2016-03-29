@@ -14,7 +14,7 @@ import jmetal.experiments.util.Friedman;
  * Example of experiment. In particular four algorithms are compared when
  * solving four constrained problems.
  */
-public class CloudCDNSimpleStudy_f201603 extends Experiment {
+public class CloudCDN_med_0_f20160311 extends Experiment {
 
     /**
      * Configures the algorithms in each independent run
@@ -29,11 +29,11 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         try {
             Object[] problemParams;
 
-            int maxEval = 1000;
+            int maxEval = 40000;
             
             problemParams = new Object[]{"CloudCDNSolutionf201603Type",
                 "/home/santiago/github/cloud-cdn/Instances/",
-                "/home/santiago/github/cloud-cdn/Instances/low/data.0/",
+                "/home/santiago/github/cloud-cdn/Instances/medium/data.0/",
                 "BestQoS"};
 
             //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "BestQoS"};
@@ -45,16 +45,16 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
             algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
                     problemName, maxEval, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
-            Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
+            Logger.getLogger(CloudCDN_med_0_f20160311.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
     }
 
     public static void main(String[] args) throws JMException, IOException {
-        CloudCDNSimpleStudy_f201603 exp = new CloudCDNSimpleStudy_f201603();
+        CloudCDN_med_0_f20160311 exp = new CloudCDN_med_0_f20160311();
 
         // exp.experimentName_ = "CloudCDNStudy";
-        exp.experimentName_ = exp.getClass().getSimpleName() + "_low_0";
+        exp.experimentName_ = exp.getClass().getSimpleName() + "_med_0";
 
         //exp.algorithmNameList_ = new String[]{"SMSEMOA"};
         //exp.algorithmNameList_ = new String[]{"NSGAII"};
@@ -72,13 +72,13 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
                 + exp.experimentName_;
         exp.paretoFrontDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/data/paretoFronts";
         exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
-        exp.independentRuns_ = 2;
+        exp.independentRuns_ = 8;
 
         exp.initExperiment();
 
         // Run the experiments
         //int numberOfThreads;
-        exp.runExperiment(2);
+        exp.runExperiment(8);
         // exp.runExperiment(numberOfThreads = 4);
 
         exp.generateQualityIndicators();

@@ -53,7 +53,7 @@ public class SMSEMOA_f201603_Settings extends Settings {
     /**
      * Constructor
      */
-    public SMSEMOA_f201603_Settings(String problem, Object[] problemParams) {
+    public SMSEMOA_f201603_Settings(String problem, int maxEval, Object[] problemParams) {
         super(problem);
 
         try {
@@ -64,7 +64,8 @@ public class SMSEMOA_f201603_Settings extends Settings {
         populationSize_ = 100;
         //maxEvaluations_ = 1000;
         //maxEvaluations_ = 10000;
-        maxEvaluations_ = 50000;
+        //maxEvaluations_ = 50000;
+        maxEvaluations_ = maxEval;
         mutationProbability_ = 1.0 / problem_.getNumberOfBits();
         crossoverProbability_ = 0.9;
         crossoverDistributionIndex_ = 20.0;

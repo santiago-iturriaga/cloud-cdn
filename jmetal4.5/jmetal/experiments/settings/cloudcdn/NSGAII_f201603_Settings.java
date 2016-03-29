@@ -51,7 +51,7 @@ public class NSGAII_f201603_Settings extends Settings {
     /**
      * Constructor
      */
-    public NSGAII_f201603_Settings(String problem, Object[] problemParams) {
+    public NSGAII_f201603_Settings(String problem, int maxEval, Object[] problemParams) {
         super(problem);
 
         try {
@@ -61,8 +61,9 @@ public class NSGAII_f201603_Settings extends Settings {
         }
         // Default experiments.settings
         populationSize_ = 100;
-        maxEvaluations_ = 5000;
+        //maxEvaluations_ = 5000;
         //maxEvaluations_ = 25000;
+        maxEvaluations_ = maxEval;
         mutationProbability_ = 1.0 / problem_.getNumberOfBits();
         crossoverProbability_ = 0.9;
         mutationDistributionIndex_ = 20.0;

@@ -56,11 +56,11 @@ public class CloudCDN_MP extends Problem {
 
     static final public String SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS = " ";
 
-    static final public String NOMBRE_ARCHIVO_DE_DOCUMENTOS = "docs.0";
+    static final public String NOMBRE_ARCHIVO_DE_DOCUMENTOS = "docs.video.f201603";
+    static final public String NOMBRE_ARCHIVO_DE_TRAFICO = "workload.video.f201603";
     static final public String NOMBRE_ARCHIVO_DE_REGIONES = "reg.0";
     static final public String NOMBRE_ARCHIVO_DE_DATACENTERS = "dc.1";
     static final public String NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS = "reg_users.0";
-    static final public String NOMBRE_ARCHIVO_DE_TRAFICO = "workload.0";
     static final public String NOMBRE_ARCHIVO_DE_QOS = "qos.0";
 
     protected Integer num_provedores_;
@@ -91,9 +91,9 @@ public class CloudCDN_MP extends Problem {
 
     protected IGreedyRouting router = null;
 
-    public CloudCDN_MP(String solutionType, String pathName, int instanceNumber, String routingAlgorithm) throws JMException {
+    public CloudCDN_MP(String solutionType, String scenPath, String instPath, String routingAlgorithm) throws JMException {
         try {
-            readProblem(pathName, instanceNumber);
+            readProblem(scenPath, instPath);
         } catch (IOException e) {
             Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
             throw new JMException(e.getMessage());
@@ -208,21 +208,24 @@ public class CloudCDN_MP extends Problem {
         return RIUpperLimits_;
     }
 
-    public void readProblem(String pathName, int instanceNumber)
+    public void readProblem(String scenPath, String instPath)
             throws IOException {
         try {
-            File miDir = new File(pathName);
+            File scenDir = new File(scenPath);
+            File instDir = new File(instPath);
 
             if (DEBUG) {
-                System.out.println("DIRECTORIO_DE_INSTANCIAS: "
-                        + miDir.getCanonicalPath());
+                System.out.println("DIRECTORIO DE ESCENARIO: "
+                        + scenDir.getCanonicalPath());
+                System.out.println("DIRECTORIO DE INSTANCIA: "
+                        + instDir.getCanonicalPath());
             }
 
             // ** CARGANDO DOCUMENTOS **//
             double totalStorageControl = 0.0;
 
             Collection<String> lineasArchivo;
-            Path path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_DOCUMENTOS);
+            Path path = Paths.get(instPath, NOMBRE_ARCHIVO_DE_DOCUMENTOS);
             lineasArchivo = leerArchivo(path.toString());
 
             for (String linea : lineasArchivo) {
@@ -257,7 +260,7 @@ public class CloudCDN_MP extends Problem {
             }
 
             // ** CARGANDO REGIONES **//
-            path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_REGIONES);
+            path = Paths.get(scenPath, NOMBRE_ARCHIVO_DE_REGIONES);
             lineasArchivo = leerArchivo(path.toString());
 
             for (String linea : lineasArchivo) {
@@ -278,7 +281,7 @@ public class CloudCDN_MP extends Problem {
             }
 
             // ** CARGANDO DATACENTERS **//
-            path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_DATACENTERS);
+            path = Paths.get(scenPath, NOMBRE_ARCHIVO_DE_DATACENTERS);
             lineasArchivo = leerArchivo(path.toString());
 
             for (String linea : lineasArchivo) {
@@ -316,7 +319,7 @@ public class CloudCDN_MP extends Problem {
             }
 
             // ** CARGANDO QOS **//
-            path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_QOS);
+            path = Paths.get(scenPath, NOMBRE_ARCHIVO_DE_QOS);
             lineasArchivo = leerArchivo(path.toString());
 
             for (String linea : lineasArchivo) {
@@ -357,7 +360,7 @@ public class CloudCDN_MP extends Problem {
             }
 
             // ** CARGANDO REGIONES USUARIOS **//
-            path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS);
+            path = Paths.get(scenPath, NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS);
             lineasArchivo = leerArchivo(path.toString());
 
             for (String linea : lineasArchivo) {
@@ -387,7 +390,7 @@ public class CloudCDN_MP extends Problem {
             }
 
             // ** CARGANDO TRAFICO **//
-            path = Paths.get(pathName, NOMBRE_ARCHIVO_DE_TRAFICO);
+            path = Paths.get(instPath, NOMBRE_ARCHIVO_DE_TRAFICO);
             lineasArchivo = leerArchivo(path.toString());
 
             double totalTrafficControl = 0.0;
