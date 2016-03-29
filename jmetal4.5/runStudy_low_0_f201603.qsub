@@ -29,7 +29,7 @@
 #PBS -o /home/siturria/github/cloud-cdn/jmetal4.5/
 
 # Will make  all variables defined in the environment from which the job is submitted available to the job.
-#PBS -V
+###PBS -V
 
 echo Job Name: $PBS_JOBNAME
 echo Working directory: $PBS_O_WORKDIR
