@@ -22,17 +22,18 @@
 #
 #
 
-# Transforma las instancias generadas por ProWGen multiplicandolas o 
-# fraccionandolas de forma de formar nuevas instancias con la cantidad
-# de videos y pedidos especificados en MAX_VIDEOS y MIN_REQUESTS.
-# Además agrega un número de proveedor de forma aleatoria entre 0 y NUM_PROV-1
+# Transforma las instancias generadas por ProWGen multiplicandolas
+# tantas veces como MULTIPLIER para crear nuevas instancias manteniendo
+# la distribución original.
+
+# Además agrega un número de proveedor de forma aleatoria 
+# entre 0 y NUM_PROV-1
 
 import random
 import os
 
 NUM_PROV = [2,4,6]
-MAX_VIDEOS = [1000,4000,9000]
-MIN_REQUESTS = [100000,800000,3600000]
+MULTIPLIER = [1,2,4]
 
 NUM_INSTANCES = 5
 NAME_DIMS = ['low','medium','high']
@@ -60,37 +61,36 @@ def main(args):
             except:
                 pass
 
-            print('> docs ({0})'.format(MAX_VIDEOS[dim]))
-            with open(get_filename_f201603(dim,inst,'docs'), 'w') as videos_out:
-                with open(get_filename(dim,inst,'docs')) as videos_in:
-                    for v_in in videos_in:
-                        v_split = v_in.split(' ')
-                        v_id = int(v_split[0])
-                        v_size = int(v_split[1])
-                        p_id = random.randint(0,NUM_PROV[dim]-1)
+            print('> multiplier ({0})'.format(MULTIPLIER[dim]))
+            max_v_id = 0
 
-                        if v_id >= MAX_VIDEOS[dim]:
-                            break
+            with open(get_filename_f201603(dim,inst,'docs'), 'w') as videos_out:            
+                for mult in range(MULTIPLIER[dim]):
+                    with open(get_filename(dim,inst,'docs')) as videos_in:
+                        for v_in in videos_in:
+                            v_split = v_in.split(' ')
+                            v_size = int(v_split[1])
+                            p_id = random.randint(0,NUM_PROV[dim]-1)
 
-                        #print("{0} {1} {2}".format(v_id,v_size,p_id))
-                        videos_out.write("{0} {1} {2}\n".format(v_id,v_size,p_id))
+                            if mult == 0:
+                                v_id = int(v_split[0])
+                                max_v_id = v_id
+                            else:
+                                v_id = (mult * max_v_id) + int(v_split[0])
 
-            total_requests = 0;
+                            #print("{0} {1} {2}".format(v_id,v_size,p_id))
+                            videos_out.write("{0} {1} {2}\n".format(v_id,v_size,p_id))
 
-            print('> workload ({0})'.format(MIN_REQUESTS[dim]))
             with open(get_filename_f201603(dim,inst,'workload'), 'w') as workload_out:
-                while total_requests < MIN_REQUESTS[dim]:
+                for mult in range(MULTIPLIER[dim]):
                     with open(get_filename(dim,inst,'workload')) as workload_in:
                         for w_in in workload_in:
                             w_split = w_in.split(' ')
                             w_time = int(w_split[0])
-                            w_d_id = int(w_split[1])
                             w_size = int(w_split[2])
                             w_orig = int(w_split[3])
-
-                            total_requests = total_requests + 1
-
-                            w_d_id = w_d_id % MAX_VIDEOS[dim]
+                            
+                            w_d_id = (mult * max_v_id) + int(w_split[1])
 
                             #print('{0} {1} {2} {3}'.format(w_time, w_refs, w_size, w_orig))
                             workload_out.write('{0} {1} {2} {3}\n'.format(w_time, w_d_id, w_size, w_orig))
