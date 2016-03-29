@@ -31,9 +31,15 @@ public class CloudCDN_low_0_f201603 extends Experiment {
 
             int maxEval = 40000;
             
+            /*
             problemParams = new Object[]{"CloudCDNSolutionf201603Type",
                 "/home/santiago/github/cloud-cdn/Instances/",
                 "/home/santiago/github/cloud-cdn/Instances/low/data.0/",
+                "BestQoS"};
+            */
+            problemParams = new Object[]{"CloudCDNSolutionf201603Type",
+                "../Instances/",
+                "../Instances/low/data.0/",
                 "BestQoS"};
 
             //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "BestQoS"};
