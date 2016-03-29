@@ -22,6 +22,11 @@
 #
 #
 
+# Transforma las instancias generadas por ProWGen multiplicandolas o 
+# fraccionandolas de forma de formar nuevas instancias con la cantidad
+# de videos y pedidos especificados en MAX_VIDEOS y MIN_REQUESTS.
+# Además agrega un número de proveedor de forma aleatoria entre 0 y NUM_PROV-1
+
 import random
 import os
 

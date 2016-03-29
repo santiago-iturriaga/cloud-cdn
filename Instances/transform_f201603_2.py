@@ -22,6 +22,13 @@
 #
 #
 
+# Transforma las instancias generadas por ProWGen multiplicandolas
+# tantas veces como MULTIPLIER para crear nuevas instancias manteniendo
+# la distribución original.
+
+# Además agrega un número de proveedor de forma aleatoria 
+# entre 0 y NUM_PROV-1
+
 import random
 import os
 
