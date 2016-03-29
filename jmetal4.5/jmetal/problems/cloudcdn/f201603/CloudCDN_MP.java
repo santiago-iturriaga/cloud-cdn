@@ -251,6 +251,7 @@ public class CloudCDN_MP extends Problem {
                 }
             }
             
+            /*
             if (DEBUG) {
                 System.out.println("IMPRIMIENDO DOCUMENTOS (TOP 10): ");
                 for (int j = 0; j < documentos_.size() && j < 10; j++) {
@@ -258,6 +259,7 @@ public class CloudCDN_MP extends Problem {
                             + documentos_.get(j).getDocSize() + " " + documentos_.get(j).getNumContenidos());
                 }
             }
+            */
 
             // ** CARGANDO REGIONES **//
             path = Paths.get(scenPath, NOMBRE_ARCHIVO_DE_REGIONES);
@@ -272,6 +274,7 @@ public class CloudCDN_MP extends Problem {
                                         .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1])));
             }
 
+            /*
             if (DEBUG) {
                 System.out.println("IMPRIMIENDO REGIONES: ");
                 for (int j = 0; j < regiones_.size(); j++) {
@@ -279,6 +282,7 @@ public class CloudCDN_MP extends Problem {
                             + regiones_.get(j).getRegNombre());
                 }
             }
+            */
 
             // ** CARGANDO DATACENTERS **//
             path = Paths.get(scenPath, NOMBRE_ARCHIVO_DE_DATACENTERS);
@@ -305,6 +309,7 @@ public class CloudCDN_MP extends Problem {
                                         .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[7]) / VM_RENTING_UPFRONT_STEPS));
             }
 
+            /*
             if (DEBUG) {
                 System.out.println("IMPRIMIENDO REGIONES DATACENTERS: ");
                 for (int j = 0; j < regionesDatacenters_.size(); j++) {
@@ -315,8 +320,8 @@ public class CloudCDN_MP extends Problem {
                             + " "
                             + regionesDatacenters_.get(j).getRegId());
                 }
-
             }
+            */
 
             // ** CARGANDO QOS **//
             path = Paths.get(scenPath, NOMBRE_ARCHIVO_DE_QOS);
@@ -348,6 +353,7 @@ public class CloudCDN_MP extends Problem {
                 sortedQoS_.get(i).sort(new BestQoSComparator());
             }
             
+            /*
             if (DEBUG) {
                 System.out.println("IMPRIMIENDO QOS: ");
                 for (int j = 0; j < qoS_.size(); j++) {
@@ -358,6 +364,7 @@ public class CloudCDN_MP extends Problem {
                     }
                 }
             }
+            */
 
             // ** CARGANDO REGIONES USUARIOS **//
             path = Paths.get(scenPath, NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS);
@@ -375,6 +382,7 @@ public class CloudCDN_MP extends Problem {
                                 .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2])));
             }
 
+            /*
             if (DEBUG) {
                 System.out.println("IMPRIMIENDO REGIONES USUARIOS: ");
                 for (int j = 0; j < regionesUsuarios_.size(); j++) {
@@ -383,6 +391,7 @@ public class CloudCDN_MP extends Problem {
                             + " " + regionesUsuarios_.get(j).getRegId());
                 }
             }
+            */
 
             int[] trafficHistogram = new int[TIME_HORIZON];
             for (int i = 0; i < TIME_HORIZON; i++) {
@@ -441,6 +450,7 @@ public class CloudCDN_MP extends Problem {
                 }
             }
 
+            /*
             if (DEBUG) {
                 System.out.println("IMPRIMIENDO TRAFICO (top 10): ");
                 for (int j = 0; j < trafico_.size() && j < 10; j++) {
@@ -450,6 +460,7 @@ public class CloudCDN_MP extends Problem {
                             + trafico_.get(j).getRegUsrId());
                 }
             }
+            */
             
             System.out.println("Total storage: " + totalStorageControl / 1024 + " GB");
             System.out.println("Total traffic: " + totalTrafficControl / 1024 + " GB");
