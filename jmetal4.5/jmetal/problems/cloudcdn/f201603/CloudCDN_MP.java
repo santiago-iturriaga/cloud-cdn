@@ -61,7 +61,7 @@ public class CloudCDN_MP extends Problem {
     static final public String NOMBRE_ARCHIVO_DE_REGIONES = "reg.0";
     static final public String NOMBRE_ARCHIVO_DE_DATACENTERS = "dc.1";
     static final public String NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS = "reg_users.0";
-    static final public String NOMBRE_ARCHIVO_DE_QOS = "qos.0";
+    static final public String NOMBRE_ARCHIVO_DE_QOS = "qos.1";
 
     protected Integer num_provedores_;
 

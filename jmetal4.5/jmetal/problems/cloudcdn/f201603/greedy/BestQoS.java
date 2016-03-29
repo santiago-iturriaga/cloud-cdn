@@ -82,7 +82,7 @@ public class BestQoS implements IGreedyRouting {
             }
 
             routingSummary[dcId]++;
-            totalQoS += t.getNumContenidos() * problem_.getQoS().get(t.getRegUsrId()).get(dcId).getQosMetric();
+            totalQoS += (t.getNumContenidos() * problem_.getQoS().get(t.getRegUsrId()).get(dcId).getQosMetric()) / problem_.getTrafico().size();
 
             //
             //=== VM allocation algorithm ==========================

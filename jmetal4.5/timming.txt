@@ -1,0 +1,3 @@
+40k evaluaciones
+
+low / 8 cores / 8 ejecuciones / intel = 40 mins
