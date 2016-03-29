@@ -14,7 +14,7 @@ import jmetal.experiments.util.Friedman;
  * Example of experiment. In particular four algorithms are compared when
  * solving four constrained problems.
  */
-public class CloudCDN_low_0_f2016031 extends Experiment {
+public class CloudCDN_high_0_f201603 extends Experiment {
 
     /**
      * Configures the algorithms in each independent run
@@ -33,7 +33,7 @@ public class CloudCDN_low_0_f2016031 extends Experiment {
             
             problemParams = new Object[]{"CloudCDNSolutionf201603Type",
                 "/home/santiago/github/cloud-cdn/Instances/",
-                "/home/santiago/github/cloud-cdn/Instances/low/data.0/",
+                "/home/santiago/github/cloud-cdn/Instances/high/data.0/",
                 "BestQoS"};
 
             //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "BestQoS"};
@@ -45,16 +45,16 @@ public class CloudCDN_low_0_f2016031 extends Experiment {
             algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
                     problemName, maxEval, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
-            Logger.getLogger(CloudCDN_low_0_f2016031.class.getName()).log(
+            Logger.getLogger(CloudCDN_high_0_f201603.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
     }
 
     public static void main(String[] args) throws JMException, IOException {
-        CloudCDN_low_0_f2016031 exp = new CloudCDN_low_0_f2016031();
+        CloudCDN_high_0_f201603 exp = new CloudCDN_high_0_f201603();
 
         // exp.experimentName_ = "CloudCDNStudy";
-        exp.experimentName_ = exp.getClass().getSimpleName() + "_low_0";
+        exp.experimentName_ = exp.getClass().getSimpleName() + "_high_0";
 
         //exp.algorithmNameList_ = new String[]{"SMSEMOA"};
         //exp.algorithmNameList_ = new String[]{"NSGAII"};
