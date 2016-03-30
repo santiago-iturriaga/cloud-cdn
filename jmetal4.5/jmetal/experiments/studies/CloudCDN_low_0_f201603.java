@@ -60,7 +60,7 @@ public class CloudCDN_low_0_f201603 extends Experiment {
         CloudCDN_low_0_f201603 exp = new CloudCDN_low_0_f201603();
 
         // exp.experimentName_ = "CloudCDNStudy";
-        exp.experimentName_ = exp.getClass().getSimpleName() + "_low_0";
+        exp.experimentName_ = exp.getClass().getSimpleName();
 
         //exp.algorithmNameList_ = new String[]{"SMSEMOA"};
         //exp.algorithmNameList_ = new String[]{"NSGAII"};
