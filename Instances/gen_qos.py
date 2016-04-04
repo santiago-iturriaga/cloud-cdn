@@ -54,6 +54,9 @@ def main():
 
     distances = []
 
+    min_dist = float('inf')
+    max_dist = 0.0
+
     with open(distance_file) as distf:
         for distl in distf:
             data_raw = distl.strip().split('\t')
@@ -62,7 +65,13 @@ def main():
             for d in data_raw:
                 data.append(float(d))
                 
+            min_dist = min([min_dist] + data)
+            max_dist = max([max_dist] + data)
+                
             distances.append(data)
+
+    #print(min_dist)
+    #print(max_dist)
 
     qos = []
 
@@ -73,9 +82,8 @@ def main():
             dc_reg = dc[1]
 
             avg_dist = distances[u_reg-1][dc_reg-1]
-            u_dc_qos = int(round((avg_dist + avg_dist * 0.05 * random.random()) * 5000)) + random.randint(5,10)
-
-            #print("{0} {1} {2} {3}".format(u_reg,dc_reg,avg_dist,u_dc_qos))
+            #u_dc_qos = int(round((avg_dist + avg_dist * 0.05 * random.random()) * 5000)) + random.randint(5,10)
+            u_dc_qos = ((avg_dist - min_dist) / (max_dist - min_dist)) + (random.random() * 0.1)
 
             qos.append((u[0], dc[0], u_dc_qos))
 

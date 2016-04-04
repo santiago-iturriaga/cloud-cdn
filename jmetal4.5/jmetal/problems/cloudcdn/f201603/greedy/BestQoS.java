@@ -92,7 +92,7 @@ public class BestQoS implements IGreedyRouting {
                 }
             }
 
-            routingSummary[dcId]++;
+            routingSummary[dcId] += t.getNumContenidos();
             totalQoS += (t.getNumContenidos() * problem_.getQoS().get(t.getRegUsrId()).get(dcId).getQosMetric()) / problem_.getTrafico().size();
 
             //

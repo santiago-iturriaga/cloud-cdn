@@ -62,7 +62,7 @@ public class CloudCDN_MP extends Problem {
     static final public String NOMBRE_ARCHIVO_DE_REGIONES = "reg.0";
     static final public String NOMBRE_ARCHIVO_DE_DATACENTERS = "dc.1";
     static final public String NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS = "reg_users.0";
-    static final public String NOMBRE_ARCHIVO_DE_QOS = "qos.1";
+    static final public String NOMBRE_ARCHIVO_DE_QOS = "qos.2";
 
     protected Integer num_provedores_;
 
@@ -457,6 +457,10 @@ public class CloudCDN_MP extends Problem {
                 }
             }
              */
+            
+            RegionDatacenter.TOTAL_STORAGE = totalStorageControl * getRegionesDatacenters().size();
+            RegionDatacenter.TOTAL_TRANSFER = totalTrafficControl;
+            
             System.out.println("Total storage: " + totalStorageControl / 1024 + " GB");
             System.out.println("Total traffic: " + totalTrafficControl / 1024 + " GB");
         } catch (Exception e) {
@@ -509,7 +513,8 @@ public class CloudCDN_MP extends Problem {
         double totalCost = 0.0;
 
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
-            totalCost += trafficSummary[i] * getRegionesDatacenters().get(i).transferPrice;
+            //totalCost += trafficSummary[i] * getRegionesDatacenters().get(i).transferPrice;
+            totalCost += getRegionesDatacenters().get(i).computeTransferCost(trafficSummary[i] * CONTENT_SIZE_MB);
         }
         totalCost = (totalCost * CONTENT_SIZE_MB) / 1024;
 
@@ -540,7 +545,8 @@ public class CloudCDN_MP extends Problem {
 
         double storageCost = 0.0;
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
-            storageCost += storageContents[i] * getRegionesDatacenters().get(i).storagePrice;
+            //storageCost += storageContents[i] * getRegionesDatacenters().get(i).storagePrice;
+            storageCost += getRegionesDatacenters().get(i).computeStorageCost(storageContents[i]);
         }
 
         return storageCost;
