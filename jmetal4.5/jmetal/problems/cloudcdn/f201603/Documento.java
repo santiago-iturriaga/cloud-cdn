@@ -31,19 +31,19 @@ public class Documento {
         this.docSize = docSize;
     }
 
-    int getProvId() {
+    public int getProvId() {
         return provId;
     }
 
-    void setProvId(int provId) {
+    public void setProvId(int provId) {
         this.provId = provId;
     }
 
-    int getNumContenidos() {
+    public int getNumContenidos() {
         return numContenidos;
     }
 
-    void setNumContenidos(int numContenidos) {
+    public void setNumContenidos(int numContenidos) {
         this.numContenidos = numContenidos;
     }
 }

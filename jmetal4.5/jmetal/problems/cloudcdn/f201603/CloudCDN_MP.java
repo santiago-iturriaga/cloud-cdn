@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -187,7 +188,7 @@ public class CloudCDN_MP extends Problem {
     public QoS getQoS(int regUsr, int regDC) {
         return qoS_.get(regUsr).get(regDC);
     }
-    
+
     public ArrayList<QoS> getSortedQoS(int regUsr) {
         return sortedQoS_.get(regUsr);
     }
@@ -250,7 +251,7 @@ public class CloudCDN_MP extends Problem {
                     documentos_.add(new Documento(docId, docSizeMB, numContenidos, provId));
                 }
             }
-            
+
             /*
             if (DEBUG) {
                 System.out.println("IMPRIMIENDO DOCUMENTOS (TOP 10): ");
@@ -259,8 +260,7 @@ public class CloudCDN_MP extends Problem {
                             + documentos_.get(j).getDocSize() + " " + documentos_.get(j).getNumContenidos());
                 }
             }
-            */
-
+             */
             // ** CARGANDO REGIONES **//
             path = Paths.get(scenPath, NOMBRE_ARCHIVO_DE_REGIONES);
             lineasArchivo = leerArchivo(path.toString());
@@ -282,8 +282,7 @@ public class CloudCDN_MP extends Problem {
                             + regiones_.get(j).getRegNombre());
                 }
             }
-            */
-
+             */
             // ** CARGANDO DATACENTERS **//
             path = Paths.get(scenPath, NOMBRE_ARCHIVO_DE_DATACENTERS);
             lineasArchivo = leerArchivo(path.toString());
@@ -321,8 +320,7 @@ public class CloudCDN_MP extends Problem {
                             + regionesDatacenters_.get(j).getRegId());
                 }
             }
-            */
-
+             */
             // ** CARGANDO QOS **//
             path = Paths.get(scenPath, NOMBRE_ARCHIVO_DE_QOS);
             lineasArchivo = leerArchivo(path.toString());
@@ -339,20 +337,20 @@ public class CloudCDN_MP extends Problem {
                 if (q.regUsrId >= qoS_.size()) {
                     qoS_.add(new HashMap<Integer, QoS>());
                 }
-                
+
                 qoS_.get(q.regUsrId).put(q.regDcId, q);
-   
+
                 if (q.regUsrId >= sortedQoS_.size()) {
                     sortedQoS_.add(new ArrayList<QoS>());
                 }
-                
+
                 sortedQoS_.get(q.regUsrId).add(q);
             }
 
-            for (int i=0; i<sortedQoS_.size(); i++) {
+            for (int i = 0; i < sortedQoS_.size(); i++) {
                 sortedQoS_.get(i).sort(new BestQoSComparator());
             }
-            
+
             /*
             if (DEBUG) {
                 System.out.println("IMPRIMIENDO QOS: ");
@@ -364,8 +362,7 @@ public class CloudCDN_MP extends Problem {
                     }
                 }
             }
-            */
-
+             */
             // ** CARGANDO REGIONES USUARIOS **//
             path = Paths.get(scenPath, NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS);
             lineasArchivo = leerArchivo(path.toString());
@@ -391,8 +388,7 @@ public class CloudCDN_MP extends Problem {
                             + " " + regionesUsuarios_.get(j).getRegId());
                 }
             }
-            */
-
+             */
             int[] trafficHistogram = new int[TIME_HORIZON];
             for (int i = 0; i < TIME_HORIZON; i++) {
                 trafficHistogram[i] = 0;
@@ -441,7 +437,7 @@ public class CloudCDN_MP extends Problem {
                     trafico_.add(aux);
                 }
             }
-            
+
             trafico_.sort(new TraficoComparator());
 
             for (int i = 0; i < TIME_HORIZON; i++) {
@@ -460,8 +456,7 @@ public class CloudCDN_MP extends Problem {
                             + trafico_.get(j).getRegUsrId());
                 }
             }
-            */
-            
+             */
             System.out.println("Total storage: " + totalStorageControl / 1024 + " GB");
             System.out.println("Total traffic: " + totalTrafficControl / 1024 + " GB");
         } catch (Exception e) {
@@ -489,7 +484,7 @@ public class CloudCDN_MP extends Problem {
             br = new BufferedReader(fr);
 
             String linea;
-            // leo hasta que no hay nada o hasta una linea vacia
+            // Leo hasta que no haya nada o hasta una linea vacía
             while ((linea = br.readLine()) != null && linea.length() != 0) {
                 lineas.add(linea);
             }
@@ -524,7 +519,7 @@ public class CloudCDN_MP extends Problem {
     private double computeStorageCost(Solution solution) {
         int dcCount = getRegionesDatacenters().size();
         int docCount = getDocumentos().size();
-        
+
         int[] storageContents = new int[dcCount];
         Binary storageVariables = CloudCDNSolutionf201603Type.GetDocStorageVariables(solution);
 
@@ -563,14 +558,13 @@ public class CloudCDN_MP extends Problem {
         return totalCost;
     }
 
-    @Override
-    public void evaluate(Solution solution) throws JMException {
+    public void evaluate(Solution solution, Optional<Integer> justProvider) throws JMException {
         try {
             double totalQoS;
             int[] reservedAllocation = new int[getRegionesDatacenters().size()];
             int[] onDemandAllocation = new int[getRegionesDatacenters().size()];
             int[] trafficSummary = new int[getRegionesDatacenters().size()];
-            totalQoS = router.Route(solution, trafficSummary, reservedAllocation, onDemandAllocation);
+            totalQoS = router.Route(solution, trafficSummary, reservedAllocation, onDemandAllocation, justProvider);
 
             double networkCost = computeNetworkCost(trafficSummary);
             double storageCost = computeStorageCost(solution);
@@ -589,5 +583,11 @@ public class CloudCDN_MP extends Problem {
             Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
             throw new JMException(e.getMessage());
         }
+    }
+
+    @Override
+    public void evaluate(Solution solution) throws JMException {
+        Optional<Integer> justProvId = Optional.empty();
+        evaluate(solution, justProvId);
     }
 }

@@ -7,6 +7,7 @@ package jmetal.problems.cloudcdn.f201603.greedy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jmetal.core.Solution;
@@ -32,7 +33,10 @@ public class RoundRobin implements IGreedyRouting {
         this.zeroes = new int[problem_.VM_RENTING_STEPS];
     }
 
-    public double Route(Solution solution, int[] routingSummary, int[] reservedAllocation, int[] onDemandAllocation) {
+    public double Route(Solution solution, int[] routingSummary, 
+            int[] reservedAllocation, int[] onDemandAllocation, 
+            Optional<Integer> justProvId) {
+        
         double totalQoS = 0.0;
 
         int numDC = problem_.getRegionesDatacenters().size();

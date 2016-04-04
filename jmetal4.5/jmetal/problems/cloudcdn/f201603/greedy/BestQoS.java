@@ -7,6 +7,7 @@ package jmetal.problems.cloudcdn.f201603.greedy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jmetal.core.Solution;
@@ -33,7 +34,10 @@ public class BestQoS implements IGreedyRouting {
     }
 
     @Override
-    public double Route(Solution solution, int[] routingSummary, int[] reservedAllocation, int[] onDemandAllocation) {
+    public double Route(Solution solution, int[] routingSummary, 
+            int[] reservedAllocation, int[] onDemandAllocation, 
+            Optional<Integer> justProvId) {
+
         double totalQoS = 0.0;
 
         int[][] vmNeeded;
@@ -57,15 +61,21 @@ public class BestQoS implements IGreedyRouting {
             int docId;
             docId = t.getDocId();
 
+            if (justProvId.isPresent()) {
+                if (problem_.getDocumentos().get(docId).getProvId() != justProvId.get().intValue()) {
+                    continue;
+                }
+            }
+            
             int dcId;
 
             ArrayList<QoS> regionQoS = problem_.getSortedQoS(t.getRegUsrId());
-            
+
             int bestIdx;
             bestIdx = 0;
 
             dcId = regionQoS.get(bestIdx).getRegDcId();
-            
+
             while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution, dcId, docId)) {
                 bestIdx++;
 
@@ -75,9 +85,10 @@ public class BestQoS implements IGreedyRouting {
                     bestIdx = 0;
                     dcId = regionQoS.get(0).getRegDcId();
                     CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, dcId, docId, true);
+
                     break;
                 } else {
-                    dcId = regionQoS.get(bestIdx).getRegDcId();        
+                    dcId = regionQoS.get(bestIdx).getRegDcId();
                 }
             }
 

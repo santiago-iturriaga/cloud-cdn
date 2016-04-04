@@ -7,6 +7,7 @@ package jmetal.problems.cloudcdn.f201603.greedy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jmetal.core.Solution;
@@ -33,7 +34,10 @@ public class CheapestComputing implements IGreedyRouting {
     }
 
     @Override
-    public double Route(Solution solution, int[] routingSummary, int[] reservedAllocation, int[] onDemandAllocation) {
+    public double Route(Solution solution, int[] routingSummary, 
+            int[] reservedAllocation, int[] onDemandAllocation, 
+            Optional<Integer> justProvId) {
+        
         double totalQoS = 0.0;
 
         ArrayList<RegionDatacenter> sortedDC = new ArrayList<>(problem_.getRegionesDatacenters());

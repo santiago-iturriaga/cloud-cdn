@@ -5,6 +5,7 @@
  */
 package jmetal.problems.cloudcdn.f201603.greedy;
 
+import java.util.Optional;
 import jmetal.core.Solution;
 
 /**
@@ -13,6 +14,8 @@ import jmetal.core.Solution;
  */
 public interface IGreedyRouting {
 
-    double Route(Solution solution, int[] routingSummary, int[] reservedAllocation, int[] onDemandAllocation);
+    double Route(Solution solution, int[] routingSummary, 
+            int[] reservedAllocation, int[] onDemandAllocation, 
+            Optional<Integer> justProvId);
     
 }
