@@ -36,13 +36,12 @@ public class CloudCDN_f201603_AnalyzeSol {
     public void Analyze() throws JMException, IOException {
         CloudCDN_MP problem;
         problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "../Instances/",
-                "../Instances/low/data.0/",
+                "Instances/",
+                "Instances/low/data.0/",
                 "BestQoS");
 
-        Path varFilePath = Paths.get("/home/santiago/github/cloud-cdn/jmetal4.5/results/"
-                + "CloudCDN_low_0_f201603/data/NSGAII/cloudcdn.f201603.CloudCDN_MP/VAR.0");
-
+        Path varFilePath = Paths.get("jmetal4.5/results/"
+                + "CloudCDN_low_0_f201603/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
         Stream<String> s = Files.lines(varFilePath);
         Optional<String> solString = s.findFirst();
 

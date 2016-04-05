@@ -31,9 +31,14 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
 
             int maxEval = 40000;
             
+            //problemParams = new Object[]{"CloudCDNSolutionf201603Type",
+            //    "/home/santiago/github/cloud-cdn/Instances/",
+            //    "/home/santiago/github/cloud-cdn/Instances/low/data.0/",
+            //    "BestQoS"};
+            
             problemParams = new Object[]{"CloudCDNSolutionf201603Type",
-                "/home/santiago/github/cloud-cdn/Instances/",
-                "/home/santiago/github/cloud-cdn/Instances/low/data.0/",
+                "Instances/",
+                "Instances/low/data.0/",
                 "BestQoS"};
 
             //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "BestQoS"};
@@ -68,20 +73,23 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
 
         int numberOfAlgorithms = exp.algorithmNameList_.length;
 
-        exp.experimentBaseDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/"
-                + exp.experimentName_;
-        exp.paretoFrontDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/data/paretoFronts";
+        //exp.experimentBaseDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/" + exp.experimentName_;
+        //exp.paretoFrontDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/data/paretoFronts";
+
+        exp.experimentBaseDirectory_ = "jmetal4.5/results/" + exp.experimentName_;
+        exp.paretoFrontDirectory_ = "jmetal4.5/results/data/paretoFronts";
+
         exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
-        exp.independentRuns_ = 1;
+        exp.independentRuns_ = 2;
 
         exp.initExperiment();
 
         // Run the experiments
         //int numberOfThreads;
-        exp.runExperiment(1);
+        exp.runExperiment(2);
         // exp.runExperiment(numberOfThreads = 4);
 
-        //exp.generateQualityIndicators();
+        exp.generateQualityIndicators();
 
         // Applying Friedman test
         /*Friedman test = new Friedman(exp);

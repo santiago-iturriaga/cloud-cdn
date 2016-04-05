@@ -57,11 +57,29 @@ public class RegionDatacenter {
     }
 
     public double computeStorageCost(double dataSize) {
-        return (this.storagePrice * dataSize) * (Math.log10((dataSize / TOTAL_STORAGE) * 10) * 0.08);
+        double discount;
+        double logfactor;
+        
+        logfactor = Math.log10((dataSize / TOTAL_STORAGE) * 10);
+        if (logfactor > 0)
+            discount = 1 - (logfactor * 0.08);
+        else
+            discount = 1;
+        
+        return (this.storagePrice * dataSize) * discount;
     }
 
     public double computeTransferCost(double dataSize) {
-        return (this.transferPrice * dataSize) * (Math.log10((dataSize / TOTAL_TRANSFER) * 10) * 0.2);
+        double discount;
+        double logfactor;
+        
+        logfactor = Math.log10((dataSize / TOTAL_TRANSFER) * 10);
+        if (logfactor > 0)
+            discount = 1 - (logfactor * 0.2);
+        else
+            discount = 1;
+        
+        return (this.transferPrice * dataSize) * discount;
     }
 
     public double computeVMCost(int numVM) {
