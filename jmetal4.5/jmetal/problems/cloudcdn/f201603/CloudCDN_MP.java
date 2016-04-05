@@ -564,12 +564,19 @@ public class CloudCDN_MP extends Problem {
         return totalCost;
     }
 
-    public void evaluate(Solution solution, Optional<Integer> justProvider) throws JMException {
+    public class EvaluateOutput {
+        public double NetworkCost;
+        public double StorageCost;
+        public double ComputingCost;
+    }
+    
+    public EvaluateOutput evaluate(Solution solution, Optional<Integer> justProvider, boolean genOutput) throws JMException {
         try {
             double totalQoS;
             int[] reservedAllocation = new int[getRegionesDatacenters().size()];
             int[] onDemandAllocation = new int[getRegionesDatacenters().size()];
             int[] trafficSummary = new int[getRegionesDatacenters().size()];
+            
             totalQoS = router.Route(solution, trafficSummary, reservedAllocation, onDemandAllocation, justProvider);
 
             double networkCost = computeNetworkCost(trafficSummary);
@@ -585,6 +592,16 @@ public class CloudCDN_MP extends Problem {
             if (solution.getNumberOfObjectives() > 1) {
                 solution.setObjective(1, totalQoS);
             }
+            
+            if (genOutput) {
+                EvaluateOutput output = new EvaluateOutput();
+                output.NetworkCost = networkCost;
+                output.StorageCost = storageCost;
+                output.ComputingCost = computingCost;
+                return output;
+            } else {
+                return null;
+            }
         } catch (Exception e) {
             Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
             throw new JMException(e.getMessage());
@@ -594,6 +611,6 @@ public class CloudCDN_MP extends Problem {
     @Override
     public void evaluate(Solution solution) throws JMException {
         Optional<Integer> justProvId = Optional.empty();
-        evaluate(solution, justProvId);
+        evaluate(solution, justProvId, false);
     }
 }

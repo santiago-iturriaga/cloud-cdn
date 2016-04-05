@@ -2,8 +2,8 @@ package jmetal.problems.cloudcdn.f201603;
 
 public class RegionDatacenter {
 
-    static double TOTAL_STORAGE;
-    static double TOTAL_TRANSFER;
+    public static double TOTAL_STORAGE;
+    public static double TOTAL_TRANSFER;
     
     int regDctId;
     String regNombre;
