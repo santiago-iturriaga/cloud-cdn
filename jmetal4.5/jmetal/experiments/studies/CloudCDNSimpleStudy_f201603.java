@@ -29,7 +29,7 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         try {
             Object[] problemParams;
 
-            int maxEval = 40000;
+            int maxEval = 10000;
             
             //problemParams = new Object[]{"CloudCDNSolutionf201603Type",
             //    "/home/santiago/github/cloud-cdn/Instances/",
