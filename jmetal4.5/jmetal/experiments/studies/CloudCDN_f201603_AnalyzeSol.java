@@ -29,8 +29,9 @@ import jmetal.util.JMException;
 public class CloudCDN_f201603_AnalyzeSol {
 
     private static final Logger LOG = Logger.getLogger(CloudCDN_f201603_AnalyzeSol.class.getName());
-    private final int NUM_PROVIDERS = 2;
+    //private final int NUM_PROVIDERS = 2;
     //private final int NUM_PROVIDERS = 4;
+    private final int NUM_PROVIDERS = 6;
 
     public CloudCDN_f201603_AnalyzeSol() {
 
@@ -39,6 +40,7 @@ public class CloudCDN_f201603_AnalyzeSol {
     public void Analyze() throws JMException, IOException {
         CloudCDN_MP problem;
   
+        /*
         problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
                 "Instances/",
                 "Instances/low/data.0/",
@@ -46,7 +48,7 @@ public class CloudCDN_f201603_AnalyzeSol {
 
         Path varFilePath = Paths.get("jmetal4.5/results/"
                 + "CloudCDN_low_0_f201603/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
-
+        */
         /*
         problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
                 "Instances/",
@@ -56,6 +58,15 @@ public class CloudCDN_f201603_AnalyzeSol {
         Path varFilePath = Paths.get("jmetal4.5/results/"
                 + "CloudCDN_med_0_f201603/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
         */
+        
+        problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
+                "Instances/",
+                "Instances/high/data.0/",
+                "BestQoS");
+
+        Path varFilePath = Paths.get("jmetal4.5/results/"
+                + "CloudCDN_high_0_f201603/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+        
         Stream<String> s = Files.lines(varFilePath);
 
         s.forEach((solString) -> {

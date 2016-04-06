@@ -33,14 +33,15 @@ public class CloudCDN_MP extends Problem {
     static final public long serialVersionUID = -6970983090454693518L;
     static final public Boolean DEBUG = true;
 
-    static final public double DOC_SIZE_AMP = 10.0; // Amplifies the document size
+    static final public double DOC_SIZE_AMP = 1.0; // Amplifies the document size
     static final public int TRAFF_AMP = 1; // Aplifies the traffic xTRAFF_AMP times
     static final public int MAX_DOCUMENTS = Integer.MAX_VALUE; // Limita la cantidad de contenidos sin importar la instancia
 
     static final public Double CONTENT_SIZE_MB = 2.0; // CONTENT_SIZE_MB = 2 MB
     // CR = VMs may serve up to VM_PROCESSING requests simultaneously
     //static final public int VM_PROCESSING = 512; // Amount theoretically served by 1GB ethernet connection
-    static final public int VM_PROCESSING = 256;
+    //static final public int VM_PROCESSING = 256;
+    static final public int VM_PROCESSING = 64;
 
     static final public int SECONDS_PER_TIMESTEP = 1;
     static final public int STORAGE_RENTING_STEPS = 3600 * 24 * 30 / SECONDS_PER_TIMESTEP; // Storage costs are considered monthly
