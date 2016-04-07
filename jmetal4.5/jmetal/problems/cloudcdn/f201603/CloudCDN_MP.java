@@ -46,16 +46,10 @@ public class CloudCDN_MP extends Problem {
     static final public int VM_PROCESSING = 32;
 
     static final public int SECONDS_PER_TIMESTEP = 1;
-    //static final public int TIME_HORIZON = 3600 * 4 / SECONDS_PER_TIMESTEP; // 4 hours
-    //static final public int TIME_HORIZON = (6 * (60 * 60)) / SECONDS_PER_TIMESTEP; // 6 hours
-    static final public int TIME_HORIZON = (12 * (60 * 60)) / SECONDS_PER_TIMESTEP; // 12 hours
-    //static final public int TIME_HORIZON = (24 * (60 * 60)) / SECONDS_PER_TIMESTEP; // 1 day
-    //static final public int TIME_HORIZON = (5 * 24 * (60 * 60)) / SECONDS_PER_TIMESTEP; // 5 days
-    
-    //static final public int STORAGE_RENTING_STEPS = 3600 * 24 * 30 / SECONDS_PER_TIMESTEP; // Storage costs are considered monthly
-    static final public int STORAGE_COST_FACTOR = (30 * 24 * (60 * 60)) / TIME_HORIZON; // Monthly storage costs are considered according the TIME_HORIZON
-    //static final public int VM_RENT_COST_FACTOR = TIME_HORIZON / (60 * 60); // Monthly storage costs are considered according the TIME_HORIZON
-    static final public int VM_RENTING_UPFRONT_FACTOR = (60 * 60) * 24 * 365 / TIME_HORIZON; // VMs are rented for 1 hour
+    public int TIME_HORIZON;
+
+    public double STORAGE_COST_FACTOR;
+    public double VM_RENTING_UPFRONT_FACTOR;
     
     static final public int VM_RENTING_STEPS = (60 * 60) / SECONDS_PER_TIMESTEP; // VMs are rented for 1 hour
 
@@ -103,7 +97,11 @@ public class CloudCDN_MP extends Problem {
 
     protected IGreedyRouting router = null;
 
-    public CloudCDN_MP(String solutionType, String scenPath, String instPath, String routingAlgorithm) throws JMException {
+    public CloudCDN_MP(String solutionType, String scenPath, String instPath, String routingAlgorithm, int time_horizon) throws JMException {
+        TIME_HORIZON = time_horizon;
+        STORAGE_COST_FACTOR = (double)TIME_HORIZON / (double)(30 * 24 * (60 * 60)); // Monthly storage costs are considered according the TIME_HORIZON
+        VM_RENTING_UPFRONT_FACTOR = (double)TIME_HORIZON / (double)((60 * 60) * 24 * 365); // VMs are rented for 1 hour
+        
         try {
             readProblem(scenPath, instPath);
         } catch (IOException e) {
@@ -309,7 +307,7 @@ public class CloudCDN_MP extends Problem {
                                 Integer.valueOf((linea
                                         .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]),
                                 Double.valueOf((linea
-                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[3]) / STORAGE_COST_FACTOR,
+                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[3]) * STORAGE_COST_FACTOR,
                                 Double.valueOf((linea
                                         .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[4]),
                                 Double.valueOf((linea
@@ -317,7 +315,7 @@ public class CloudCDN_MP extends Problem {
                                 Double.valueOf((linea
                                         .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[6]),
                                 Double.valueOf((linea
-                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[7]) / VM_RENTING_UPFRONT_FACTOR));
+                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[7]) * VM_RENTING_UPFRONT_FACTOR));
             }
 
             /*
