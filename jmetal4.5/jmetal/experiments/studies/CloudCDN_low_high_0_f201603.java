@@ -14,7 +14,7 @@ import jmetal.experiments.util.Friedman;
  * Example of experiment. In particular four algorithms are compared when
  * solving four constrained problems.
  */
-public class CloudCDN_low_low_0_f2016031 extends Experiment {
+public class CloudCDN_low_high_0_f201603 extends Experiment {
 
     /**
      * Configures the algorithms in each independent run
@@ -30,8 +30,8 @@ public class CloudCDN_low_low_0_f2016031 extends Experiment {
             Object[] problemParams;
 
             int maxEval = 40000;
-            int time_horizon = (96 * (60 * 60)); // 96 horas ~ 4 días
-            
+            int time_horizon = (12 * (60 * 60)); // 12 horas ~ 0.5 dias
+                    
             /*
             problemParams = new Object[]{"CloudCDNSolutionf201603Type",
                 "/home/santiago/github/cloud-cdn/Instances/",
@@ -53,13 +53,13 @@ public class CloudCDN_low_low_0_f2016031 extends Experiment {
             algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
                     problemName, maxEval, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
-            Logger.getLogger(CloudCDN_low_low_0_f2016031.class.getName()).log(
+            Logger.getLogger(CloudCDN_low_high_0_f201603.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
     }
 
     public static void main(String[] args) throws JMException, IOException {
-        CloudCDN_low_low_0_f2016031 exp = new CloudCDN_low_low_0_f2016031();
+        CloudCDN_low_high_0_f201603 exp = new CloudCDN_low_high_0_f201603();
 
         // exp.experimentName_ = "CloudCDNStudy";
         exp.experimentName_ = exp.getClass().getSimpleName();
