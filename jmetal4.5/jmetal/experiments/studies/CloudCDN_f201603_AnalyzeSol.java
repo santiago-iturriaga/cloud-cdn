@@ -180,6 +180,19 @@ public class CloudCDN_f201603_AnalyzeSol {
         Path varFilePath;
         int time_horizon;
 
+        System.out.println(" === LOW_VLOW ====================================================== ");
+        time_horizon = (96 * (60 * 60)); 
+        problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
+                "Instances/",
+                "Instances/low/data.0/",
+                "BestQoS",
+                time_horizon);
+
+        varFilePath = Paths.get("jmetal4.5/results/"
+                + "CloudCDN_low_vlow_0_f201603/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+
+        Analyze(problem, 2, varFilePath);
+        
         System.out.println(" === LOW_LOW ======================================================= ");
         time_horizon = (96 * (60 * 60)); 
         problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",

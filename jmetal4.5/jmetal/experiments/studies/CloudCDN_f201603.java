@@ -14,7 +14,17 @@ import jmetal.experiments.util.Friedman;
  * Example of experiment. In particular four algorithms are compared when
  * solving four constrained problems.
  */
-public class CloudCDNSimpleStudy_f201603 extends Experiment {
+public class CloudCDN_f201603 extends Experiment {
+
+    private int instance_number;
+    private String instance_type;
+    private int time_horizon;
+
+    public CloudCDN_f201603(String instance_type, int instance_number, int time_horizon) {
+        this.instance_number = instance_number;
+        this.instance_type = instance_type;
+        this.time_horizon = time_horizon;
+    }
 
     /**
      * Configures the algorithms in each independent run
@@ -29,17 +39,19 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         try {
             Object[] problemParams;
 
+            //int maxEval = 60000;
             int maxEval = 10000;
-            int time_horizon = (12 * (60 * 60)); // 12 horas ~ 0.5 dias
-            
-            //problemParams = new Object[]{"CloudCDNSolutionf201603Type",
-            //    "/home/santiago/github/cloud-cdn/Instances/",
-            //    "/home/santiago/github/cloud-cdn/Instances/low/data.0/",
-            //    "BestQoS"};
-            
+            //int time_horizon = (96 * (60 * 60)); // 96 horas ~ 4 días
+
+            /*
             problemParams = new Object[]{"CloudCDNSolutionf201603Type",
-                "Instances/",
-                "Instances/low/data.0/",
+                "/home/santiago/github/cloud-cdn/Instances/",
+                "/home/santiago/github/cloud-cdn/Instances/low/data.0/",
+                "BestQoS"};
+             */
+            problemParams = new Object[]{"CloudCDNSolutionf201603Type",
+                "../Instances/",
+                "../Instances/" + instance_type + "/data." + instance_number + "/",
                 "BestQoS",
                 time_horizon};
 
@@ -52,44 +64,49 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
             //algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
             //        problemName, maxEval, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
-            Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
+            Logger.getLogger(CloudCDN_f201603.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
     }
 
     public static void main(String[] args) throws JMException, IOException {
-        CloudCDNSimpleStudy_f201603 exp = new CloudCDNSimpleStudy_f201603();
+        int inst_number = 0;
+        String inst_type = "";
+        int time_horizon = 0;
 
-        // exp.experimentName_ = "CloudCDNStudy";
-        exp.experimentName_ = exp.getClass().getSimpleName() + "_low_0";
+        if (args.length != 3) {
+            System.out.println("Error! Parametros incorrectos.");
+            System.exit(-1);
+        } else {
+            inst_type = args[0].trim().toLowerCase();
+            inst_number = Integer.parseInt(args[1].trim());
+            time_horizon = Integer.parseInt(args[2].trim());
+            
+            System.out.println("Instance Type  : " + inst_type);
+            System.out.println("Instance Number: " + inst_number);
+            System.out.println("Time Horizon   : " + time_horizon);
+        }
 
+        inst_number = Integer.parseInt(args[1]);
+
+        CloudCDN_f201603 exp = new CloudCDN_f201603(inst_type, inst_number, time_horizon);
+
+        exp.experimentName_ = exp.getClass().getSimpleName() + "_" + inst_type + "_" + inst_number + "_" + time_horizon;
         exp.algorithmNameList_ = new String[]{"SMSEMOA"};
-        //exp.algorithmNameList_ = new String[]{"NSGAII"};
-        //exp.algorithmNameList_ = new String[]{"SMSEMOA", "NSGAII"};
-
         exp.problemList_ = new String[]{"cloudcdn.f201603.CloudCDN_MP"};
         exp.paretoFrontFile_ = new String[]{"CloudCDN_MP.pf"};
-
-        //exp.indicatorList_ = new String[]{};
         exp.indicatorList_ = new String[]{"EPSILON", "SPREAD", "HV"};
-
+        exp.experimentBaseDirectory_ = "results/" + exp.experimentName_;
+        exp.paretoFrontDirectory_ = "results/data/paretoFronts";
         int numberOfAlgorithms = exp.algorithmNameList_.length;
-
-        //exp.experimentBaseDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/" + exp.experimentName_;
-        //exp.paretoFrontDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/data/paretoFronts";
-
-        exp.experimentBaseDirectory_ = "jmetal4.5/results/" + exp.experimentName_;
-        exp.paretoFrontDirectory_ = "jmetal4.5/results/data/paretoFronts";
-
         exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
-        exp.independentRuns_ = 2;
-
+        exp.independentRuns_ = 30;
+        //exp.independentRuns_ = 2;
         exp.initExperiment();
-
+        
         // Run the experiments
-        //int numberOfThreads;
-        exp.runExperiment(2);
-        // exp.runExperiment(numberOfThreads = 4);
+        exp.runExperiment(6);
+        //exp.runExperiment(2);
 
         exp.generateQualityIndicators();
 
@@ -100,7 +117,7 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         test.executeTest("SPREAD");*/
 
         // Generate latex tables
-        //exp.generateLatexTables();
+        exp.generateLatexTables();
 
         // Configure the R scripts to be generated
         /*int rows;
