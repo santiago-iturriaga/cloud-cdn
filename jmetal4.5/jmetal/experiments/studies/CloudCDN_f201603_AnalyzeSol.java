@@ -53,7 +53,8 @@ public class CloudCDN_f201603_AnalyzeSol {
 
                 for (int dc = 0; dc < problem.getRegionesDatacenters().size(); dc++) {
                     try {
-                        vars0.setValue(dc, Integer.parseInt(parts[dc]));
+                        //vars0.setValue(dc, Integer.parseInt(parts[dc]));
+                        vars0.setValue(dc, 0);
                     } catch (JMException ex) {
                         Logger.getLogger(CloudCDN_f201603_AnalyzeSol.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -126,51 +127,39 @@ public class CloudCDN_f201603_AnalyzeSol {
         Path varFilePath;
         int time_horizon = (12 * (60 * 60)); // 12 horas ~ 0.5 dias
 
-        /*
-            System.out.println(" === SAMPLE ======================================================= ");
-            problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                    "Instances/",
-                    "Instances/low/data.0/",
-                    "BestQoS");
-
-            varFilePath = Paths.get("jmetal4.5/results/"
-                    + "CloudCDNSimpleStudy_f201603_low_0/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
-
-            analyzer.Analyze(problem, varFilePath);
-         */
         System.out.println(" === LOW ======================================================= ");
         problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "Instances/",
-                "Instances/low/data.0/",
+                "../Instances/",
+                "../Instances/low/data.0/",
                 "BestQoS",
                 time_horizon);
 
-        varFilePath = Paths.get("jmetal4.5/results/"
-                + "CloudCDN_low_0_f201603/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+        varFilePath = Paths.get("results/"
+                + "CloudCDN_f201603_low_0_43200/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
 
         Analyze(problem, 2, varFilePath);
 
         System.out.println(" === MED ======================================================= ");
         problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "Instances/",
-                "Instances/medium/data.0/",
+                "../Instances/",
+                "../Instances/medium/data.0/",
                 "BestQoS",
                 time_horizon);
 
-        varFilePath = Paths.get("jmetal4.5/results/"
-                + "CloudCDN_med_0_f201603/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+        varFilePath = Paths.get("results/"
+                + "CloudCDN_f201603_medium_0_43200/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
 
         Analyze(problem, 4, varFilePath);
 
         System.out.println(" === HIGH ====================================================== ");
         problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "Instances/",
-                "Instances/high/data.0/",
+                "../Instances/",
+                "../Instances/high/data.0/",
                 "BestQoS",
                 time_horizon);
 
-        varFilePath = Paths.get("jmetal4.5/results/"
-                + "CloudCDN_high_0_f201603/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+        varFilePath = Paths.get("results/"
+                + "CloudCDN_f201603_high_0_43200/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
 
         Analyze(problem, 6, varFilePath);
     }
@@ -178,57 +167,52 @@ public class CloudCDN_f201603_AnalyzeSol {
     public void differentIntensity() throws JMException, IOException {
         CloudCDN_MP problem;
         Path varFilePath;
-        int time_horizon;
 
-        System.out.println(" === LOW_VLOW ====================================================== ");
-        time_horizon = (96 * (60 * 60)); 
+        System.out.println(" === LOW_43200 ====================================================== ");
         problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "Instances/",
-                "Instances/low/data.0/",
+                "../Instances/",
+                "../Instances/low/data.0/",
                 "BestQoS",
-                time_horizon);
+                43200);
 
-        varFilePath = Paths.get("jmetal4.5/results/"
-                + "CloudCDN_low_vlow_0_f201603/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+        varFilePath = Paths.get("results/"
+                + "CloudCDN_f201603_low_0_43200/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
 
         Analyze(problem, 2, varFilePath);
         
-        System.out.println(" === LOW_LOW ======================================================= ");
-        time_horizon = (96 * (60 * 60)); 
+        System.out.println(" === LOW_86400 ======================================================= ");
         problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "Instances/",
-                "Instances/low/data.0/",
+                "../Instances/",
+                "../Instances/low/data.0/",
                 "BestQoS",
-                time_horizon);
+                86400);
 
-        varFilePath = Paths.get("jmetal4.5/results/"
-                + "CloudCDN_low_low_0_f201603/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+        varFilePath = Paths.get("results/"
+                + "CloudCDN_f201603_low_0_86400/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
 
         Analyze(problem, 2, varFilePath);
 
-        System.out.println(" === LOW_MED ======================================================= ");
-        time_horizon = (24 * (60 * 60));
+        System.out.println(" === LOW_172800 ======================================================= ");
         problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "Instances/",
-                "Instances/low/data.0/",
+                "../Instances/",
+                "../Instances/low/data.0/",
                 "BestQoS",
-                time_horizon);
+                172800);
 
-        varFilePath = Paths.get("jmetal4.5/results/"
-                + "CloudCDN_low_med_0_f201603/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+        varFilePath = Paths.get("results/"
+                + "CloudCDN_f201603_low_0_172800/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
 
         Analyze(problem, 2, varFilePath);
 
-        System.out.println(" === LOW_HIGH ====================================================== ");
-        time_horizon = (12 * (60 * 60));
+        System.out.println(" === LOW_345600 ====================================================== ");
         problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "Instances/",
-                "Instances/low/data.0/",
+                "../Instances/",
+                "../Instances/low/data.0/",
                 "BestQoS",
-                time_horizon);
+                345600);
 
-        varFilePath = Paths.get("jmetal4.5/results/"
-                + "CloudCDN_low_high_0_f201603/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+        varFilePath = Paths.get("results/"
+                + "CloudCDN_f201603_low_0_345600/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
 
         Analyze(problem, 2, varFilePath);
     }
