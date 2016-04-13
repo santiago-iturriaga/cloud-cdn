@@ -38,9 +38,10 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
             //    "BestQoS"};
             
             problemParams = new Object[]{"CloudCDNSolutionf201603Type",
-                "Instances/",
-                "Instances/low/data.0/",
-                "BestQoS",
+                "../Instances/",
+                "../Instances/low/data.0/",
+                /*"BestQoS",*/
+                "BestQoSSecure",
                 time_horizon};
 
             //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "BestQoS"};
@@ -78,8 +79,8 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         //exp.experimentBaseDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/" + exp.experimentName_;
         //exp.paretoFrontDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/data/paretoFronts";
 
-        exp.experimentBaseDirectory_ = "jmetal4.5/results/" + exp.experimentName_;
-        exp.paretoFrontDirectory_ = "jmetal4.5/results/data/paretoFronts";
+        exp.experimentBaseDirectory_ = "results/" + exp.experimentName_;
+        exp.paretoFrontDirectory_ = "results/data/paretoFronts";
 
         exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
         exp.independentRuns_ = 2;

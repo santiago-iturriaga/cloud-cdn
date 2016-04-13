@@ -121,6 +121,24 @@ public class CloudCDN_f201603_AnalyzeSol {
                     + " " + output.NetworkCost + " " + output.StorageCost + " " + output.ComputingCost);
         });
     }
+    
+    public void simple() throws JMException, IOException {
+        CloudCDN_MP problem;
+        Path varFilePath;
+        int time_horizon = (12 * (60 * 60)); // 12 horas ~ 0.5 dias
+
+        System.out.println(" === LOW ======================================================= ");
+        problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
+                "../Instances/",
+                "../Instances/low/data.0/",
+                "BestQoS",
+                time_horizon);
+
+        varFilePath = Paths.get("results/"
+                + "CloudCDNSimpleStudy_f201603_low_0/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+
+        Analyze(problem, 2, varFilePath);
+    }
 
     public void differentBulk() throws JMException, IOException {
         CloudCDN_MP problem;
@@ -222,8 +240,9 @@ public class CloudCDN_f201603_AnalyzeSol {
             CloudCDN_f201603_AnalyzeSol analyzer;
             analyzer = new CloudCDN_f201603_AnalyzeSol();
 
+            analyzer.simple();
             //analyzer.differentBulk();
-            analyzer.differentIntensity();
+            //analyzer.differentIntensity();
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
