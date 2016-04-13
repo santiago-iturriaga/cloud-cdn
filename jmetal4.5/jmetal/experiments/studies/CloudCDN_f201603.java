@@ -39,8 +39,8 @@ public class CloudCDN_f201603 extends Experiment {
         try {
             Object[] problemParams;
 
-            //int maxEval = 60000;
-            int maxEval = 10000;
+            int maxEval = 60000;
+            //int maxEval = 10000;
             //int time_horizon = (96 * (60 * 60)); // 96 horas ~ 4 días
 
             /*
@@ -52,7 +52,7 @@ public class CloudCDN_f201603 extends Experiment {
             problemParams = new Object[]{"CloudCDNSolutionf201603Type",
                 "../Instances/",
                 "../Instances/" + instance_type + "/data." + instance_number + "/",
-                "BestQoS",
+                "BestQoSSecure",
                 time_horizon};
 
             //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "BestQoS"};
@@ -105,7 +105,7 @@ public class CloudCDN_f201603 extends Experiment {
         exp.initExperiment();
         
         // Run the experiments
-        exp.runExperiment(6);
+        exp.runExperiment(7);
         //exp.runExperiment(2);
 
         exp.generateQualityIndicators();

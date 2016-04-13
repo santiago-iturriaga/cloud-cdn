@@ -35,13 +35,15 @@ public class CloudCDN_MP extends Problem {
     static final public Boolean DEBUG = true;
 
     //static final public double DOC_SIZE_AMP = 1.0; // Amplifies the document size
-    //static final public double DOC_SIZE_AMP = 3.0; // Amplifies the document size
-    static final public double DOC_SIZE_AMP = 15.0; // Amplifies the document size
+    static final public double DOC_SIZE_AMP = 3.0; // Amplifies the document size
+    //static final public double DOC_SIZE_AMP = 10.0; // Amplifies the document size
+    //static final public double DOC_SIZE_AMP = 15.0; // Amplifies the document size
     static final public int TRAFF_AMP = 1; // Aplifies the traffic xTRAFF_AMP times
     static final public int MAX_DOCUMENTS = Integer.MAX_VALUE; // Limita la cantidad de contenidos sin importar la instancia
 
-    //static final public Double CONTENT_SIZE_MB = 2.0; // CONTENT_SIZE_MB = 2 MB
     static final public Double CONTENT_SIZE_MB = 0.25; // CONTENT_SIZE_MB = 2 MB
+    //static final public Double CONTENT_SIZE_MB = 0.5; // CONTENT_SIZE_MB = 2 MB
+    //static final public Double CONTENT_SIZE_MB = 2.0; // CONTENT_SIZE_MB = 2 MB
     //VMs may serve up to VM_PROCESSING requests simultaneously
     //static final public int VM_PROCESSING = 512; // Amount theoretically served by 1GB ethernet connection
     //static final public int VM_PROCESSING = 256;
@@ -96,6 +98,12 @@ public class CloudCDN_MP extends Problem {
 
     protected IGreedyRouting router = null;
 
+    // === Routing aux variables
+    public int[][][] vmNeeded;
+    public int[][][] vmOverflow;
+    public int[][] vmMaxNeeded;
+    public int[][] vmMaxOverflow;
+    // =========================
     public CloudCDN_MP(String solutionType, String scenPath, String instPath, String routingAlgorithm, int time_horizon) throws JMException {
         TIME_HORIZON = time_horizon;
         // Monthly storage costs are considered according the TIME_HORIZON
@@ -149,6 +157,11 @@ public class CloudCDN_MP extends Problem {
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
             RIUpperLimits_[i] = upperVMLimit;
         }
+
+        vmNeeded = new int[getRegionesDatacenters().size()][getNumProvedores()][CloudCDN_MP.VM_RENTING_STEPS];
+        vmOverflow = new int[getRegionesDatacenters().size()][getNumProvedores()][CloudCDN_MP.VM_RENTING_STEPS];
+        vmMaxNeeded = new int[getRegionesDatacenters().size()][getNumProvedores()];
+        vmMaxOverflow = new int[getRegionesDatacenters().size()][getNumProvedores()];
 
         if (routingAlgorithm.compareTo("CheapestNetwork") == 0) {
             System.out.println("Greedy routing: CheapestNetwork");
@@ -239,7 +252,7 @@ public class CloudCDN_MP extends Problem {
                 docSizeMB = DOC_SIZE_AMP
                         * Double.valueOf((linea
                                 .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1])
-                        / (1024 * 1024);
+                        / (1024.0 * 1024.0);
 
                 int numContenidos;
                 numContenidos = (int) Math.ceil((double) docSizeMB / (double) CONTENT_SIZE_MB);
@@ -468,6 +481,9 @@ public class CloudCDN_MP extends Problem {
                 }
             }
              */
+            System.out.println("Total documents: " + getDocumentos().size());
+            System.out.println("Total requests: " + getTrafico().size());
+
             RegionDatacenter.TOTAL_STORAGE = totalStorageControl / 1024;
             RegionDatacenter.TOTAL_TRANSFER = totalTrafficControl / 1024;
 
@@ -592,7 +608,7 @@ public class CloudCDN_MP extends Problem {
             int[] trafficSummary = new int[getRegionesDatacenters().size()];
 
             totalQoS = router.Route(solution, trafficSummary, reservedAllocation, onDemandAllocation, justProvider);
-            
+
             double networkCost = computeNetworkCost(trafficSummary);
             double storageCost = computeStorageCost(solution);
             double computingCost = computeComputingCost(solution, reservedAllocation, onDemandAllocation);

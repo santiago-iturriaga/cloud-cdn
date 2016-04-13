@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jmetal.experiments.util.Friedman;
+import jmetal.util.PseudoRandom;
+import jmetal.util.RandomGenerator;
 
 /**
  * Example of experiment. In particular four algorithms are compared when
@@ -30,6 +32,7 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
             Object[] problemParams;
 
             int maxEval = 10000;
+            //int maxEval = 200;
             int time_horizon = (12 * (60 * 60)); // 12 horas ~ 0.5 dias
             
             //problemParams = new Object[]{"CloudCDNSolutionf201603Type",
@@ -83,16 +86,19 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         exp.paretoFrontDirectory_ = "results/data/paretoFronts";
 
         exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
-        exp.independentRuns_ = 2;
+        exp.independentRuns_ = 1;
 
         exp.initExperiment();
 
+        /* Init random with same seed */
+        PseudoRandom.setRandomGenerator(new RandomGenerator(0.0));
+        
         // Run the experiments
         //int numberOfThreads;
-        exp.runExperiment(2);
+        exp.runExperiment(1);
         // exp.runExperiment(numberOfThreads = 4);
 
-        exp.generateQualityIndicators();
+        //exp.generateQualityIndicators();
 
         // Applying Friedman test
         /*Friedman test = new Friedman(exp);

@@ -27,10 +27,9 @@ public class BestQoSSecure implements IGreedyRouting {
 
     private final CloudCDN_MP problem_;
     private final int[] zeroes;
-
-    private static ThreadLocal<int[][][]> vmNeededThreaded = new ThreadLocal<>();
-    private static ThreadLocal<int[][][]> vmOverflowThreaded = new ThreadLocal<>();
     
+    //private static ThreadLocal<int[][][]> vmNeededThreaded = new ThreadLocal<>();
+    //private static ThreadLocal<int[][][]> vmOverflowThreaded = new ThreadLocal<>();
     public BestQoSSecure(CloudCDN_MP problem) {
         this.problem_ = problem;
         this.zeroes = new int[problem_.VM_RENTING_STEPS];
@@ -42,33 +41,31 @@ public class BestQoSSecure implements IGreedyRouting {
             Optional<Integer> justProvId) {
 
         double totalQoS = 0.0;
-        
-        if (vmNeededThreaded.get() == null) {
-            vmNeededThreaded.set(new int[problem_.getRegionesDatacenters().size()][problem_.getNumProvedores()][CloudCDN_MP.VM_RENTING_STEPS]);
-        }
+
+        //if (vmNeededThreaded.get() == null) {
+        //    vmNeededThreaded.set(new int[problem_.getRegionesDatacenters().size()][problem_.getNumProvedores()][CloudCDN_MP.VM_RENTING_STEPS]);
+        //}
         int[][][] vmNeeded;
-        vmNeeded = vmNeededThreaded.get();
-        
-        if (vmOverflowThreaded.get() == null) {
-            vmOverflowThreaded.set(new int[problem_.getRegionesDatacenters().size()][problem_.getNumProvedores()][CloudCDN_MP.VM_RENTING_STEPS]);
-        }
+        //vmNeeded = vmNeededThreaded.get();
+        vmNeeded = problem_.vmNeeded;
+
+        //if (vmOverflowThreaded.get() == null) {
+        //    vmOverflowThreaded.set(new int[problem_.getRegionesDatacenters().size()][problem_.getNumProvedores()][CloudCDN_MP.VM_RENTING_STEPS]);
+        //}
         int[][][] vmOverflow;
-        vmOverflow = vmOverflowThreaded.get();
-        
-        for (int d = 0; d < problem_.getRegionesDatacenters().size(); d++) {
-            for (int h = 0; h < problem_.getNumProvedores(); h++) {
-                System.arraycopy(zeroes, 0, vmNeeded[d][h], 0, problem_.VM_RENTING_STEPS);
-                System.arraycopy(zeroes, 0, vmOverflow[d][h], 0, problem_.VM_RENTING_STEPS);
-            }
-        }
-        
-        //int[][] vmMaxNeeded;
+        //vmOverflow = vmOverflowThreaded.get();
+        vmOverflow = problem_.vmOverflow;
+
+        int[][] vmMaxNeeded, vmMaxOverflow;
         //vmMaxNeeded = new int[problem_.getRegionesDatacenters().size()][problem_.getNumProvedores()];
-        
+        //vmMaxOverflow = new int[problem_.getRegionesDatacenters().size()][problem_.getNumProvedores()];
+        vmMaxNeeded = problem_.vmMaxNeeded;
+        vmMaxOverflow = problem_.vmMaxOverflow;
+
+        ResetArrays(vmNeeded, vmOverflow, vmMaxNeeded, vmMaxOverflow);
+
         int lowerBound;
         lowerBound = 0;
-
-        int neededVMs;
 
         for (int i = 0; i < problem_.getTrafico().size(); i++) {
             //
@@ -90,29 +87,7 @@ public class BestQoSSecure implements IGreedyRouting {
             }
 
             int dcId;
-
-            ArrayList<QoS> regionQoS = problem_.getSortedQoS(t.getRegUsrId());
-
-            int bestIdx;
-            bestIdx = 0;
-
-            dcId = regionQoS.get(bestIdx).getRegDcId();
-
-            while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution, dcId, docId)) {
-                bestIdx++;
-
-                if (bestIdx >= regionQoS.size()) {
-                    // All documents must be assigned.
-                    // TODO: considerar otras alternativas a la no factibilidad.
-                    bestIdx = 0;
-                    dcId = regionQoS.get(0).getRegDcId();
-                    CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, dcId, docId, true);
-
-                    break;
-                } else {
-                    dcId = regionQoS.get(bestIdx).getRegDcId();
-                }
-            }
+            dcId = RouteCurrentRequest(solution, t);
 
             routingSummary[dcId] += t.getNumContenidos();
             totalQoS += (t.getNumContenidos() * problem_.getQoS().get(t.getRegUsrId()).get(dcId).getQosMetric()) / problem_.getTrafico().size();
@@ -124,39 +99,8 @@ public class BestQoSSecure implements IGreedyRouting {
             currStep = t.getReqTime() - lowerBound;
 
             if (currStep > problem_.VM_RENTING_STEPS) {
-                for (int d = 0; d < problem_.getRegionesDatacenters().size(); d++) {
-                    //System.arraycopy(zeroes, 0, vmMaxNeeded[d], 0, problem_.getNumProvedores());
-                    
-                    neededVMs = 0;
-                    for (int h = 0; h < problem_.getNumProvedores(); h++) {
-                        int maxDemand;
-                        maxDemand = 0;
-
-                        for (int j = 0; j < problem_.VM_RENTING_STEPS; j++) {
-                            if (vmNeeded[d][h][j] > maxDemand) {
-                                maxDemand = vmNeeded[d][h][j];
-                            }
-                        }
-
-                        if (maxDemand > 0) {
-                            neededVMs += (int) Math.ceil((double) maxDemand / (double) problem_.VM_PROCESSING);
-                        }
-                        
-                        System.arraycopy(vmOverflow[d][h], 0, vmNeeded[d][h], 0, problem_.VM_RENTING_STEPS);
-                        System.arraycopy(zeroes, 0, vmOverflow[d][h], 0, problem_.VM_RENTING_STEPS);
-                    }
-
-                    int rentedVMs;
-                    try {
-                        rentedVMs = CloudCDNSolutionf201603Type.GetRIVariables(solution).getValue(d);
-                    } catch (JMException ex) {
-                        Logger.getLogger(BestQoSSecure.class.getName()).log(Level.SEVERE, null, ex);
-                        rentedVMs = 0;
-                    }
-
-                    reservedAllocation[d] += Math.min(rentedVMs, neededVMs);
-                    onDemandAllocation[d] += Math.max(0, neededVMs - rentedVMs);
-                }
+                NextRentBatch(solution, vmNeeded, vmOverflow, vmMaxNeeded, vmMaxOverflow,
+                        reservedAllocation, onDemandAllocation);
 
                 while (currStep > problem_.VM_RENTING_STEPS) {
                     lowerBound += problem_.VM_RENTING_STEPS;
@@ -164,15 +108,124 @@ public class BestQoSSecure implements IGreedyRouting {
                 }
             }
 
-            for (int len = 0; len < t.getNumContenidos(); len++) {
-                if (currStep + len < problem_.VM_RENTING_STEPS) {
-                    vmNeeded[dcId][provId][currStep + len]++;
-                } else {
-                    vmOverflow[dcId][provId][currStep + len - problem_.VM_RENTING_STEPS]++;
-                }
-            }
+            AccountCurrentRequest(t, dcId, provId, currStep,
+                    vmNeeded, vmOverflow, vmMaxNeeded, vmMaxOverflow);
         }
 
         return totalQoS;
+    }
+
+    private void ResetArrays(int[][][] vmNeeded, int[][][] vmOverflow,
+            int[][] vmMaxNeeded, int[][] vmMaxOverflow) {
+
+        for (int d = 0; d < problem_.getRegionesDatacenters().size(); d++) {
+            for (int h = 0; h < problem_.getNumProvedores(); h++) {
+                System.arraycopy(zeroes, 0, vmNeeded[d][h], 0, problem_.VM_RENTING_STEPS);
+                System.arraycopy(zeroes, 0, vmOverflow[d][h], 0, problem_.VM_RENTING_STEPS);
+            }
+        }
+
+        for (int d = 0; d < problem_.getRegionesDatacenters().size(); d++) {
+            System.arraycopy(zeroes, 0, vmMaxNeeded[d], 0, problem_.getNumProvedores());
+            System.arraycopy(zeroes, 0, vmMaxOverflow[d], 0, problem_.getNumProvedores());
+        }
+    }
+
+    private int RouteCurrentRequest(Solution solution, Trafico t) {
+        int docId = t.getDocId();
+
+        ArrayList<QoS> regionQoS = problem_.getSortedQoS(t.getRegUsrId());
+
+        int bestIdx;
+        bestIdx = 0;
+
+        int dcId;
+        dcId = regionQoS.get(bestIdx).getRegDcId();
+
+        while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution, dcId, docId)) {
+            bestIdx++;
+
+            if (bestIdx >= regionQoS.size()) {
+                // All documents must be assigned.
+                // TODO: considerar otras alternativas a la no factibilidad.
+                dcId = regionQoS.get(0).getRegDcId();
+                CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, dcId, docId, true);
+                return dcId;
+            }
+        }
+
+        return dcId;
+    }
+
+    private void AccountCurrentRequest(Trafico t, int dcId, int provId, int currStep,
+            int[][][] vmNeeded, int[][][] vmOverflow,
+            int[][] vmMaxNeeded, int[][] vmMaxOverflow) {
+
+        int time;
+
+        int contentsInCurrStep;
+        contentsInCurrStep = t.getNumContenidos();
+
+        int contentsInNextStep;
+        contentsInNextStep = 0;
+
+        if (currStep + contentsInCurrStep > problem_.VM_RENTING_STEPS) {
+            contentsInCurrStep = problem_.VM_RENTING_STEPS - currStep;
+            contentsInNextStep = t.getNumContenidos() - contentsInCurrStep;
+
+            if (contentsInNextStep > problem_.VM_RENTING_STEPS) {
+                System.out.println("DANGER!");
+            }
+        }
+
+        for (int len = 0; len < contentsInCurrStep; len++) {
+            time = currStep + len;
+            vmNeeded[dcId][provId][time]++;
+
+            if (vmMaxNeeded[dcId][provId] < vmNeeded[dcId][provId][time]) {
+                vmMaxNeeded[dcId][provId] = vmNeeded[dcId][provId][time];
+            }
+        }
+
+        for (int len = 0; len < contentsInNextStep; len++) {
+            vmOverflow[dcId][provId][len]++;
+
+            if (vmMaxOverflow[dcId][provId] < vmOverflow[dcId][provId][len]) {
+                vmMaxOverflow[dcId][provId] = vmOverflow[dcId][provId][len];
+            }
+        }
+    }
+
+    private void NextRentBatch(Solution solution,
+            int[][][] vmNeeded, int[][][] vmOverflow,
+            int[][] vmMaxNeeded, int[][] vmMaxOverflow,
+            int[] reservedAllocation, int[] onDemandAllocation) {
+
+        int neededVMs;
+
+        for (int d = 0; d < problem_.getRegionesDatacenters().size(); d++) {
+            neededVMs = 0;
+
+            for (int h = 0; h < problem_.getNumProvedores(); h++) {
+                neededVMs += (int) Math.ceil((double) vmMaxNeeded[d][h] / (double) problem_.VM_PROCESSING);
+
+                System.arraycopy(vmOverflow[d][h], 0, vmNeeded[d][h], 0, problem_.VM_RENTING_STEPS);
+                System.arraycopy(zeroes, 0, vmOverflow[d][h], 0, problem_.VM_RENTING_STEPS);
+            }
+
+            System.arraycopy(vmMaxOverflow[d], 0, vmMaxNeeded[d], 0, problem_.getNumProvedores());
+            System.arraycopy(zeroes, 0, vmMaxOverflow[d], 0, problem_.getNumProvedores());
+
+            int rentedVMs;
+            try {
+                rentedVMs = CloudCDNSolutionf201603Type.GetRIVariables(solution).getValue(d);
+            } catch (JMException ex) {
+                Logger.getLogger(BestQoSSecure.class.getName()).log(Level.SEVERE, null, ex);
+                rentedVMs = 0;
+            }
+
+            reservedAllocation[d] += Math.min(rentedVMs, neededVMs);
+            onDemandAllocation[d] += Math.max(0, neededVMs - rentedVMs);
+        }
     }
 }

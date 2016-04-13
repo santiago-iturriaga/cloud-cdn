@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Nombre del trabajo
-#PBS -N low_0_43200
+#PBS -N low_0_259200
 
 # Requerimientos
 # En este caso nuestro trabajo requiere: 16 procesadores, 1 hora de ejecución.
@@ -58,5 +58,5 @@ NPROCS=$(wc -l < $PBS_NODEFILE)
 echo $NPROCS
 echo
 
-time (/home/siturria/github/cloud-cdn/jmetal4.5/runStudy_f201603.sh low 0 43200)
+time (/home/siturria/github/cloud-cdn/jmetal4.5/runStudy_f201603.sh low 0 259200)
 

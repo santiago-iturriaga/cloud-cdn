@@ -1,0 +1,25 @@
+mocell/moead
+mochc
+nsgaii
+smsemoa
+
+OK: num. pedidos por VM
+OK: no mezclar las VMs
+analizar soluciones
+hacer algoritmo de validación
+hacer algoritmo simple
+
+QoS -> (1) cada pedido a su dc más cercano (2) calcular el storage de cada video y la cantidad mínima necesaria de VM para satisfacer los pedidos
+
+Min cost -> (1) todos los pedidos al dc con menor costo de network [si hay empate, desempata el QoS] (2) calcular el storage de cada video y la cantidad mínima necesaria de VM para satisfacer los pedidos
+
+Compromiso -> (1) factor qos/costo?
+
+>>> Bandwidth
+
+m3.large DISK=100000 KB/s (100 MB/s) NET=723 Mbps (90 MB/s)
+
+Se usan instancias m4.large que garantizan un ancho de banda de 450 Mbps
+https://aws.amazon.com/ec2/instance-types/
+
+Esos 450 Mbps son 56,25 MB/s. Si contamos que ese ancho de banda se debe usar en dos bandas (primero para recuperar el contenido y luego para reenviarlo al cliente), nos deja aprox. 28 MB/s para cada banda. En youtube, 10 minutos de video 720p ocupan unos 150 MB. Por lo tanto se necesitan 0,25 MB/s. Eso nos deja que cada VM puede atender 28 / 0,25 = 112 pedidos por VM.

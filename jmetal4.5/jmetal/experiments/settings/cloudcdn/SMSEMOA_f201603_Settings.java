@@ -61,6 +61,7 @@ public class SMSEMOA_f201603_Settings extends Settings {
         } catch (JMException e) {
             e.printStackTrace();
         }
+        //populationSize_ = 10;
         populationSize_ = 100;
         //maxEvaluations_ = 1000;
         //maxEvaluations_ = 10000;
