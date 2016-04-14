@@ -34,9 +34,9 @@ public class CloudCDN_MP extends Problem {
     static final public long serialVersionUID = -6970983090454693518L;
     static final public Boolean DEBUG = true;
 
-    //static final public double DOC_SIZE_AMP = 1.0; // Amplifies the document size
+    static final public double DOC_SIZE_AMP = 1.0; // Amplifies the document size
     //static final public double DOC_SIZE_AMP = 3.0; // Amplifies the document size
-    static final public double DOC_SIZE_AMP = 10.0; // Amplifies the document size
+    //static final public double DOC_SIZE_AMP = 10.0; // Amplifies the document size
     //static final public double DOC_SIZE_AMP = 15.0; // Amplifies the document size
     static final public int TRAFF_AMP = 1; // Aplifies the traffic xTRAFF_AMP times
     static final public int MAX_DOCUMENTS = Integer.MAX_VALUE; // Limita la cantidad de contenidos sin importar la instancia
@@ -48,8 +48,9 @@ public class CloudCDN_MP extends Problem {
     //VMs may serve up to VM_PROCESSING requests simultaneously
     //static final public int VM_PROCESSING = 512; // Amount theoretically served by 1GB ethernet connection
     //static final public int VM_PROCESSING = 256;
-    static final public int VM_PROCESSING = 112;
+    //static final public int VM_PROCESSING = 112; // 720p
     //static final public int VM_PROCESSING = 64;
+    static final public int VM_PROCESSING = 61; // 1080p
     //static final public int VM_PROCESSING = 32;
 
     static final public int SECONDS_PER_TIMESTEP = 1;
@@ -69,8 +70,10 @@ public class CloudCDN_MP extends Problem {
 
     static final public String SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS = " ";
 
-    static final public String NOMBRE_ARCHIVO_DE_DOCUMENTOS = "docs.video.f201603";
-    static final public String NOMBRE_ARCHIVO_DE_TRAFICO = "workload.video.f201603";
+    //static final public String NOMBRE_ARCHIVO_DE_DOCUMENTOS = "docs.video.f201603";
+    //static final public String NOMBRE_ARCHIVO_DE_TRAFICO = "workload.video.f201603";
+    static final public String NOMBRE_ARCHIVO_DE_DOCUMENTOS = "docs.video.f201604";
+    static final public String NOMBRE_ARCHIVO_DE_TRAFICO = "workload.video.f201604";
     static final public String NOMBRE_ARCHIVO_DE_REGIONES = "reg.0";
     static final public String NOMBRE_ARCHIVO_DE_DATACENTERS = "dc.1";
     static final public String NOMBRE_ARCHIVO_DE_REGIONES_USUARIOS = "reg_users.0";

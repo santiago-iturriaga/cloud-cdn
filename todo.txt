@@ -22,4 +22,6 @@ m3.large DISK=100000 KB/s (100 MB/s) NET=723 Mbps (90 MB/s)
 Se usan instancias m4.large que garantizan un ancho de banda de 450 Mbps
 https://aws.amazon.com/ec2/instance-types/
 
-Esos 450 Mbps son 56,25 MB/s. Si contamos que ese ancho de banda se debe usar en dos bandas (primero para recuperar el contenido y luego para reenviarlo al cliente), nos deja aprox. 28 MB/s para cada banda. En youtube, 10 minutos de video 720p ocupan unos 150 MB. Por lo tanto se necesitan 0,25 MB/s. Eso nos deja que cada VM puede atender 28 / 0,25 = 112 pedidos por VM.
+Esos 450 Mbps son 56,25 MB/s. Si contamos que ese ancho de banda se debe usar en dos bandas (primero para recuperar el contenido y luego para reenviarlo al cliente), nos deja aprox. 28 MB/s para cada banda (225 Mbps por banda). 
+(1) En youtube, 10 minutos de video 720p ocupan unos 150 MB. Por lo tanto se necesitan 0,25 MB/s. Eso nos deja que cada VM puede atender 28 / 0,25 = 112 pedidos por VM.
+(2) Un video de buena calidad 1080p requiere aproximadamente 3774 Kbps (3.68 Mbps). Eso quiere decir que cada VM puede servir 225 / 3.68 = 61,14 ~ 61 requests por segundo. Cada video requerirá transmitir 3.68 / 8 = 0,46 MB/s para funcionar correctamente.

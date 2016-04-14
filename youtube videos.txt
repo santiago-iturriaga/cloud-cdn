@@ -3,3 +3,26 @@ And two random 10-minute videos:
 480p - 93.6 MB and 71.7 MB
 720p - 150.3 MB and 153.0 MB 
 
+---
+
+I noted bitrate for various resolutions of a good quality video
+2160p video   :  20000 kbps
+1440p  video  :     8913 kbps
+1080p video  :     3774 kbps
+720p  video   :    3000 kbps
+480p video    :    1000 kbps
+360p video    :       721 kbps
+240p video    :       377 kbps
+144p  video    :       80 kbps
+
+
+
+so for 10 minute  video, data used will be
+2160p video   :  20000 *60*10/8/1024 =  1465 MB
+1440p  video  :  8913 *60*10/8/1024    =   653 MB
+1080p video  :  3774*60*10/8/1024     =   277 MB
+720p  video   :  3000*60*10/8/1024     =   220 MB
+480p video    :  1000*60*10/8/1024     =    73 MB
+360p video    :   721*60*10/8/1024       =    53 MB
+240p video    :   377*60*10/8/1024      =    27.6 MB
+144p  video    :   80*60*10/8/1024       =    5.8 MB
