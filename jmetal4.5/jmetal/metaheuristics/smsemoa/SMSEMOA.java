@@ -114,8 +114,12 @@ public class SMSEMOA extends Algorithm {
             problem_.evaluateConstraints(newSolution);
             evaluations++;
             population.add(newSolution);
+            
+            System.out.print(i + " ");
         } //for
 
+        System.out.println("\nRunning:");
+        
         // Generations ...
         while (evaluations < maxEvaluations) {
             if (evaluations % 100 == 0) {

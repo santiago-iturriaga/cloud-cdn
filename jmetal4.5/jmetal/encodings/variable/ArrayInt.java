@@ -247,4 +247,22 @@ public class ArrayInt extends Variable {
 
         return string;
     } // toString  
+
+    /**
+     * Obtain the hamming distance between two binary strings
+     *
+     * @param other The binary string to compare
+     * @return The hamming distance
+     */
+    public int hammingDistance(ArrayInt other) {
+        int distance = 0;
+        int i = 0;
+        while (i < size_) {
+            if (array_[i] != other.array_[i]) {
+                distance++;
+            }
+            i++;
+        }
+        return distance;
+    } // hammingDistance
 } // ArrayInt

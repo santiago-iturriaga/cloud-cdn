@@ -31,15 +31,14 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         try {
             Object[] problemParams;
 
-            int maxEval = 10000;
+            int maxEval = 1000;
             //int maxEval = 200;
             int time_horizon = (12 * (60 * 60)); // 12 horas ~ 0.5 dias
-            
+
             //problemParams = new Object[]{"CloudCDNSolutionf201603Type",
             //    "/home/santiago/github/cloud-cdn/Instances/",
             //    "/home/santiago/github/cloud-cdn/Instances/low/data.0/",
             //    "BestQoS"};
-            
             problemParams = new Object[]{"CloudCDNSolutionf201603Type",
                 "../Instances/",
                 "../Instances/low/data.0/",
@@ -53,8 +52,10 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
             //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "RoundRobin"};
             algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(
                     problemName, maxEval, problemParams).configure();
-            //algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
-            //        problemName, maxEval, problemParams).configure();
+            algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
+                    problemName, maxEval, problemParams).configure();
+            algorithm[2] = new jmetal.experiments.settings.cloudcdn.MOCHC_f201603_Settings(
+                    problemName, maxEval, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
             Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
                     Level.SEVERE, null, ex);
@@ -67,9 +68,10 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         // exp.experimentName_ = "CloudCDNStudy";
         exp.experimentName_ = exp.getClass().getSimpleName() + "_low_0";
 
-        exp.algorithmNameList_ = new String[]{"SMSEMOA"};
+        //exp.algorithmNameList_ = new String[]{"SMSEMOA"};
         //exp.algorithmNameList_ = new String[]{"NSGAII"};
         //exp.algorithmNameList_ = new String[]{"SMSEMOA", "NSGAII"};
+        exp.algorithmNameList_ = new String[]{"SMSEMOA", "NSGAII", "MOCHC"};
 
         exp.problemList_ = new String[]{"cloudcdn.f201603.CloudCDN_MP"};
         exp.paretoFrontFile_ = new String[]{"CloudCDN_MP.pf"};
@@ -81,7 +83,6 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
 
         //exp.experimentBaseDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/" + exp.experimentName_;
         //exp.paretoFrontDirectory_ = "/home/siturria/github/cloud-cdn/jmetal4.5/results/data/paretoFronts";
-
         exp.experimentBaseDirectory_ = "results/" + exp.experimentName_;
         exp.paretoFrontDirectory_ = "results/data/paretoFronts";
 
@@ -92,23 +93,21 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
 
         /* Init random with same seed */
         PseudoRandom.setRandomGenerator(new RandomGenerator(0.0));
-        
+
         // Run the experiments
         //int numberOfThreads;
         exp.runExperiment(1);
         // exp.runExperiment(numberOfThreads = 4);
 
-        //exp.generateQualityIndicators();
-
+        exp.generateQualityIndicators();
+        
         // Applying Friedman test
         /*Friedman test = new Friedman(exp);
         test.executeTest("EPSILON");
         test.executeTest("HV");
         test.executeTest("SPREAD");*/
-
         // Generate latex tables
         //exp.generateLatexTables();
-
         // Configure the R scripts to be generated
         /*int rows;
         int columns;
