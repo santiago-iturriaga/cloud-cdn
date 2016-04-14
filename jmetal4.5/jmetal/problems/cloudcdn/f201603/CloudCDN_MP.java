@@ -102,11 +102,15 @@ public class CloudCDN_MP extends Problem {
 
     protected IGreedyRouting router = null;
 
-    // === Routing aux variables
+    // === Routing aux. variables
     public int[][][] vmNeeded;
     public int[][][] vmOverflow;
     public int[][] vmMaxNeeded;
     public int[][] vmMaxOverflow;
+
+    public int[][] vmNeededUnsecure;
+    public int[][] vmOverflowUnsecure;
+
     // =========================
     public CloudCDN_MP(String solutionType, String scenPath, String instPath, String routingAlgorithm, int time_horizon) throws JMException {
         TIME_HORIZON = time_horizon;
@@ -162,10 +166,13 @@ public class CloudCDN_MP extends Problem {
             RIUpperLimits_[i] = upperVMLimit;
         }
 
-        vmNeeded = new int[getRegionesDatacenters().size()][getNumProvedores()][CloudCDN_MP.VM_RENTING_STEPS];
-        vmOverflow = new int[getRegionesDatacenters().size()][getNumProvedores()][CloudCDN_MP.VM_RENTING_STEPS];
+        vmNeeded = new int[getRegionesDatacenters().size()][getNumProvedores()][VM_RENTING_STEPS];
+        vmOverflow = new int[getRegionesDatacenters().size()][getNumProvedores()][VM_RENTING_STEPS];
         vmMaxNeeded = new int[getRegionesDatacenters().size()][getNumProvedores()];
         vmMaxOverflow = new int[getRegionesDatacenters().size()][getNumProvedores()];
+        
+        vmNeededUnsecure = new int[getRegionesDatacenters().size()][VM_RENTING_STEPS];
+        vmOverflowUnsecure = new int[getRegionesDatacenters().size()][VM_RENTING_STEPS];
 
         if (routingAlgorithm.compareTo("CheapestNetwork") == 0) {
             System.out.println("Greedy routing: CheapestNetwork");

@@ -34,18 +34,24 @@ public class BestQoS implements IGreedyRouting {
     }
 
     @Override
-    public double Route(Solution solution, int[] routingSummary, 
-            int[] reservedAllocation, int[] onDemandAllocation, 
+    public double Route(Solution solution, int[] routingSummary,
+            int[] reservedAllocation, int[] onDemandAllocation,
             Optional<Integer> justProvId) {
 
         double totalQoS = 0.0;
 
         int[][] vmNeeded;
-        vmNeeded = new int[problem_.getRegionesDatacenters().size()][problem_.VM_RENTING_STEPS];
-
         int[][] vmOverflow;
-        vmOverflow = new int[problem_.getRegionesDatacenters().size()][problem_.VM_RENTING_STEPS];
-
+        
+        //vmNeeded = new int[problem_.getRegionesDatacenters().size()][CloudCDN_MP.VM_RENTING_STEPS];
+        //vmOverflow = new int[problem_.getRegionesDatacenters().size()][CloudCDN_MP.VM_RENTING_STEPS];
+        
+        vmOverflow = problem_.vmOverflowUnsecure;
+        vmNeeded = problem_.vmNeededUnsecure;
+        for (int d = 0; d < problem_.getRegionesDatacenters().size(); d++) {
+            System.arraycopy(zeroes, 0, vmNeeded[d], 0, problem_.VM_RENTING_STEPS);
+            System.arraycopy(zeroes, 0, vmOverflow[d], 0, problem_.VM_RENTING_STEPS);
+        }
         int lowerBound;
         lowerBound = 0;
 
@@ -66,7 +72,7 @@ public class BestQoS implements IGreedyRouting {
                     continue;
                 }
             }
-            
+
             int dcId;
 
             ArrayList<QoS> regionQoS = problem_.getSortedQoS(t.getRegUsrId());
@@ -85,7 +91,6 @@ public class BestQoS implements IGreedyRouting {
                     bestIdx = 0;
                     dcId = regionQoS.get(0).getRegDcId();
                     CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, dcId, docId, true);
-
                     break;
                 } else {
                     dcId = regionQoS.get(bestIdx).getRegDcId();

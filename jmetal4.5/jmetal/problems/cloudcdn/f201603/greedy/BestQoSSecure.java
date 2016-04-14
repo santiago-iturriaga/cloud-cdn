@@ -151,6 +151,8 @@ public class BestQoSSecure implements IGreedyRouting {
                 dcId = regionQoS.get(0).getRegDcId();
                 CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, dcId, docId, true);
                 return dcId;
+            } else {
+                dcId = regionQoS.get(bestIdx).getRegDcId();
             }
         }
 
