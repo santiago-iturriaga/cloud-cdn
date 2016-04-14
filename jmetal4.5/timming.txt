@@ -1,6 +1,0 @@
-40k evaluaciones
-8 cores / 8 ejecuciones / intel
-
-low  = 40m
-med  = 2h30m
-high = 6h30m

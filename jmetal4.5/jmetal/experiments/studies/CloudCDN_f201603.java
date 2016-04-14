@@ -40,7 +40,7 @@ public class CloudCDN_f201603 extends Experiment {
             Object[] problemParams;
 
             //int maxEval = 60000;
-            int maxEval = 30000;
+            int maxEval = 40000;
             //int maxEval = 10000;
             //int time_horizon = (96 * (60 * 60)); // 96 horas ~ 4 días
 
@@ -106,7 +106,8 @@ public class CloudCDN_f201603 extends Experiment {
         exp.initExperiment();
         
         // Run the experiments
-        exp.runExperiment(7);
+        exp.runExperiment(16);
+        //exp.runExperiment(7);
         //exp.runExperiment(2);
 
         exp.generateQualityIndicators();
