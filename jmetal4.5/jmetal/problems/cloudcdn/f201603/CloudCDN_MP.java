@@ -35,13 +35,14 @@ public class CloudCDN_MP extends Problem {
     static final public Boolean DEBUG = true;
 
     //static final public double DOC_SIZE_AMP = 1.0; // Amplifies the document size
-    static final public double DOC_SIZE_AMP = 3.0; // Amplifies the document size
-    //static final public double DOC_SIZE_AMP = 10.0; // Amplifies the document size
+    //static final public double DOC_SIZE_AMP = 3.0; // Amplifies the document size
+    static final public double DOC_SIZE_AMP = 10.0; // Amplifies the document size
     //static final public double DOC_SIZE_AMP = 15.0; // Amplifies the document size
     static final public int TRAFF_AMP = 1; // Aplifies the traffic xTRAFF_AMP times
     static final public int MAX_DOCUMENTS = Integer.MAX_VALUE; // Limita la cantidad de contenidos sin importar la instancia
 
-    static final public Double CONTENT_SIZE_MB = 0.25; // CONTENT_SIZE_MB = 2 MB
+    //static final public Double CONTENT_SIZE_MB = 0.25; // CONTENT_SIZE_MB = 2 MB
+    static final public Double CONTENT_SIZE_MB = 0.46; // CONTENT_SIZE_MB = 2 MB
     //static final public Double CONTENT_SIZE_MB = 0.5; // CONTENT_SIZE_MB = 2 MB
     //static final public Double CONTENT_SIZE_MB = 2.0; // CONTENT_SIZE_MB = 2 MB
     //VMs may serve up to VM_PROCESSING requests simultaneously
