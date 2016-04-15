@@ -1,0 +1,14 @@
+SMSEMOA
+Population = {60, 80, 100}
+Cross = {0.7, 0.8, 0.9}
+Mutation = {x1, x5, x10} // 1 / num. genes
+
+NSGAII
+Population = {60, 80, 100}
+Cross = {0.7, 0.8, 0.9}
+Mutation = {x1, x5, x10} // 1 / num. genes
+
+MOCHC
+Population = {60, 80, 100}
+Cross = {0.8, 0.9, 1.0}
+Mutation = {0.25, 0.35, 0.45}

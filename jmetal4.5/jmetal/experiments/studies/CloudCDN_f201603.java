@@ -39,31 +39,21 @@ public class CloudCDN_f201603 extends Experiment {
         try {
             Object[] problemParams;
 
-            //int maxEval = 60000;
             int maxEval = 40000;
-            //int maxEval = 10000;
-            //int time_horizon = (96 * (60 * 60)); // 96 horas ~ 4 días
+            System.out.println("Num Evaluations: " + maxEval);
 
-            /*
-            problemParams = new Object[]{"CloudCDNSolutionf201603Type",
-                "/home/santiago/github/cloud-cdn/Instances/",
-                "/home/santiago/github/cloud-cdn/Instances/low/data.0/",
-                "BestQoS"};
-             */
             problemParams = new Object[]{"CloudCDNSolutionf201603Type",
                 "../Instances/",
                 "../Instances/" + instance_type + "/data." + instance_number + "/",
                 "BestQoSSecure",
                 time_horizon};
 
-            //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "BestQoS"};
-            //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "CheapestNetwork"};
-            //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "CheapestComputing"};
-            //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "RoundRobin"};
             algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(
                     problemName, maxEval, problemParams).configure();
-            //algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
-            //        problemName, maxEval, problemParams).configure();
+            algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
+                    problemName, maxEval, problemParams).configure();
+            algorithm[2] = new jmetal.experiments.settings.cloudcdn.MOCHC_f201603_Settings(
+                    problemName, maxEval, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
             Logger.getLogger(CloudCDN_f201603.class.getName()).log(
                     Level.SEVERE, null, ex);
@@ -74,26 +64,38 @@ public class CloudCDN_f201603 extends Experiment {
         int inst_number = 0;
         String inst_type = "";
         int time_horizon = 0;
+        int num_threads = 1;
 
-        if (args.length != 3) {
+        if (args.length != 4) {
             System.out.println("Error! Parametros incorrectos.");
             System.exit(-1);
         } else {
             inst_type = args[0].trim().toLowerCase();
             inst_number = Integer.parseInt(args[1].trim());
             time_horizon = Integer.parseInt(args[2].trim());
-            
+            num_threads = Integer.parseInt(args[3].trim());
+
             System.out.println("Instance Type  : " + inst_type);
             System.out.println("Instance Number: " + inst_number);
             System.out.println("Time Horizon   : " + time_horizon);
-        }
+            System.out.println("Num Threads    : " + num_threads);
 
-        inst_number = Integer.parseInt(args[1]);
+            /*
+            Time horizon table:
+            -------------------
+            12 horas = (12 * (60 * 60)) = 43200
+            1 día = 24 horas = (24 * (60 * 60)) = 86400
+            2 días = 48 horas = (48 * (60 * 60)) = 172800
+            3 días = 72 horas = (72 * (60 * 60)) = 259200
+            4 días = 96 horas = (96 * (60 * 60)) = 345600
+             */
+        }
 
         CloudCDN_f201603 exp = new CloudCDN_f201603(inst_type, inst_number, time_horizon);
 
         exp.experimentName_ = exp.getClass().getSimpleName() + "_" + inst_type + "_" + inst_number + "_" + time_horizon;
-        exp.algorithmNameList_ = new String[]{"SMSEMOA"};
+        //exp.algorithmNameList_ = new String[]{"SMSEMOA"};
+        exp.algorithmNameList_ = new String[]{"SMSEMOA", "NSGAII", "MOCHC"};
         exp.problemList_ = new String[]{"cloudcdn.f201603.CloudCDN_MP"};
         exp.paretoFrontFile_ = new String[]{"CloudCDN_MP.pf"};
         exp.indicatorList_ = new String[]{"EPSILON", "SPREAD", "HV"};
@@ -102,27 +104,24 @@ public class CloudCDN_f201603 extends Experiment {
         int numberOfAlgorithms = exp.algorithmNameList_.length;
         exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
         exp.independentRuns_ = 30;
-        //exp.independentRuns_ = 2;
         exp.initExperiment();
-        
+
         // Run the experiments
-        exp.runExperiment(16);
-        //exp.runExperiment(7);
-        //exp.runExperiment(2);
+        exp.runExperiment(num_threads);
 
         exp.generateQualityIndicators();
 
         // Applying Friedman test
-        /*Friedman test = new Friedman(exp);
+        Friedman test = new Friedman(exp);
         test.executeTest("EPSILON");
         test.executeTest("HV");
-        test.executeTest("SPREAD");*/
+        test.executeTest("SPREAD");
 
         // Generate latex tables
         exp.generateLatexTables();
 
         // Configure the R scripts to be generated
-        /*int rows;
+        int rows;
         int columns;
         String prefix;
         String[] problems;
@@ -132,6 +131,6 @@ public class CloudCDN_f201603 extends Experiment {
         prefix = exp.experimentName_;
         problems = new String[]{"CloudCDN_MO"};
         exp.generateRBoxplotScripts(rows, columns, problems, prefix, false, exp);
-        exp.generateRWilcoxonScripts(problems, prefix, exp);*/
+        exp.generateRWilcoxonScripts(problems, prefix, exp);
     }
 }
