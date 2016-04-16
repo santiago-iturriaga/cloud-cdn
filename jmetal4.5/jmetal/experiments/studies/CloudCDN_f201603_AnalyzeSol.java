@@ -35,6 +35,8 @@ public class CloudCDN_f201603_AnalyzeSol {
     }
 
     public void Analyze(CloudCDN_MP problem, int num_prov, Path varFilePath) throws JMException, IOException {
+        CloudCDNSolutionf201603Type solutionTypeCustom_ = new CloudCDNSolutionf201603Type(problem, 100);
+        
         Stream<String> s = Files.lines(varFilePath);
         s.forEach((solString) -> {
             String[] parts = solString.trim().split(" ");
@@ -64,7 +66,7 @@ public class CloudCDN_f201603_AnalyzeSol {
                     if ((problem.getDocumentos().get(doc).getProvId() == provId) || (provId == -1)) {
                         for (int dc = 0; dc < problem.getRegionesDatacenters().size(); dc++) {
                             int bitpos;
-                            bitpos = CloudCDNSolutionf201603Type.GetDCDocIndex(
+                            bitpos = solutionTypeCustom_.GetDCDocIndex(
                                     problem.getRegionesDatacenters().size(),
                                     problem.getDocumentos().size(),
                                     dc, doc);
@@ -136,7 +138,7 @@ public class CloudCDN_f201603_AnalyzeSol {
 
         varFilePath = Paths.get("results/"
                 + "CloudCDNSimpleStudy_f201603_low_0/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
-
+        
         Analyze(problem, 2, varFilePath);
     }
 

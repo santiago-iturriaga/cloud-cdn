@@ -42,15 +42,15 @@ public class CloudCDN_f201603_GreedyQoS {
                 "../Instances/" + inst_type + "/data." + inst_number + "/",
                 "BestQoSSecure",
                 time_horizon);
-        CloudCDNSolutionf201603Type sol_type = new CloudCDNSolutionf201603Type(prob);
-        Solution solution = new Solution(prob, sol_type.createVariables());
+        //CloudCDNSolutionf201603Type sol_type = new CloudCDNSolutionf201603Type(prob);
+        //Solution solution = new Solution(prob, sol_type.createVariables());
         
         double totalQoS = 0.0;
-        int[] reservedAllocation = new int[prob.getRegionesDatacenters().size()];
-        int[] onDemandAllocation = new int[prob.getRegionesDatacenters().size()];
+        //int[] reservedAllocation = new int[prob.getRegionesDatacenters().size()];
+        //int[] onDemandAllocation = new int[prob.getRegionesDatacenters().size()];
         int[] routingSummary = new int[prob.getRegionesDatacenters().size()];
         
-        ArrayList<Trafico> ongoing_traffic = new ArrayList<Trafico>();
+        //ArrayList<Trafico> ongoing_traffic = new ArrayList<Trafico>();
         
         
         for (int tid = 0; tid < prob.getTrafico().size(); tid++) {
@@ -60,7 +60,7 @@ public class CloudCDN_f201603_GreedyQoS {
             int dcId;
             dcId = prob.getSortedQoS(t.getRegUsrId()).get(0).getRegDcId();
             
-            CloudCDNSolutionf201603Type.SetDocStored(prob, solution, dcId, t.getDocId(), true);
+           // CloudCDNSolutionf201603Type.SetDocStored(prob, solution, dcId, t.getDocId(), true);
             
             routingSummary[dcId] += t.getNumContenidos();
             totalQoS += (t.getNumContenidos() * prob.getQoS().get(t.getRegUsrId()).get(dcId).getQosMetric()) / prob.getTrafico().size();

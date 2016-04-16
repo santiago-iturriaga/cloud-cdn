@@ -103,7 +103,8 @@ public class SMSEMOA_f201603_Settings extends Settings {
         parameters.put("probability", crossoverProbability_);
         parameters.put("distributionIndex", crossoverDistributionIndex_);
         //crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
-        crossover = CrossoverFactory.getCrossoverOperator("cloudcdn.SinglePointCrossoverf201603", parameters);
+        //crossover = CrossoverFactory.getCrossoverOperator("cloudcdn.SinglePointCrossoverf201603", parameters);
+        crossover = CrossoverFactory.getCrossoverOperator("cloudcdn.HUXCrossoverf201603", parameters);
 
         parameters = new HashMap();
         parameters.put("probability", mutationProbability_);

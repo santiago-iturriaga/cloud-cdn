@@ -82,7 +82,7 @@ public class BestQoS implements IGreedyRouting {
 
             dcId = regionQoS.get(bestIdx).getRegDcId();
 
-            while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution, dcId, docId)) {
+            while (!problem_.solutionTypeCustom_.IsDocStored(problem_, solution, dcId, docId)) {
                 bestIdx++;
 
                 if (bestIdx >= regionQoS.size()) {
@@ -90,7 +90,7 @@ public class BestQoS implements IGreedyRouting {
                     // TODO: considerar otras alternativas a la no factibilidad.
                     bestIdx = 0;
                     dcId = regionQoS.get(0).getRegDcId();
-                    CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, dcId, docId, true);
+                    problem_.solutionTypeCustom_.SetDocStored(problem_, solution, dcId, docId, true);
                     break;
                 } else {
                     dcId = regionQoS.get(bestIdx).getRegDcId();
@@ -122,7 +122,7 @@ public class BestQoS implements IGreedyRouting {
 
                     int rentedVMs;
                     try {
-                        rentedVMs = CloudCDNSolutionf201603Type.GetRIVariables(solution).getValue(d);
+                        rentedVMs = problem_.solutionTypeCustom_.GetRIVariables(solution).getValue(d);
                     } catch (JMException ex) {
                         Logger.getLogger(BestQoS.class.getName()).log(Level.SEVERE, null, ex);
                         rentedVMs = 0;
@@ -171,14 +171,14 @@ public class BestQoS implements IGreedyRouting {
                 int cheapestIdx;
                 cheapestIdx = 0;
 
-                while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution, sortedDC.get(cheapestIdx).getRegDctId(), docId)) {
+                while (!problem_.solutionTypeCustom_.IsDocStored(problem_, solution, sortedDC.get(cheapestIdx).getRegDctId(), docId)) {
                     cheapestIdx++;
 
                     if (cheapestIdx >= sortedDC.size()) {
                         // All documents must be assigned.
                         // TODO: considerar otras alternativas a la no factibilidad.
                         cheapestIdx = 0;
-                        CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, sortedDC.get(0).getRegDctId(), docId, true);
+                        problem_.solutionTypeCustom_.SetDocStored(problem_, solution, sortedDC.get(0).getRegDctId(), docId, true);
 
                         break;
                     }

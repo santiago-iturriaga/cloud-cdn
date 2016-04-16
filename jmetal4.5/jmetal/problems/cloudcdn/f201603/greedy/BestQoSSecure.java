@@ -142,14 +142,14 @@ public class BestQoSSecure implements IGreedyRouting {
         int dcId;
         dcId = regionQoS.get(bestIdx).getRegDcId();
 
-        while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution, dcId, docId)) {
+        while (!problem_.solutionTypeCustom_.IsDocStored(problem_, solution, dcId, docId)) {
             bestIdx++;
 
             if (bestIdx >= regionQoS.size()) {
                 // All documents must be assigned.
                 // TODO: considerar otras alternativas a la no factibilidad.
                 dcId = regionQoS.get(0).getRegDcId();
-                CloudCDNSolutionf201603Type.SetDocStored(problem_, solution, dcId, docId, true);
+                problem_.solutionTypeCustom_.SetDocStored(problem_, solution, dcId, docId, true);
                 return dcId;
             } else {
                 dcId = regionQoS.get(bestIdx).getRegDcId();
@@ -220,7 +220,7 @@ public class BestQoSSecure implements IGreedyRouting {
 
             int rentedVMs;
             try {
-                rentedVMs = CloudCDNSolutionf201603Type.GetRIVariables(solution).getValue(d);
+                rentedVMs = problem_.solutionTypeCustom_.GetRIVariables(solution).getValue(d);
             } catch (JMException ex) {
                 Logger.getLogger(BestQoSSecure.class.getName()).log(Level.SEVERE, null, ex);
                 rentedVMs = 0;

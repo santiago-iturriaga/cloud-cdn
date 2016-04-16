@@ -12,3 +12,10 @@ MOCHC
 Population = {60, 80, 100}
 Cross = {0.8, 0.9, 1.0}
 Mutation = {0.25, 0.35, 0.45}
+
+OK?: evals 200.000
+OK: HUX
+OK: 300Mbps
+convergencia con hipervolumen 
+(reportar todas las generaciones)(en NSGAII reportar solo rank 1)
+agregar población externa a MOCHC

@@ -49,8 +49,9 @@ public class CloudCDN_MP extends Problem {
     //static final public int VM_PROCESSING = 512; // Amount theoretically served by 1GB ethernet connection
     //static final public int VM_PROCESSING = 256;
     //static final public int VM_PROCESSING = 112; // 720p
+    static final public int VM_PROCESSING = 81; // 1080p 300Mbps
     //static final public int VM_PROCESSING = 64;
-    static final public int VM_PROCESSING = 61; // 1080p
+    //static final public int VM_PROCESSING = 61; // 1080p 225Mbps
     //static final public int VM_PROCESSING = 32;
 
     static final public int SECONDS_PER_TIMESTEP = 1;
@@ -102,6 +103,8 @@ public class CloudCDN_MP extends Problem {
 
     protected IGreedyRouting router = null;
 
+    public CloudCDNSolutionf201603Type solutionTypeCustom_;
+    
     // === Routing aux. variables
     public int[][][] vmNeeded;
     public int[][][] vmOverflow;
@@ -110,7 +113,6 @@ public class CloudCDN_MP extends Problem {
 
     public int[][] vmNeededUnsecure;
     public int[][] vmOverflowUnsecure;
-
     // =========================
     public CloudCDN_MP(String solutionType, String scenPath, String instPath, String routingAlgorithm, int time_horizon) throws JMException {
         TIME_HORIZON = time_horizon;
@@ -132,14 +134,27 @@ public class CloudCDN_MP extends Problem {
         trafico_.trimToSize();
         qoS_.trimToSize();
 
-        if (solutionType.compareTo("CloudCDNSolutionf201603Type") == 0) {
+        if (solutionType.compareTo("CloudCDNSolutionf201603b100Type") == 0) {
             try {
-                solutionType_ = new CloudCDNSolutionf201603Type(this);
+                solutionType_ = solutionTypeCustom_ = new CloudCDNSolutionf201603Type(this, 100);
             } catch (Exception e) {
                 Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
                 throw new JMException(e.getMessage());
             }
-
+        } else if (solutionType.compareTo("CloudCDNSolutionf201603b200Type") == 0) {
+            try {
+                 solutionType_ = solutionTypeCustom_ = new CloudCDNSolutionf201603Type(this, 200);
+            } catch (Exception e) {
+                Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
+                throw new JMException(e.getMessage());
+            }
+        } else if (solutionType.compareTo("CloudCDNSolutionf201603b1000Type") == 0) {
+            try {
+                solutionType_ = solutionTypeCustom_ = new CloudCDNSolutionf201603Type(this, 1000);
+            } catch (Exception e) {
+                Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
+                throw new JMException(e.getMessage());
+            }
         } else {
             throw new JMException("Solution type invalid");
         }
@@ -570,7 +585,7 @@ public class CloudCDN_MP extends Problem {
             int varIdx;
 
             for (int dcId = 0; dcId < getRegionesDatacenters().size(); dcId++) {
-                varIdx = CloudCDNSolutionf201603Type.GetDCDocIndex(dcCount, docCount, dcId, docId);
+                varIdx = solutionTypeCustom_.GetDCDocIndex(dcCount, docCount, dcId, docId);
 
                 if (storageVariables.getIth(varIdx)) {
                     storageContents[dcId] += aux.getNumContenidos();
@@ -589,12 +604,12 @@ public class CloudCDN_MP extends Problem {
     private double computeComputingCost(Solution solution, int[] reservedAllocation, int[] onDemandAllocation) throws JMException {
         double totalCost = 0.0;
         double auxUpfront;
-        double auxRes;
+        //double auxRes;
         double auxOnDem;
 
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
-            auxUpfront = (getRegionesDatacenters().get(i).vmResUpfrontPrice * CloudCDNSolutionf201603Type.GetRIDCCount(solution, i));
-            auxRes = (getRegionesDatacenters().get(i).vmResPrice * reservedAllocation[i]);
+            auxUpfront = (getRegionesDatacenters().get(i).vmResUpfrontPrice * solutionTypeCustom_.GetRIDCCount(solution, i));
+            //auxRes = (getRegionesDatacenters().get(i).vmResPrice * reservedAllocation[i]);
             auxOnDem = (getRegionesDatacenters().get(i).vmPrice * onDemandAllocation[i]);
 
             //totalCost += auxUpfront + auxRes + auxOnDem;

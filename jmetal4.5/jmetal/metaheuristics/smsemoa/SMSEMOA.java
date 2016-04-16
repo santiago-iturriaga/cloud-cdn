@@ -165,8 +165,8 @@ public class SMSEMOA extends Algorithm {
             union = ((SolutionSet) population).union(offspringPopulation);
 
             // Ranking the union (non-dominated sorting)
-            Ranking ranking = new Ranking(union);
-
+            Ranking ranking = new Ranking(union);            
+            
             // ensure crowding distance values are up to date
             // (may be important for parent selection)
             for (int j = 0; j < population.size(); j++) {
@@ -230,11 +230,18 @@ public class SMSEMOA extends Algorithm {
                     requiredEvaluations = evaluations;
                 } // if
             } // if
+            
+            double hv_value;
+            hv_value = hv_.calculateHypervolume(
+                    ranking.getSubfront(0).writeObjectivesToMatrix(), 
+                    ranking.getSubfront(0).size(), 
+                    2);
+            System.out.println("HV = " + hv_value);
         } // while
 
         // Return as output parameter the required evaluations
         setOutputParameter("evaluations", requiredEvaluations);
-
+        
         // Return the first non-dominated front
         Ranking ranking = new Ranking(population);
         ranking.getSubfront(0).printFeasibleFUN("FUN");

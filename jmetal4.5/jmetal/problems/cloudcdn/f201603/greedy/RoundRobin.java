@@ -68,7 +68,7 @@ public class RoundRobin implements IGreedyRouting {
             int loopCount;
             loopCount = 0;
 
-            while (!CloudCDNSolutionf201603Type.IsDocStored(problem_, solution,
+            while (!problem_.solutionTypeCustom_.IsDocStored(problem_, solution,
                     problem_.getRegionesDatacenters().get(currDC).getRegDctId(), docId)) {
 
                 currDC = (currDC + 1) % numDC;
@@ -78,7 +78,7 @@ public class RoundRobin implements IGreedyRouting {
                     // All documents must be assigned.
                     // TODO: considerar otras alternativas a la no factibilidad.
                     currDC = PseudoRandom.randInt(0, numDC - 1);
-                    CloudCDNSolutionf201603Type.SetDocStored(problem_, solution,
+                    problem_.solutionTypeCustom_.SetDocStored(problem_, solution,
                             problem_.getRegionesDatacenters().get(currDC).getRegDctId(), docId, true);
 
                     break;
@@ -114,7 +114,7 @@ public class RoundRobin implements IGreedyRouting {
 
                     int rentedVMs;
                     try {
-                        rentedVMs = CloudCDNSolutionf201603Type.GetRIVariables(solution).getValue(d);
+                        rentedVMs = problem_.solutionTypeCustom_.GetRIVariables(solution).getValue(d);
                     } catch (JMException ex) {
                         Logger.getLogger(RoundRobin.class.getName()).log(Level.SEVERE, null, ex);
                         rentedVMs = 0;
