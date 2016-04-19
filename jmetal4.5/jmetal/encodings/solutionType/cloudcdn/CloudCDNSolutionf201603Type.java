@@ -14,8 +14,8 @@ import jmetal.util.JMException;
 
 public class CloudCDNSolutionf201603Type extends SolutionType {
 
-    public int NUM_BUCKETS = 100;
-    
+    public int NUM_BUCKETS = 0;
+
     CloudCDN_MP customProblem_;
 
     /**
@@ -27,7 +27,7 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
         super(problem);
 
         System.out.println("Number of buckets: " + num_buckets);
-        
+
         customProblem_ = (CloudCDN_MP) problem;
         NUM_BUCKETS = num_buckets;
     } // Constructor
@@ -50,9 +50,9 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
             return null;
         }
     } // createVariables
-    
+
     public int GetDCDocIndex(int dcCount, int docCount, int dcId, int docId) {
-        int bucketIdx = (int) Math.floor(((double) docId / (double) docCount) * NUM_BUCKETS);
+        int bucketIdx = (docId * NUM_BUCKETS) / docCount;
         //return NUM_BUCKETS * dcId + bucketIdx;
         return dcCount * bucketIdx + dcId;
     }
@@ -65,26 +65,30 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
         return GetRIVariables(solution).getValue(dcId);
     }
 
-    public static Binary GetDocStorageVariables(Solution solution) {
+    public void SetRIDCCount(Solution solution, int dcId, int value) throws JMException {
+        GetRIVariables(solution).setValue(dcId, value);
+    }
+
+    public Binary GetDocStorageVariables(Solution solution) {
         return (Binary) solution.getDecisionVariables()[1];
     }
 
     public boolean IsDocStored(CloudCDN_MP customProblem, Solution solution, int dcId, int docId) {
         return GetDocStorageVariables(solution).getIth(
-            GetDCDocIndex(
-                    customProblem.getRegionesDatacenters().size(),
-                    customProblem.getDocumentos().size(),
-                    dcId,
-                    docId));
+                GetDCDocIndex(
+                        customProblem.getRegionesDatacenters().size(),
+                        customProblem.getDocumentos().size(),
+                        dcId,
+                        docId));
     }
-    
+
     public void SetDocStored(CloudCDN_MP customProblem, Solution solution, int dcId, int docId, boolean status) {
-        GetDocStorageVariables(solution).setIth(
-            GetDCDocIndex(
-                    customProblem.getRegionesDatacenters().size(),
-                    customProblem.getDocumentos().size(),
-                    dcId,
-                    docId),
-            status);
+        int idx = GetDCDocIndex(
+                customProblem.getRegionesDatacenters().size(),
+                customProblem.getDocumentos().size(),
+                dcId,
+                docId);
+
+        GetDocStorageVariables(solution).setIth(idx, status);
     }
 }

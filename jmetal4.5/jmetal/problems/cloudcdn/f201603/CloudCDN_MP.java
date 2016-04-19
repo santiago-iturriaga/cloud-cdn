@@ -104,7 +104,7 @@ public class CloudCDN_MP extends Problem {
     protected IGreedyRouting router = null;
 
     public CloudCDNSolutionf201603Type solutionTypeCustom_;
-    
+
     // === Routing aux. variables
     public int[][][] vmNeeded;
     public int[][][] vmOverflow;
@@ -113,6 +113,7 @@ public class CloudCDN_MP extends Problem {
 
     public int[][] vmNeededUnsecure;
     public int[][] vmOverflowUnsecure;
+
     // =========================
     public CloudCDN_MP(String solutionType, String scenPath, String instPath, String routingAlgorithm, int time_horizon) throws JMException {
         TIME_HORIZON = time_horizon;
@@ -134,7 +135,8 @@ public class CloudCDN_MP extends Problem {
         trafico_.trimToSize();
         qoS_.trimToSize();
 
-        if (solutionType.compareTo("CloudCDNSolutionf201603b100Type") == 0) {
+        if ((solutionType.compareTo("CloudCDNSolutionf201603b100Type") == 0)
+                || (solutionType.compareTo("CloudCDNSolutionf201603Type") == 0)) {
             try {
                 solutionType_ = solutionTypeCustom_ = new CloudCDNSolutionf201603Type(this, 100);
             } catch (Exception e) {
@@ -143,7 +145,7 @@ public class CloudCDN_MP extends Problem {
             }
         } else if (solutionType.compareTo("CloudCDNSolutionf201603b200Type") == 0) {
             try {
-                 solutionType_ = solutionTypeCustom_ = new CloudCDNSolutionf201603Type(this, 200);
+                solutionType_ = solutionTypeCustom_ = new CloudCDNSolutionf201603Type(this, 200);
             } catch (Exception e) {
                 Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
                 throw new JMException(e.getMessage());
@@ -185,7 +187,7 @@ public class CloudCDN_MP extends Problem {
         vmOverflow = new int[getRegionesDatacenters().size()][getNumProvedores()][VM_RENTING_STEPS];
         vmMaxNeeded = new int[getRegionesDatacenters().size()][getNumProvedores()];
         vmMaxOverflow = new int[getRegionesDatacenters().size()][getNumProvedores()];
-        
+
         vmNeededUnsecure = new int[getRegionesDatacenters().size()][VM_RENTING_STEPS];
         vmOverflowUnsecure = new int[getRegionesDatacenters().size()][VM_RENTING_STEPS];
 
@@ -561,7 +563,7 @@ public class CloudCDN_MP extends Problem {
         return lineas;
     }
 
-    private double computeNetworkCost(int[] trafficSummary) {
+    public double computeNetworkCost(int[] trafficSummary) {
         double totalCost = 0.0;
 
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {
@@ -571,12 +573,12 @@ public class CloudCDN_MP extends Problem {
         return totalCost;
     }
 
-    private double computeStorageCost(Solution solution) {
+    public double computeStorageCost(Solution solution) {
         int dcCount = getRegionesDatacenters().size();
         int docCount = getDocumentos().size();
 
         int[] storageContents = new int[dcCount];
-        Binary storageVariables = CloudCDNSolutionf201603Type.GetDocStorageVariables(solution);
+        Binary storageVariables = solutionTypeCustom_.GetDocStorageVariables(solution);
 
         for (int docId = 0; docId < getDocumentos().size(); docId++) {
             Documento aux;
@@ -601,7 +603,7 @@ public class CloudCDN_MP extends Problem {
         return storageCost;
     }
 
-    private double computeComputingCost(Solution solution, int[] reservedAllocation, int[] onDemandAllocation) throws JMException {
+    public double computeComputingCost(Solution solution, int[] reservedAllocation, int[] onDemandAllocation) throws JMException {
         double totalCost = 0.0;
         double auxUpfront;
         //double auxRes;
