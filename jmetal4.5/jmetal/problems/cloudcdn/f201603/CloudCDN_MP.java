@@ -166,7 +166,7 @@ public class CloudCDN_MP extends Problem {
 
         length_ = new int[numberOfVariables_];
         length_[0] = getRegionesDatacenters().size();
-        length_[1] = getRegionesDatacenters().size() * 100;
+        length_[1] = getRegionesDatacenters().size() * solutionTypeCustom_.NUM_BUCKETS;
 
         RILowerLimits_ = new double[getRegionesDatacenters().size()];
         for (int i = 0; i < getRegionesDatacenters().size(); i++) {

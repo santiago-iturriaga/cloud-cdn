@@ -14,7 +14,7 @@ import jmetal.util.JMException;
 
 public class CloudCDNSolutionf201603Type extends SolutionType {
 
-    private int NUM_BUCKETS = 100;
+    public int NUM_BUCKETS = 100;
     
     CloudCDN_MP customProblem_;
 
