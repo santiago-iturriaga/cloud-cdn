@@ -61,8 +61,9 @@ public class CloudCDN_f201603_long_MOCHC extends Experiment {
         String inst_type = "";
         int time_horizon = 0;
         int num_threads = 1;
+        int exp_id = 99;
 
-        if (args.length != 4) {
+        if (args.length != 5) {
             System.out.println("Error! Parametros incorrectos.");
             System.exit(-1);
         } else {
@@ -70,11 +71,13 @@ public class CloudCDN_f201603_long_MOCHC extends Experiment {
             inst_number = Integer.parseInt(args[1].trim());
             time_horizon = Integer.parseInt(args[2].trim());
             num_threads = Integer.parseInt(args[3].trim());
+            exp_id = Integer.parseInt(args[4].trim());
 
             System.out.println("Instance Type  : " + inst_type);
             System.out.println("Instance Number: " + inst_number);
             System.out.println("Time Horizon   : " + time_horizon);
             System.out.println("Num Threads    : " + num_threads);
+            System.out.println("Experiment Id  : " + exp_id);
 
             /*
             Time horizon table:
@@ -89,7 +92,7 @@ public class CloudCDN_f201603_long_MOCHC extends Experiment {
 
         CloudCDN_f201603_long_MOCHC exp = new CloudCDN_f201603_long_MOCHC(inst_type, inst_number, time_horizon);
 
-        exp.experimentName_ = exp.getClass().getSimpleName() + "_200k_MOCHC";
+        exp.experimentName_ = exp.getClass().getSimpleName() + "_long_MOCHC_" + exp_id;
         exp.algorithmNameList_ = new String[]{"MOCHC"};
         exp.problemList_ = new String[]{"cloudcdn.f201603.CloudCDN_MP"};
         exp.paretoFrontFile_ = new String[]{"CloudCDN_MP.pf"};
@@ -98,13 +101,13 @@ public class CloudCDN_f201603_long_MOCHC extends Experiment {
         exp.paretoFrontDirectory_ = "results/data/paretoFronts";
         int numberOfAlgorithms = exp.algorithmNameList_.length;
         exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
-        exp.independentRuns_ = 8;
+        exp.independentRuns_ = 1;
         exp.initExperiment();
 
         // Run the experiments
         exp.runExperiment(num_threads);
 
-        exp.generateQualityIndicators();
+        //exp.generateQualityIndicators();
 
         // Applying Friedman test
         //Friedman test = new Friedman(exp);
