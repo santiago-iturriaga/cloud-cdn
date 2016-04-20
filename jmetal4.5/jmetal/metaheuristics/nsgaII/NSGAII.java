@@ -38,7 +38,7 @@ import jmetal.util.comparators.CrowdingComparator;
 public class NSGAII extends Algorithm {
 
     private Hypervolume hv_;
-    
+
     /**
      * Constructor
      *
@@ -110,13 +110,6 @@ public class NSGAII extends Algorithm {
 
         // Generations 
         while (evaluations < maxEvaluations) {
-            if (evaluations % 100 == 0) {
-                System.out.print(evaluations + ", ");
-
-                if (evaluations % 1000 == 0) {
-                    System.out.println("");
-                }
-            }
             // Create the offSpring solutionSet      
             offspringPopulation = new SolutionSet(populationSize);
             Solution[] parents = new Solution[2];
@@ -192,6 +185,25 @@ public class NSGAII extends Algorithm {
                     requiredEvaluations = evaluations;
                 } // if
             } // if
+
+            if (printHV) {
+                if ((evaluations % 1000 == 0) || (evaluations >= maxEvaluations)) {
+                    double currentPF[][];
+                    currentPF = ranking.getSubfront(0).writeObjectivesToMatrix();
+
+                    double normalizedFront[][];
+                    normalizedFront = normalize(currentPF);
+
+                    double hv_value;
+                    hv_value = hv_.calculateHypervolume(
+                            normalizedFront,
+                            ranking.getSubfront(0).size(),
+                            problem_.getNumberOfObjectives());
+
+                    System.out.println("HV " + hv_value);
+                    //ranking.getSubfront(0).printFeasibleFUN("FUN_" + evaluations);
+                }
+            }
         } // while
 
         // Return as output parameter the required evaluations
@@ -201,17 +213,19 @@ public class NSGAII extends Algorithm {
         Ranking ranking = new Ranking(population);
         ranking.getSubfront(0).printFeasibleFUN("FUN_NSGAII");
 
-        if (printHV) {
-            if ((evaluations % 100 == 0) || (evaluations >= maxEvaluations)) {
-                double hv_value;
-                hv_value = hv_.calculateHypervolume(
-                        ranking.getSubfront(0).writeObjectivesToMatrix(),
-                        ranking.getSubfront(0).size(),
-                        problem_.getNumberOfObjectives());
-                System.out.println("HV " + hv_value);
+        return ranking.getSubfront(0);
+    } // execute
+
+    private double[][] normalize(double[][] pf) {
+        double[][] normalizedPF;
+        normalizedPF = new double[pf.length][pf[0].length];
+
+        for (int i = 0; i < pf.length; i++) {
+            for (int j = 0; j < pf[0].length; j++) {
+                normalizedPF[i][j] = 1.0 / pf[i][j];
             }
         }
 
-        return ranking.getSubfront(0);
-    } // execute
+        return normalizedPF;
+    }
 } // NSGA-II

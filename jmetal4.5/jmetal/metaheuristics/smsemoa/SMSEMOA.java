@@ -125,14 +125,6 @@ public class SMSEMOA extends Algorithm {
 
         // Generations ...
         while (evaluations < maxEvaluations) {
-            if (evaluations % 100 == 0) {
-                System.out.print(evaluations + ", ");
-
-                if (evaluations % 1000 == 0) {
-                    System.out.println("");
-                }
-            }
-
             // select parents
             offspringPopulation = new SolutionSet(populationSize);
             LinkedList<Solution> selectedParents = new LinkedList<Solution>();
@@ -235,13 +227,21 @@ public class SMSEMOA extends Algorithm {
             } // if
 
             if (printHV) {
-                if ((evaluations % 100 == 0) || (evaluations >= maxEvaluations)) {
+                if ((evaluations % 1000 == 0) || (evaluations >= maxEvaluations)) {
+                    double currentPF[][];
+                    currentPF = ranking.getSubfront(0).writeObjectivesToMatrix();
+
+                    double normalizedFront[][];
+                    normalizedFront = normalize(currentPF);
+
                     double hv_value;
                     hv_value = hv_.calculateHypervolume(
-                            ranking.getSubfront(0).writeObjectivesToMatrix(),
+                            normalizedFront,
                             ranking.getSubfront(0).size(),
                             problem_.getNumberOfObjectives());
+
                     System.out.println("HV " + hv_value);
+                    //ranking.getSubfront(0).printFeasibleFUN("FUN_" + evaluations);
                 }
             }
         } // while
@@ -254,6 +254,19 @@ public class SMSEMOA extends Algorithm {
         ranking.getSubfront(0).printFeasibleFUN("FUN");
         return ranking.getSubfront(0);
     } // execute
+
+    private double[][] normalize(double[][] pf) {
+        double[][] normalizedPF;
+        normalizedPF = new double[pf.length][pf[0].length];
+
+        for (int i = 0; i < pf.length; i++) {
+            for (int j = 0; j < pf[0].length; j++) {
+                normalizedPF[i][j] = 1.0 / pf[i][j];
+            }
+        }
+
+        return normalizedPF;
+    }
 
     /**
      * Calculates how much hypervolume each point dominates exclusively. The

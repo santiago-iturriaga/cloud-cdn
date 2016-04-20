@@ -28,7 +28,6 @@ import jmetal.util.comparators.CrowdingComparator;
 
 import java.util.Comparator;
 import jmetal.encodings.variable.ArrayInt;
-import jmetal.operators.selection.RankingAndCrowdingSelection;
 import jmetal.qualityIndicator.Hypervolume;
 
 /**
@@ -109,7 +108,6 @@ public class MOCHC extends Algorithm {
      * solutions as a result of the algorithm execution
      */
     public SolutionSet execute() throws JMException, ClassNotFoundException {
-        int iterations;
         int populationSize;
         int convergenceValue;
         int maxEvaluations;
@@ -149,7 +147,6 @@ public class MOCHC extends Algorithm {
         parentSelection = (Operator) getOperator("parentSelection");
         newGenerationSelection = (Operator) getOperator("newGenerationSelection");
 
-        iterations = 0;
         evaluations = 0;
 
         //Calculate the maximum problem sizes
@@ -180,14 +177,6 @@ public class MOCHC extends Algorithm {
         System.out.println("\nRunning:");
 
         while (!condition) {
-            if (evaluations % 100 == 0) {
-                System.out.print(evaluations + ", ");
-
-                if (evaluations % 1000 == 0) {
-                    System.out.println("");
-                }
-            }
-
             offspringPopulation = new SolutionSet(populationSize);
             for (int i = 0; i < solutionSet.size() / 2; i++) {
                 Solution[] parents = (Solution[]) parentSelection.execute(solutionSet);
@@ -229,7 +218,6 @@ public class MOCHC extends Algorithm {
                     newPopulation.add(solution);
                 }
             }
-            iterations++;
 
             solutionSet = newPopulation;
             if (evaluations >= maxEvaluations) {
@@ -241,17 +229,38 @@ public class MOCHC extends Algorithm {
             }
 
             if (printHV) {
-                if ((evaluations % 100 == 0) || (evaluations >= maxEvaluations)) {
+                if ((evaluations % 1000 == 0) || (evaluations >= maxEvaluations)) {
+                    double currentPF[][];
+                    currentPF = archive_.writeObjectivesToMatrix();
+
+                    double normalizedFront[][];
+                    normalizedFront = normalize(currentPF);
+
                     double hv_value;
                     hv_value = hv_.calculateHypervolume(
-                            archive_.writeObjectivesToMatrix(),
+                            normalizedFront,
                             archive_.size(),
                             problem_.getNumberOfObjectives());
+
                     System.out.println("HV " + hv_value);
+                    //ranking.getSubfront(0).printFeasibleFUN("FUN_" + evaluations);
                 }
             }
         }
 
         return archive_;
     } // execute
+    
+        private double[][] normalize(double[][] pf) {
+        double[][] normalizedPF;
+        normalizedPF = new double[pf.length][pf[0].length];
+
+        for (int i = 0; i < pf.length; i++) {
+            for (int j = 0; j < pf[0].length; j++) {
+                normalizedPF[i][j] = 1.0 / pf[i][j];
+            }
+        }
+
+        return normalizedPF;
+    }
 }  // MOCHC

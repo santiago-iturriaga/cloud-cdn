@@ -8,7 +8,6 @@ import jmetal.util.JMException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jmetal.experiments.util.Friedman;
 import jmetal.util.PseudoRandom;
 import jmetal.util.RandomGenerator;
 
@@ -31,7 +30,7 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         try {
             Object[] problemParams;
 
-            int maxEval = 1000;
+            int maxEval = 4000;
             int time_horizon = (12 * (60 * 60)); // 12 horas ~ 0.5 dias
 
             problemParams = new Object[]{"CloudCDNSolutionf201603Type",
@@ -42,10 +41,10 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
 
             algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(
                     problemName, maxEval, true, problemParams).configure();
-            algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
-                    problemName, maxEval, true, problemParams).configure();
-            algorithm[2] = new jmetal.experiments.settings.cloudcdn.MOCHC_f201603_Settings(
-                    problemName, maxEval, true, problemParams).configure();
+            //algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
+            //        problemName, maxEval, true, problemParams).configure();
+            //algorithm[2] = new jmetal.experiments.settings.cloudcdn.MOCHC_f201603_Settings(
+            //        problemName, maxEval, true, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
             Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
                     Level.SEVERE, null, ex);
@@ -58,10 +57,10 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
         // exp.experimentName_ = "CloudCDNStudy";
         exp.experimentName_ = exp.getClass().getSimpleName() + "_low_0";
 
-        //exp.algorithmNameList_ = new String[]{"SMSEMOA"};
+        exp.algorithmNameList_ = new String[]{"SMSEMOA"};
         //exp.algorithmNameList_ = new String[]{"NSGAII"};
         //exp.algorithmNameList_ = new String[]{"SMSEMOA", "NSGAII"};
-        exp.algorithmNameList_ = new String[]{"SMSEMOA", "NSGAII", "MOCHC"};
+        //exp.algorithmNameList_ = new String[]{"SMSEMOA", "NSGAII", "MOCHC"};
 
         exp.problemList_ = new String[]{"cloudcdn.f201603.CloudCDN_MP"};
         exp.paretoFrontFile_ = new String[]{"CloudCDN_MP.pf"};
