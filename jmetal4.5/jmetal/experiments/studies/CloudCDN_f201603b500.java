@@ -14,14 +14,14 @@ import jmetal.experiments.util.Friedman;
  * Example of experiment. In particular four algorithms are compared when
  * solving four constrained problems.
  */
-public class CloudCDN_f201603b1000 extends Experiment {
+public class CloudCDN_f201603b500 extends Experiment {
 
     private int instance_number;
     private String instance_type;
     private int time_horizon;
     private int max_evals;
 
-    public CloudCDN_f201603b1000(String instance_type, int instance_number, int time_horizon,
+    public CloudCDN_f201603b500(String instance_type, int instance_number, int time_horizon,
             int max_evals) {
         
         this.instance_number = instance_number;
@@ -43,7 +43,7 @@ public class CloudCDN_f201603b1000 extends Experiment {
         try {
             Object[] problemParams;
 
-            problemParams = new Object[]{"CloudCDNSolutionf201603b1000Type",
+            problemParams = new Object[]{"CloudCDNSolutionf201603b500Type",
                 "../Instances/",
                 "../Instances/" + instance_type + "/data." + instance_number + "/",
                 "BestQoSSecure",
@@ -52,7 +52,7 @@ public class CloudCDN_f201603b1000 extends Experiment {
             algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(
                     problemName, max_evals, false, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
-            Logger.getLogger(CloudCDN_f201603b1000.class.getName()).log(
+            Logger.getLogger(CloudCDN_f201603b500.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
     }
@@ -94,7 +94,7 @@ public class CloudCDN_f201603b1000 extends Experiment {
              */
         }
 
-        CloudCDN_f201603b1000 exp = new CloudCDN_f201603b1000(inst_type, inst_number, time_horizon, max_evals);
+        CloudCDN_f201603b500 exp = new CloudCDN_f201603b500(inst_type, inst_number, time_horizon, max_evals);
 
         exp.experimentName_ = exp.getClass().getSimpleName();
         exp.algorithmNameList_ = new String[]{"SMSEMOA"};

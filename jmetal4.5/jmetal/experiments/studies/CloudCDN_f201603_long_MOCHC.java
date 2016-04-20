@@ -14,13 +14,13 @@ import jmetal.experiments.util.Friedman;
  * Example of experiment. In particular four algorithms are compared when
  * solving four constrained problems.
  */
-public class CloudCDN_f201603_200k_SMSEMOA extends Experiment {
+public class CloudCDN_f201603_long_MOCHC extends Experiment {
 
     private int instance_number;
     private String instance_type;
     private int time_horizon;
 
-    public CloudCDN_f201603_200k_SMSEMOA(String instance_type, int instance_number, int time_horizon) {
+    public CloudCDN_f201603_long_MOCHC(String instance_type, int instance_number, int time_horizon) {
         this.instance_number = instance_number;
         this.instance_type = instance_type;
         this.time_horizon = time_horizon;
@@ -39,7 +39,7 @@ public class CloudCDN_f201603_200k_SMSEMOA extends Experiment {
         try {
             Object[] problemParams;
 
-            int maxEval = 200000;
+            int maxEval = 300000;
             System.out.println("Num Evaluations: " + maxEval);
 
             problemParams = new Object[]{"CloudCDNSolutionf201603b100Type",
@@ -48,10 +48,10 @@ public class CloudCDN_f201603_200k_SMSEMOA extends Experiment {
                 "BestQoSSecure",
                 time_horizon};
 
-            algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(
-                    problemName, maxEval, problemParams).configure();
+            algorithm[0] = new jmetal.experiments.settings.cloudcdn.MOCHC_f201603_Settings(
+                    problemName, maxEval, true, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
-            Logger.getLogger(CloudCDN_f201603_200k_SMSEMOA.class.getName()).log(
+            Logger.getLogger(CloudCDN_f201603_long_MOCHC.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
     }
@@ -87,10 +87,10 @@ public class CloudCDN_f201603_200k_SMSEMOA extends Experiment {
              */
         }
 
-        CloudCDN_f201603_200k_SMSEMOA exp = new CloudCDN_f201603_200k_SMSEMOA(inst_type, inst_number, time_horizon);
+        CloudCDN_f201603_long_MOCHC exp = new CloudCDN_f201603_long_MOCHC(inst_type, inst_number, time_horizon);
 
-        exp.experimentName_ = exp.getClass().getSimpleName() + "_200k_SMSEMOA";
-        exp.algorithmNameList_ = new String[]{"SMSEMOA"};
+        exp.experimentName_ = exp.getClass().getSimpleName() + "_200k_MOCHC";
+        exp.algorithmNameList_ = new String[]{"MOCHC"};
         exp.problemList_ = new String[]{"cloudcdn.f201603.CloudCDN_MP"};
         exp.paretoFrontFile_ = new String[]{"CloudCDN_MP.pf"};
         exp.indicatorList_ = new String[]{"EPSILON", "SPREAD", "HV"};
@@ -98,7 +98,7 @@ public class CloudCDN_f201603_200k_SMSEMOA extends Experiment {
         exp.paretoFrontDirectory_ = "results/data/paretoFronts";
         int numberOfAlgorithms = exp.algorithmNameList_.length;
         exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
-        exp.independentRuns_ = 15;
+        exp.independentRuns_ = 8;
         exp.initExperiment();
 
         // Run the experiments

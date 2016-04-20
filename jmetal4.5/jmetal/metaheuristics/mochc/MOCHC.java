@@ -28,6 +28,8 @@ import jmetal.util.comparators.CrowdingComparator;
 
 import java.util.Comparator;
 import jmetal.encodings.variable.ArrayInt;
+import jmetal.operators.selection.RankingAndCrowdingSelection;
+import jmetal.qualityIndicator.Hypervolume;
 
 /**
  * This class executes the MOCHC algorithm described in: A.J. Nebro, E. Alba, G.
@@ -38,11 +40,15 @@ import jmetal.encodings.variable.ArrayInt;
  */
 public class MOCHC extends Algorithm {
 
+    private Hypervolume hv_;
+    CrowdingArchive archive_;
+
     /**
      * Constructor Creates a new instance of MOCHC
      */
     public MOCHC(Problem problem) {
         super(problem);
+        this.hv_ = new Hypervolume();
     }
 
     /**
@@ -134,6 +140,9 @@ public class MOCHC extends Algorithm {
         maxEvaluations
                 = ((Integer) getInputParameter("maxEvaluations")).intValue();
 
+        boolean printHV;
+        printHV = (boolean) getInputParameter("printHV");
+
         // Read operators
         crossover = (Operator) getOperator("crossover");
         cataclysmicMutation = (Operator) getOperator("cataclysmicMutation");
@@ -154,6 +163,8 @@ public class MOCHC extends Algorithm {
             }
         }
         minimumDistance = (int) Math.floor(initialConvergenceCount * size);
+
+        archive_ = new CrowdingArchive(populationSize, problem_.getNumberOfObjectives());
 
         solutionSet = new SolutionSet(populationSize);
         for (int i = 0; i < populationSize; i++) {
@@ -201,7 +212,6 @@ public class MOCHC extends Algorithm {
                 minimumDistance--;
             }
             if (minimumDistance <= -convergenceValue) {
-
                 minimumDistance = (int) (1.0 / size * (1 - 1.0 / size) * size);
                 //minimumDistance = (int) (0.35 * (1 - 0.35) * size);
 
@@ -225,14 +235,23 @@ public class MOCHC extends Algorithm {
             if (evaluations >= maxEvaluations) {
                 condition = true;
             }
+
+            for (int i = 0; i < solutionSet.size(); i++) {
+                archive_.add(solutionSet.get(i));
+            }
+
+            if (printHV) {
+                if ((evaluations % 100 == 0) || (evaluations >= maxEvaluations)) {
+                    double hv_value;
+                    hv_value = hv_.calculateHypervolume(
+                            archive_.writeObjectivesToMatrix(),
+                            archive_.size(),
+                            problem_.getNumberOfObjectives());
+                    System.out.println("HV " + hv_value);
+                }
+            }
         }
 
-        CrowdingArchive archive;
-        archive = new CrowdingArchive(populationSize, problem_.getNumberOfObjectives());
-        for (int i = 0; i < solutionSet.size(); i++) {
-            archive.add(solutionSet.get(i));
-        }
-
-        return archive;
+        return archive_;
     } // execute
 }  // MOCHC

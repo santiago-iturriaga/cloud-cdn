@@ -47,11 +47,12 @@ public class NSGAII_f201603_Settings extends Settings {
     public double crossoverProbability_;
     public double mutationDistributionIndex_;
     public double crossoverDistributionIndex_;
+    public boolean printHV_;
 
     /**
      * Constructor
      */
-    public NSGAII_f201603_Settings(String problem, int maxEval, Object[] problemParams) {
+    public NSGAII_f201603_Settings(String problem, int maxEval, boolean printHV, Object[] problemParams) {
         super(problem);
 
         try {
@@ -68,6 +69,7 @@ public class NSGAII_f201603_Settings extends Settings {
         crossoverProbability_ = 0.9;
         mutationDistributionIndex_ = 20.0;
         crossoverDistributionIndex_ = 20.0;
+        printHV_ = printHV;
     } // NSGAII_Settings
 
     /**
@@ -92,6 +94,7 @@ public class NSGAII_f201603_Settings extends Settings {
         // Algorithm parameters
         algorithm.setInputParameter("populationSize", populationSize_);
         algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+        algorithm.setInputParameter("printHV", printHV_);
 
         // Mutation and Crossover for Real codification
         parameters = new HashMap();

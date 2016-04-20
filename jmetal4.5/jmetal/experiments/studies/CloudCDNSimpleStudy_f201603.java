@@ -32,30 +32,20 @@ public class CloudCDNSimpleStudy_f201603 extends Experiment {
             Object[] problemParams;
 
             int maxEval = 1000;
-            //int maxEval = 200;
             int time_horizon = (12 * (60 * 60)); // 12 horas ~ 0.5 dias
 
-            //problemParams = new Object[]{"CloudCDNSolutionf201603Type",
-            //    "/home/santiago/github/cloud-cdn/Instances/",
-            //    "/home/santiago/github/cloud-cdn/Instances/low/data.0/",
-            //    "BestQoS"};
             problemParams = new Object[]{"CloudCDNSolutionf201603Type",
                 "../Instances/",
                 "../Instances/low/data.0/",
-                /*"BestQoS",*/
                 "BestQoSSecure",
                 time_horizon};
 
-            //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "BestQoS"};
-            //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "CheapestNetwork"};
-            //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "CheapestComputing"};
-            //problemParams = new Object[] {"CloudCDNSolutionf201603Type", "test/", 0, "RoundRobin"};
             algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(
-                    problemName, maxEval, problemParams).configure();
+                    problemName, maxEval, true, problemParams).configure();
             algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
-                    problemName, maxEval, problemParams).configure();
+                    problemName, maxEval, true, problemParams).configure();
             algorithm[2] = new jmetal.experiments.settings.cloudcdn.MOCHC_f201603_Settings(
-                    problemName, maxEval, problemParams).configure();
+                    problemName, maxEval, true, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
             Logger.getLogger(CloudCDNSimpleStudy_f201603.class.getName()).log(
                     Level.SEVERE, null, ex);

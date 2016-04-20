@@ -49,11 +49,11 @@ public class CloudCDN_f201603 extends Experiment {
                 time_horizon};
 
             algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(
-                    problemName, maxEval, problemParams).configure();
+                    problemName, maxEval, false, problemParams).configure();
             algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
-                    problemName, maxEval, problemParams).configure();
+                    problemName, maxEval, false, problemParams).configure();
             algorithm[2] = new jmetal.experiments.settings.cloudcdn.MOCHC_f201603_Settings(
-                    problemName, maxEval, problemParams).configure();
+                    problemName, maxEval, false, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
             Logger.getLogger(CloudCDN_f201603.class.getName()).log(
                     Level.SEVERE, null, ex);

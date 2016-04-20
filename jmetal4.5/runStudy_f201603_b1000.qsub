@@ -5,7 +5,7 @@
 
 # Requerimientos
 # En este caso nuestro trabajo requiere: 16 procesadores, 1 hora de ejecución.
-#PBS -l nodes=1:ppn=16,walltime=4:00:00
+#PBS -l nodes=1:ppn=8,walltime=4:00:00
 
 # Cola de ejecución
 #PBS -q quick_jobs
@@ -58,4 +58,4 @@ NPROCS=$(wc -l < $PBS_NODEFILE)
 echo $NPROCS
 echo
 
-time (/home/siturria/github/cloud-cdn/jmetal4.5/runStudy_f201603b1000.sh low 0 43200 16)
+/home/siturria/bin/jdk1.8.0_77/bin/java -classpath ../bin jmetal.experiments.studies.CloudCDN_f201603b1000 low 0 43200 8 120000 8

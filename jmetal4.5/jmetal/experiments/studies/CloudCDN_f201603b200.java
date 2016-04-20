@@ -19,11 +19,15 @@ public class CloudCDN_f201603b200 extends Experiment {
     private int instance_number;
     private String instance_type;
     private int time_horizon;
+    private int max_evals;
 
-    public CloudCDN_f201603b200(String instance_type, int instance_number, int time_horizon) {
+    public CloudCDN_f201603b200(String instance_type, int instance_number, int time_horizon,
+            int max_evals) {
+        
         this.instance_number = instance_number;
         this.instance_type = instance_type;
         this.time_horizon = time_horizon;
+        this.max_evals = max_evals;
     }
 
     /**
@@ -39,9 +43,6 @@ public class CloudCDN_f201603b200 extends Experiment {
         try {
             Object[] problemParams;
 
-            int maxEval = 60000;
-            System.out.println("Num Evaluations: " + maxEval);
-
             problemParams = new Object[]{"CloudCDNSolutionf201603b200Type",
                 "../Instances/",
                 "../Instances/" + instance_type + "/data." + instance_number + "/",
@@ -49,7 +50,7 @@ public class CloudCDN_f201603b200 extends Experiment {
                 time_horizon};
 
             algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(
-                    problemName, maxEval, problemParams).configure();
+                    problemName, max_evals, false, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
             Logger.getLogger(CloudCDN_f201603b200.class.getName()).log(
                     Level.SEVERE, null, ex);
@@ -61,8 +62,10 @@ public class CloudCDN_f201603b200 extends Experiment {
         String inst_type = "";
         int time_horizon = 0;
         int num_threads = 1;
+        int max_evals = 80000;
+        int num_exec = 30;
 
-        if (args.length != 4) {
+        if (args.length != 6) {
             System.out.println("Error! Parametros incorrectos.");
             System.exit(-1);
         } else {
@@ -70,11 +73,15 @@ public class CloudCDN_f201603b200 extends Experiment {
             inst_number = Integer.parseInt(args[1].trim());
             time_horizon = Integer.parseInt(args[2].trim());
             num_threads = Integer.parseInt(args[3].trim());
+            max_evals = Integer.parseInt(args[4].trim());
+            num_exec = Integer.parseInt(args[5].trim());
 
             System.out.println("Instance Type  : " + inst_type);
             System.out.println("Instance Number: " + inst_number);
             System.out.println("Time Horizon   : " + time_horizon);
             System.out.println("Num Threads    : " + num_threads);
+            System.out.println("Num Evaluations: " + max_evals);
+            System.out.println("Num Executions : " + num_exec);
 
             /*
             Time horizon table:
@@ -87,7 +94,7 @@ public class CloudCDN_f201603b200 extends Experiment {
              */
         }
 
-        CloudCDN_f201603b200 exp = new CloudCDN_f201603b200(inst_type, inst_number, time_horizon);
+        CloudCDN_f201603b200 exp = new CloudCDN_f201603b200(inst_type, inst_number, time_horizon, max_evals);
 
         exp.experimentName_ = exp.getClass().getSimpleName();
         exp.algorithmNameList_ = new String[]{"SMSEMOA"};
@@ -98,7 +105,7 @@ public class CloudCDN_f201603b200 extends Experiment {
         exp.paretoFrontDirectory_ = "results/data/paretoFronts";
         int numberOfAlgorithms = exp.algorithmNameList_.length;
         exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
-        exp.independentRuns_ = 15;
+        exp.independentRuns_ = num_exec;
         exp.initExperiment();
 
         // Run the experiments

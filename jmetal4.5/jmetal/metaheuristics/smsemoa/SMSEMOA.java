@@ -95,6 +95,9 @@ public class SMSEMOA extends Algorithm {
         indicators = (QualityIndicator) getInputParameter("indicators");
         offset = (Double) getInputParameter("offset");
 
+        boolean printHV;
+        printHV = (boolean) getInputParameter("printHV");
+
         //Initialize the variables
         population = new SolutionSet(populationSize);
         evaluations = 0;
@@ -114,22 +117,22 @@ public class SMSEMOA extends Algorithm {
             problem_.evaluateConstraints(newSolution);
             evaluations++;
             population.add(newSolution);
-            
+
             System.out.print(i + " ");
         } //for
 
         System.out.println("\nRunning:");
-        
+
         // Generations ...
         while (evaluations < maxEvaluations) {
             if (evaluations % 100 == 0) {
                 System.out.print(evaluations + ", ");
-                
+
                 if (evaluations % 1000 == 0) {
                     System.out.println("");
                 }
             }
-            
+
             // select parents
             offspringPopulation = new SolutionSet(populationSize);
             LinkedList<Solution> selectedParents = new LinkedList<Solution>();
@@ -165,8 +168,8 @@ public class SMSEMOA extends Algorithm {
             union = ((SolutionSet) population).union(offspringPopulation);
 
             // Ranking the union (non-dominated sorting)
-            Ranking ranking = new Ranking(union);            
-            
+            Ranking ranking = new Ranking(union);
+
             // ensure crowding distance values are up to date
             // (may be important for parent selection)
             for (int j = 0; j < population.size(); j++) {
@@ -230,18 +233,22 @@ public class SMSEMOA extends Algorithm {
                     requiredEvaluations = evaluations;
                 } // if
             } // if
-            
-            double hv_value;
-            hv_value = hv_.calculateHypervolume(
-                    ranking.getSubfront(0).writeObjectivesToMatrix(), 
-                    ranking.getSubfront(0).size(), 
-                    2);
-            System.out.println("HV = " + hv_value);
+
+            if (printHV) {
+                if ((evaluations % 100 == 0) || (evaluations >= maxEvaluations)) {
+                    double hv_value;
+                    hv_value = hv_.calculateHypervolume(
+                            ranking.getSubfront(0).writeObjectivesToMatrix(),
+                            ranking.getSubfront(0).size(),
+                            problem_.getNumberOfObjectives());
+                    System.out.println("HV " + hv_value);
+                }
+            }
         } // while
 
         // Return as output parameter the required evaluations
         setOutputParameter("evaluations", requiredEvaluations);
-        
+
         // Return the first non-dominated front
         Ranking ranking = new Ranking(population);
         ranking.getSubfront(0).printFeasibleFUN("FUN");

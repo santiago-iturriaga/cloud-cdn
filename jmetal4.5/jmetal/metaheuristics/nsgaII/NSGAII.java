@@ -21,6 +21,7 @@
 package jmetal.metaheuristics.nsgaII;
 
 import jmetal.core.*;
+import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
@@ -36,6 +37,8 @@ import jmetal.util.comparators.CrowdingComparator;
  */
 public class NSGAII extends Algorithm {
 
+    private Hypervolume hv_;
+    
     /**
      * Constructor
      *
@@ -43,6 +46,7 @@ public class NSGAII extends Algorithm {
      */
     public NSGAII(Problem problem) {
         super(problem);
+        this.hv_ = new Hypervolume();
     } // NSGAII
 
     /**
@@ -75,6 +79,9 @@ public class NSGAII extends Algorithm {
         populationSize = ((Integer) getInputParameter("populationSize")).intValue();
         maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
         indicators = (QualityIndicator) getInputParameter("indicators");
+
+        boolean printHV;
+        printHV = (boolean) getInputParameter("printHV");
 
         //Initialize the variables
         population = new SolutionSet(populationSize);
@@ -193,6 +200,17 @@ public class NSGAII extends Algorithm {
         // Return the first non-dominated front
         Ranking ranking = new Ranking(population);
         ranking.getSubfront(0).printFeasibleFUN("FUN_NSGAII");
+
+        if (printHV) {
+            if ((evaluations % 100 == 0) || (evaluations >= maxEvaluations)) {
+                double hv_value;
+                hv_value = hv_.calculateHypervolume(
+                        ranking.getSubfront(0).writeObjectivesToMatrix(),
+                        ranking.getSubfront(0).size(),
+                        problem_.getNumberOfObjectives());
+                System.out.println("HV " + hv_value);
+            }
+        }
 
         return ranking.getSubfront(0);
     } // execute

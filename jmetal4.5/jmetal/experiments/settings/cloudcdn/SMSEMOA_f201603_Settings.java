@@ -49,11 +49,12 @@ public class SMSEMOA_f201603_Settings extends Settings {
     public double crossoverDistributionIndex_;
     public double mutationDistributionIndex_;
     public double offset_;
+    public boolean printHV_;
 
     /**
      * Constructor
      */
-    public SMSEMOA_f201603_Settings(String problem, int maxEval, Object[] problemParams) {
+    public SMSEMOA_f201603_Settings(String problem, int maxEval, boolean printHV, Object[] problemParams) {
         super(problem);
 
         try {
@@ -72,7 +73,7 @@ public class SMSEMOA_f201603_Settings extends Settings {
         crossoverDistributionIndex_ = 20.0;
         mutationDistributionIndex_ = 20.0;
         offset_ = 100.0;
-
+        printHV_ = printHV;
     } // SMSEMOA_Settings
 
     /**
@@ -97,6 +98,7 @@ public class SMSEMOA_f201603_Settings extends Settings {
         algorithm.setInputParameter("populationSize", populationSize_);
         algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
         algorithm.setInputParameter("offset", offset_);
+        algorithm.setInputParameter("printHV", printHV_);
 
         // Mutation and Crossover for Real codification 
         parameters = new HashMap();
@@ -120,7 +122,7 @@ public class SMSEMOA_f201603_Settings extends Settings {
         algorithm.addOperator("crossover", crossover);
         algorithm.addOperator("mutation", mutation);
         algorithm.addOperator("selection", selection);
-
+        
         return algorithm;
     } // configure
 

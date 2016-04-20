@@ -48,8 +48,9 @@ public class MOCHC_f201603_Settings extends Settings {
     int convergenceValue_;
     double crossoverProbability_;
     double mutationProbability_;
+    public boolean printHV_;
 
-    public MOCHC_f201603_Settings(String problemName, int maxEval, Object[] problemParams) {
+    public MOCHC_f201603_Settings(String problemName, int maxEval, boolean printHV, Object[] problemParams) {
         super(problemName);
 
         //Object [] problemParams = {"Binary"};
@@ -68,7 +69,7 @@ public class MOCHC_f201603_Settings extends Settings {
 
         crossoverProbability_ = 1.0;
         mutationProbability_ = 0.35;
-
+        printHV_ = printHV;
     }
 
     /**
@@ -95,6 +96,7 @@ public class MOCHC_f201603_Settings extends Settings {
         algorithm.setInputParameter("convergenceValue", convergenceValue_);
         algorithm.setInputParameter("populationSize", populationSize_);
         algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+        algorithm.setInputParameter("printHV", printHV_);
 
         // Crossover operator
         parameters = new HashMap();
