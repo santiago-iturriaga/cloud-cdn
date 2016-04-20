@@ -8,7 +8,7 @@
 #PBS -l nodes=1:ppn=8,walltime=24:00:00
 
 # Cola de ejecución
-#PBS -q medium_jobs
+#PBS -q small_jobs
 
 # Directorio de trabajo
 #PBS -d /home/siturria/github/cloud-cdn/jmetal4.5
