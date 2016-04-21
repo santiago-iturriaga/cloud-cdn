@@ -39,10 +39,10 @@ public class CloudCDN_f201603_long_SMSEMOA extends Experiment {
         try {
             Object[] problemParams;
 
-            int maxEval = 300000;
+            int maxEval = 120000;
             System.out.println("Num Evaluations: " + maxEval);
 
-            problemParams = new Object[]{"CloudCDNSolutionf201603b100Type",
+            problemParams = new Object[]{"CloudCDNSolutionf201603b25Type",
                 "../Instances/",
                 "../Instances/" + instance_type + "/data." + instance_number + "/",
                 "BestQoSSecure",
