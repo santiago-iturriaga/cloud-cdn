@@ -80,7 +80,7 @@ def main(args):
                             w_size = random.randint(554,1385)*(1024*1024)
                             w_orig = int(w_split[3])
 
-                            if w_doc_id < DIMS_SIZE[dim] / 2 or docs_count - w_doc_id <= DIMS_SIZE[dim] / 2:
+                            if w_doc_id < (DIMS_SIZE[dim] * 0.25) or docs_count - w_doc_id <= (DIMS_SIZE[dim] * 0.75):
                                 if w_doc_id in doc_id_mapping:
                                     new_doc_id = doc_id_mapping[w_doc_id]
                                 else:

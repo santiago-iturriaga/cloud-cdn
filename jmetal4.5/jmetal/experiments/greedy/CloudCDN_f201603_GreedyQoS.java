@@ -65,7 +65,7 @@ public class CloudCDN_f201603_GreedyQoS {
             int dcId;
             dcId = prob.getSortedQoS(t.getRegUsrId()).get(0).getRegDcId();
 
-            prob.solutionTypeCustom_.SetDocStored(prob, solution, dcId, t.getDocId(), true);
+            prob.solutionTypeCustom_.SetDocStored(solution, dcId, t.getDocId(), true);
             //prob.solutionTypeCustom_.SetDocStored(prob, solution, 0, t.getDocId(), true);
         }
 

@@ -55,33 +55,43 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
         Variable[] vars = createVariables();
         for (int i = 0; i < problem_.getLength(0); i++) {
             try {
-                ((ArrayInt)vars[0]).setValue(i, 0);
+                ((ArrayInt) vars[0]).setValue(i, 0);
             } catch (JMException ex) {
                 Logger.getLogger(CloudCDNSolutionf201603Type.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
         for (int i = 0; i < problem_.getLength(1); i++) {
-            ((Binary)vars[1]).setIth(i, true);
+            ((Binary) vars[1]).setIth(i, true);
         }
-        
+
         return vars;
     }
-    
+
     public Variable[] createZeroMaxVariables() {
         Variable[] vars = createVariables();
         for (int i = 0; i < problem_.getLength(0); i++) {
             try {
-                ((ArrayInt)vars[0]).setValue(i, 0);
+                ((ArrayInt) vars[0]).setValue(i, 0);
             } catch (JMException ex) {
                 Logger.getLogger(CloudCDNSolutionf201603Type.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
         for (int i = 0; i < problem_.getLength(1); i++) {
-            ((Binary)vars[1]).setIth(i, false);
+            ((Binary) vars[1]).setIth(i, false);
         }
-        
+
+        for (int i = 0; i < customProblem_.getDocumentos().size(); i++) {
+            int dcIdx = GetDCDocIndex(
+                    customProblem_.getRegionesDatacenters().size(),
+                    customProblem_.getDocumentos().size(),
+                    0,
+                    i);
+
+            ((Binary) vars[1]).setIth(dcIdx, true);
+        }
+
         return vars;
     }
 
@@ -107,19 +117,19 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
         return (Binary) solution.getDecisionVariables()[1];
     }
 
-    public boolean IsDocStored(CloudCDN_MP customProblem, Solution solution, int dcId, int docId) {
+    public boolean IsDocStored(Solution solution, int dcId, int docId) {
         return GetDocStorageVariables(solution).getIth(
                 GetDCDocIndex(
-                        customProblem.getRegionesDatacenters().size(),
-                        customProblem.getDocumentos().size(),
+                        customProblem_.getRegionesDatacenters().size(),
+                        customProblem_.getDocumentos().size(),
                         dcId,
                         docId));
     }
 
-    public void SetDocStored(CloudCDN_MP customProblem, Solution solution, int dcId, int docId, boolean status) {
+    public void SetDocStored(Solution solution, int dcId, int docId, boolean status) {
         int idx = GetDCDocIndex(
-                customProblem.getRegionesDatacenters().size(),
-                customProblem.getDocumentos().size(),
+                customProblem_.getRegionesDatacenters().size(),
+                customProblem_.getDocumentos().size(),
                 dcId,
                 docId);
 

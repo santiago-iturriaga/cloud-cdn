@@ -66,7 +66,7 @@ public class CloudCDN_f201603_GreedyCost {
             dcId = prob.getSortedQoS(t.getRegUsrId()).get(0).getRegDcId();
 
             //prob.solutionTypeCustom_.SetDocStored(prob, solution, dcId, t.getDocId(), true);
-            prob.solutionTypeCustom_.SetDocStored(prob, solution, 0, t.getDocId(), true);
+            prob.solutionTypeCustom_.SetDocStored(solution, 0, t.getDocId(), true);
         }
 
         Optional<Integer> justProvId = Optional.empty();

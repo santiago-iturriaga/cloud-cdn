@@ -68,7 +68,7 @@ public class RoundRobin implements IGreedyRouting {
             int loopCount;
             loopCount = 0;
 
-            while (!problem_.solutionTypeCustom_.IsDocStored(problem_, solution,
+            while (!problem_.solutionTypeCustom_.IsDocStored(solution,
                     problem_.getRegionesDatacenters().get(currDC).getRegDctId(), docId)) {
 
                 currDC = (currDC + 1) % numDC;
@@ -78,7 +78,7 @@ public class RoundRobin implements IGreedyRouting {
                     // All documents must be assigned.
                     // TODO: considerar otras alternativas a la no factibilidad.
                     currDC = PseudoRandom.randInt(0, numDC - 1);
-                    problem_.solutionTypeCustom_.SetDocStored(problem_, solution,
+                    problem_.solutionTypeCustom_.SetDocStored(solution,
                             problem_.getRegionesDatacenters().get(currDC).getRegDctId(), docId, true);
 
                     break;

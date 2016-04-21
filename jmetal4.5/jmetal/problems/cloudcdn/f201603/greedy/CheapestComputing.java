@@ -69,14 +69,14 @@ public class CheapestComputing implements IGreedyRouting {
             int cheapestIdx;
             cheapestIdx = 0;
 
-            while (!problem_.solutionTypeCustom_.IsDocStored(problem_, solution, sortedDC.get(cheapestIdx).getRegDctId(), docId)) {
+            while (!problem_.solutionTypeCustom_.IsDocStored(solution, sortedDC.get(cheapestIdx).getRegDctId(), docId)) {
                 cheapestIdx++;
 
                 if (cheapestIdx >= sortedDC.size()) {
                     // All documents must be assigned.
                     // TODO: considerar otras alternativas a la no factibilidad.
                     cheapestIdx = 0;
-                    problem_.solutionTypeCustom_.SetDocStored(problem_, solution, sortedDC.get(0).getRegDctId(), docId, true);
+                    problem_.solutionTypeCustom_.SetDocStored(solution, sortedDC.get(0).getRegDctId(), docId, true);
 
                     break;
                 }
@@ -158,14 +158,14 @@ public class CheapestComputing implements IGreedyRouting {
                 int cheapestIdx;
                 cheapestIdx = 0;
 
-                while (!problem_.solutionTypeCustom_.IsDocStored(problem_, solution, sortedDC.get(cheapestIdx).getRegDctId(), docId)) {
+                while (!problem_.solutionTypeCustom_.IsDocStored(solution, sortedDC.get(cheapestIdx).getRegDctId(), docId)) {
                     cheapestIdx++;
 
                     if (cheapestIdx >= sortedDC.size()) {
                         // All documents must be assigned.
                         // TODO: considerar otras alternativas a la no factibilidad.
                         cheapestIdx = 0;
-                        problem_.solutionTypeCustom_.SetDocStored(problem_, solution, sortedDC.get(0).getRegDctId(), docId, true);
+                        problem_.solutionTypeCustom_.SetDocStored(solution, sortedDC.get(0).getRegDctId(), docId, true);
 
                         break;
                     }

@@ -142,14 +142,14 @@ public class BestQoSSecure implements IGreedyRouting {
         int dcId;
         dcId = regionQoS.get(bestIdx).getRegDcId();
 
-        while (!problem_.solutionTypeCustom_.IsDocStored(problem_, solution, dcId, docId)) {
+        while (!problem_.solutionTypeCustom_.IsDocStored(solution, dcId, docId)) {
             bestIdx++;
 
             if (bestIdx >= regionQoS.size()) {
                 // All documents must be assigned.
                 // TODO: considerar otras alternativas a la no factibilidad.
                 dcId = regionQoS.get(0).getRegDcId();
-                problem_.solutionTypeCustom_.SetDocStored(problem_, solution, dcId, docId, true);
+                problem_.solutionTypeCustom_.SetDocStored(solution, dcId, docId, true);
                 return dcId;
             } else {
                 dcId = regionQoS.get(bestIdx).getRegDcId();
