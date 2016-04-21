@@ -51,6 +51,40 @@ public class CloudCDNSolutionf201603Type extends SolutionType {
         }
     } // createVariables
 
+    public Variable[] createOneMaxVariables() {
+        Variable[] vars = createVariables();
+        for (int i = 0; i < problem_.getLength(0); i++) {
+            try {
+                ((ArrayInt)vars[0]).setValue(i, 0);
+            } catch (JMException ex) {
+                Logger.getLogger(CloudCDNSolutionf201603Type.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        for (int i = 0; i < problem_.getLength(1); i++) {
+            ((Binary)vars[1]).setIth(i, true);
+        }
+        
+        return vars;
+    }
+    
+    public Variable[] createZeroMaxVariables() {
+        Variable[] vars = createVariables();
+        for (int i = 0; i < problem_.getLength(0); i++) {
+            try {
+                ((ArrayInt)vars[0]).setValue(i, 0);
+            } catch (JMException ex) {
+                Logger.getLogger(CloudCDNSolutionf201603Type.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        for (int i = 0; i < problem_.getLength(1); i++) {
+            ((Binary)vars[1]).setIth(i, false);
+        }
+        
+        return vars;
+    }
+
     public int GetDCDocIndex(int dcCount, int docCount, int dcId, int docId) {
         int bucketIdx = (docId * NUM_BUCKETS) / docCount;
         //return NUM_BUCKETS * dcId + bucketIdx;

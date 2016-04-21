@@ -19,6 +19,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package jmetal.metaheuristics.smsemoa;
 
+import java.util.ArrayList;
 import jmetal.core.*;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
@@ -98,6 +99,8 @@ public class SMSEMOA extends Algorithm {
         boolean printHV;
         printHV = (boolean) getInputParameter("printHV");
 
+        ArrayList<Solution> startingPopulation = (ArrayList<Solution>) getInputParameter("startingPopulation");
+
         //Initialize the variables
         population = new SolutionSet(populationSize);
         evaluations = 0;
@@ -109,16 +112,25 @@ public class SMSEMOA extends Algorithm {
         crossoverOperator = operators_.get("crossover");
         selectionOperator = operators_.get("selection");
 
+        for (int i = 0; i < startingPopulation.size(); i++) {
+            problem_.evaluate(startingPopulation.get(i));
+            problem_.evaluateConstraints(startingPopulation.get(i));
+            evaluations++;
+            population.add(startingPopulation.get(i));
+
+            System.out.print(population.size() + " ");
+        }
+
         // Create the initial solutionSet
         Solution newSolution;
-        for (int i = 0; i < populationSize; i++) {
+        while (population.size() < populationSize) {
             newSolution = new Solution(problem_);
             problem_.evaluate(newSolution);
             problem_.evaluateConstraints(newSolution);
             evaluations++;
             population.add(newSolution);
 
-            System.out.print(i + " ");
+            System.out.print(population.size() + " ");
         } //for
 
         System.out.println("\nRunning:");

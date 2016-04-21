@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package jmetal.experiments.settings.cloudcdn;
 
+import java.util.ArrayList;
 import jmetal.experiments.settings.*;
 import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
@@ -35,7 +36,11 @@ import jmetal.util.JMException;
 
 import java.util.HashMap;
 import java.util.Properties;
+import jmetal.core.Solution;
+import jmetal.core.Variable;
+import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionf201603Type;
 import jmetal.metaheuristics.smsemoa.FastSMSEMOA;
+import jmetal.problems.cloudcdn.f201603.CloudCDN_MP;
 
 /**
  * Settings class of algorithm SMSEMOA
@@ -93,7 +98,7 @@ public class SMSEMOA_f201603_Settings extends Settings {
         // Creating the algorithm. 
         algorithm = new SMSEMOA(problem_);
         //algorithm = new FastSMSEMOA(problem_);
-
+        
         // Algorithm parameters
         algorithm.setInputParameter("populationSize", populationSize_);
         algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
@@ -123,58 +128,12 @@ public class SMSEMOA_f201603_Settings extends Settings {
         algorithm.addOperator("mutation", mutation);
         algorithm.addOperator("selection", selection);
         
+        ArrayList<Solution> startingPopulation = new ArrayList<>();
+        startingPopulation.add(new Solution(problem_, ((CloudCDN_MP)problem_).solutionTypeCustom_.createOneMaxVariables()));
+        startingPopulation.add(new Solution(problem_, ((CloudCDN_MP)problem_).solutionTypeCustom_.createZeroMaxVariables()));
+        algorithm.setInputParameter("startingPopulation", startingPopulation);
+        
         return algorithm;
     } // configure
 
-    /**
-     * Configure SMSEMOA with user-defined parameter experiments.settings
-     *
-     * @return A SMSEMOA algorithm object
-     */
-    @Override
-    public Algorithm configure(Properties configuration) throws JMException {
-        Algorithm algorithm;
-        Selection selection;
-        Crossover crossover;
-        Mutation mutation;
-
-        HashMap parameters; // Operator parameters
-
-        // Creating the algorithm.
-        algorithm = new SMSEMOA(problem_);
-
-        // Algorithm parameters
-        populationSize_ = Integer.parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-        maxEvaluations_ = Integer.parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
-        offset_ = Double.parseDouble(configuration.getProperty("offset", String.valueOf(offset_)));
-        algorithm.setInputParameter("populationSize", populationSize_);
-        algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
-        algorithm.setInputParameter("offset", offset_);
-
-        // Mutation and Crossover for Real codification
-        crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
-        crossoverDistributionIndex_ = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex_)));
-        parameters = new HashMap();
-        parameters.put("probability", crossoverProbability_);
-        parameters.put("distributionIndex", crossoverDistributionIndex_);
-        crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
-
-        mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
-        mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
-        parameters = new HashMap();
-        parameters.put("probability", mutationProbability_);
-        parameters.put("distributionIndex", mutationDistributionIndex_);
-        mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-
-        // Selection Operator
-        parameters = null;
-        selection = SelectionFactory.getSelectionOperator("RandomSelection", parameters);
-
-        // Add the operators to the algorithm
-        algorithm.addOperator("crossover", crossover);
-        algorithm.addOperator("mutation", mutation);
-        algorithm.addOperator("selection", selection);
-
-        return algorithm;
-    }
 } // SMSEMOA_Settings
