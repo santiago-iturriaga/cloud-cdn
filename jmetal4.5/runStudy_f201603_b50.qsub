@@ -58,4 +58,4 @@ NPROCS=$(wc -l < $PBS_NODEFILE)
 echo $NPROCS
 echo
 
-/home/siturria/bin/jdk1.8.0_77/bin/java -classpath ../bin jmetal.experiments.studies.CloudCDN_f201603b50 low 0 43200 8 120000 8
+/home/siturria/bin/jdk1.8.0_77/bin/java -classpath ../bin jmetal.experiments.studies.CloudCDN_f201603b50 low 0 43200 8 40000 8

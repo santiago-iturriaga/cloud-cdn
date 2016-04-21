@@ -143,6 +143,13 @@ public class CloudCDN_MP extends Problem {
                 Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
                 throw new JMException(e.getMessage());
             }
+        } else if (solutionType.compareTo("CloudCDNSolutionf201603b10Type") == 0) {
+            try {
+                solutionType_ = solutionTypeCustom_ = new CloudCDNSolutionf201603Type(this, 10);
+            } catch (Exception e) {
+                Logger.getLogger(CloudCDN_MP.class.getName()).log(Level.SEVERE, null, e);
+                throw new JMException(e.getMessage());
+            }
         } else if (solutionType.compareTo("CloudCDNSolutionf201603b25Type") == 0) {
             try {
                 solutionType_ = solutionTypeCustom_ = new CloudCDNSolutionf201603Type(this, 25);

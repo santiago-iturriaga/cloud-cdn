@@ -7,7 +7,7 @@ OK: num. pedidos por VM
 OK: no mezclar las VMs
 analizar soluciones
 hacer algoritmo de validación
-hacer algoritmo simple
+OK: hacer algoritmo simple
 
 QoS -> (1) cada pedido a su dc más cercano (2) calcular el storage de cada video y la cantidad mínima necesaria de VM para satisfacer los pedidos
 
