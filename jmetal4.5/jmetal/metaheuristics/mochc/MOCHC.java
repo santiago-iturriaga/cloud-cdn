@@ -233,7 +233,11 @@ public class MOCHC extends Algorithm {
 
             if (printHV) {
                 if ((lastHV == -1) || (evaluations - lastHV >= 1000) || (evaluations >= maxEvaluations)) {
-                    lastHV = 0;
+                    if (lastHV == -1) {
+                        lastHV = 0;
+                    } else {
+                        lastHV = evaluations;
+                    }
 
                     double currentPF[][];
                     currentPF = archive_.writeObjectivesToMatrix();
