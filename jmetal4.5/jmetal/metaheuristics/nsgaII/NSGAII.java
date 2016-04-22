@@ -108,6 +108,8 @@ public class NSGAII extends Algorithm {
 
         System.out.println("\nRunning:");
 
+        int lastHV = -1;
+        
         // Generations 
         while (evaluations < maxEvaluations) {
             // Create the offSpring solutionSet      
@@ -187,7 +189,9 @@ public class NSGAII extends Algorithm {
             } // if
 
             if (printHV) {
-                if ((evaluations % 1000 == 0) || (evaluations >= maxEvaluations)) {
+                if ((lastHV == -1) || (evaluations - lastHV >= 1000) || (evaluations >= maxEvaluations)) {
+                    lastHV = 0;
+                    
                     double currentPF[][];
                     currentPF = ranking.getSubfront(0).writeObjectivesToMatrix();
 
@@ -200,7 +204,7 @@ public class NSGAII extends Algorithm {
                             ranking.getSubfront(0).size(),
                             problem_.getNumberOfObjectives());
 
-                    System.out.println("HV " + hv_value);
+                    System.out.println(evaluations + " " + hv_value);
                     //ranking.getSubfront(0).printFeasibleFUN("FUN_" + evaluations);
                 }
             }

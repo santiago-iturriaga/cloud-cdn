@@ -176,6 +176,8 @@ public class MOCHC extends Algorithm {
 
         System.out.println("\nRunning:");
 
+        int lastHV = -1;
+        
         while (!condition) {
             offspringPopulation = new SolutionSet(populationSize);
             for (int i = 0; i < solutionSet.size() / 2; i++) {
@@ -215,6 +217,7 @@ public class MOCHC extends Algorithm {
                     cataclysmicMutation.execute(solution);
                     problem_.evaluate(solution);
                     problem_.evaluateConstraints(solution);
+                    evaluations += 1;
                     newPopulation.add(solution);
                 }
             }
@@ -229,7 +232,9 @@ public class MOCHC extends Algorithm {
             }
 
             if (printHV) {
-                if ((evaluations % 1000 == 0) || (evaluations >= maxEvaluations)) {
+                if ((lastHV == -1) || (evaluations - lastHV >= 1000) || (evaluations >= maxEvaluations)) {
+                    lastHV = 0;
+
                     double currentPF[][];
                     currentPF = archive_.writeObjectivesToMatrix();
 
@@ -242,16 +247,18 @@ public class MOCHC extends Algorithm {
                             archive_.size(),
                             problem_.getNumberOfObjectives());
 
-                    System.out.println("HV " + hv_value);
+                    System.out.println(evaluations + " " + hv_value);
                     //ranking.getSubfront(0).printFeasibleFUN("FUN_" + evaluations);
                 }
             }
         }
 
+        System.out.println("Total evaluations " + evaluations);
+
         return archive_;
     } // execute
-    
-        private double[][] normalize(double[][] pf) {
+
+    private double[][] normalize(double[][] pf) {
         double[][] normalizedPF;
         normalizedPF = new double[pf.length][pf[0].length];
 
