@@ -1,0 +1,151 @@
+Job Name: b100
+Working directory: /home/siturria/github/cloud-cdn/jmetal4.5
+Queue: quick_jobs
+Cantidad de tasks: 1
+Home: /home/siturria
+Puerto del MOM: 15003
+Nombre del usuario: siturria
+Idioma: en_US.UTF-8
+Cookie: 699B1E874465309641E1E9F1BE3C640C
+Offset de numero de nodos: 0
+Shell: /bin/bash
+Host: rocks-cluster.fing.edu.uy
+Cola de ejecucion: quick_jobs
+Archivo de nodos: /var/spool/torque/aux//111700.rocks-cluster.fing.edu.uy
+Path: /opt/openmpi/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/bio/ncbi/bin:/opt/bio/mpiblast/bin:/opt/bio/EMBOSS/bin:/opt/bio/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/hmmer/bin:/opt/bio/phylip/exe:/opt/bio/mrbayes:/opt/bio/fasta:/opt/bio/glimmer/bin:/opt/bio/glimmer/scripts:/opt/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodocksuite/bin:/opt/bio/wgs/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/usr/java/latest/bin:/opt/maui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/pdsh/bin:/opt/rocks/bin:/opt/rocks/sbin:/opt/gridengine/bin/linux-x64:/opt/dell/srvadmin/bin:/home/siturria/bin/hwloc-1.9.1/bin:/home/siturria/bin/mc-4.8.13/bin:/home/siturria/bin/valgrind-3.9.0/bin:/home/siturria/intel/bin
+
+Current path:
+/home/siturria/github/cloud-cdn/jmetal4.5
+
+Nodos:
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+
+Cantidad de nodos:
+8
+
+Instance Type  : low
+Instance Number: 0
+Time Horizon   : 43200
+Num Threads    : 8
+Num Evaluations: 40000
+Num Executions : 8
+Experiment directory does NOT exist. Creating
+Experiment directory: results/CloudCDN_f201603b100
+Experiment: Name: CloudCDN_f201603b100
+Experiment: creating 8 threads
+Experiment: Number of algorithms: 1
+Experiment: Number of problems: 1
+Experiment: runs: 8
+Experiment: Experiment directory: results/CloudCDN_f201603b100
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 100
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 100
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 100
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 100
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 100
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 100
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total storage: 945.4199414062497 GB
+Greedy routing: BestQoSSecure
+Total traffic: 6759.0478515625 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 100
+Number of buckets: 100
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+Creating results/CloudCDN_f201603b100/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP
+Creating results/CloudCDN_f201603b100/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP
+Thread-5 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 5, time: 08:57:50.067
+Thread-0 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 0, time: 08:57:50.068
+Thread-7 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 7, time: 08:57:50.075
+Thread-2 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 1, time: 08:57:50.076
+Thread-3 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 3, time: 08:57:50.076
+Thread-6 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 6, time: 08:57:50.076
+Thread-1 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 2, time: 08:57:50.077
+Thread-4 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 4, time: 08:57:50.076
+1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 3 3 3 3 3 4 3 3 2 4 5 4 4 5 4 4 3 4 6 5 5 6 5 5 4 5 7 6 7 6 6 6 5 6 8 7 8 7 7 6 7 9 9 8 7 8 8 7 8 10 10 9 9 9 8 8 9 11 10 11 10 10 9 9 10 12 11 12 11 11 10 11 13 12 13 10 12 12 12 14 13 14 11 11 13 13 13 15 14 15 12 12 14 14 14 16 15 16 13 13 15 15 15 17 16 17 14 14 16 16 16 18 17 18 15 15 17 17 19 17 18 19 16 16 18 18 20 18 19 20 17 19 19 17 21 19 20 21 18 20 20 22 20 21 22 18 19 21 21 23 21 22 23 20 22 22 24 22 19 23 24 21 23 23 25 23 20 24 25 22 24 24 26 24 21 25 26 25 25 27 25 23 26 27 26 28 22 26 24 26 28 27 27 27 25 27 29 28 23 28 28 26 30 29 28 29 29 29 27 30 30 29 31 24 30 30 28 31 31 30 32 31 25 29 32 32 31 33 31 32 26 30 33 33 32 34 32 33 27 31 34 34 33 35 33 34 28 35 32 35 34 36 34 35 29 36 36 33 35 37 35 30 36 37 37 34 36 38 36 31 38 38 35 37 37 39 32 37 39 39 36 38 38 40 33 40 40 37 39 39 41 38 34 41 41 38 40 40 42 39 42 42 39 35 41 41 43 40 43 43 40 42 42 44 41 44 44 41 43 43 36 45 42 45 45 42 44 44 46 43 46 46 37 43 45 45 47 47 47 38 44 46 46 48 44 48 48 39 45 47 47 49 49 49 40 46 48 48 50 45 50 50 41 47 49 49 51 51 51 42 50 48 50 52 46 52 52 43 51 49 51 53 53 53 52 44 50 52 54 47 54 54 53 45 51 53 55 55 55 54 46 52 54 56 48 56 56 55 47 53 55 57 57 57 56 48 54 56 58 49 58 58 57 49 55 57 59 59 59 58 50 56 58 60 50 60 60 59 51 57 59 61 61 60 61 52 58 60 62 51 62 61 62 53 59 61 63 63 62 63 54 60 62 64 52 64 63 64 55 61 63 65 65 64 65 56 62 64 66 53 66 65 66 57 63 65 67 67 66 67 58 64 66 68 68 54 67 68 59 65 69 67 69 68 69 60 66 70 68 55 70 71 70 61 67 69 71 72 69 71 68 56 70 73 62 72 72 69 71 70 74 63 73 57 72 73 75 70 71 64 74 73 76 74 71 72 74 65 75 58 77 75 72 73 75 66 76 78 76 76 73 74 79 67 77 59 77 77 74 75 80 78 78 60 75 68 81 78 76 79 79 82 61 76 79 80 77 80 69 83 81 77 80 62 78 84 81 82 70 78 81 79 85 83 82 79 82 63 86 80 84 83 71 87 80 85 83 81 84 88 86 81 64 84 72 85 89 87 82 82 85 73 90 88 86 83 83 86 91 89 65 74 87 84 92 90 84 87 66 75 88 93 91 85 85 88 67 76 89 94 92 86 89 68 77 95 90 93 87 96 86 90 94 78 91 97 69 88 95 87 91 79 92 98 96 89 88 92 93 80 70 99 97 90 89 93 94 81 98 71 100 
+Running:
+91 90 94 99 95 82 72 92 100 
+Running:
+91 95 96 83 93 92 96 97 84 73 94 93 97 85 74 95 94 98 98 75 96 99 95 86 76 97 100 
+Running:
+96 87 99 77 98 97 88 78 99 98 100 
+Running:
+89 79 100 
+Running:
+99 90 80 100 
+Running:
+91 81 82 92 83 93 84 94 85 95 86 96 87 97 88 98 89 99 90 100 
+Running:
+91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-4 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 4, time: 09:24:58.662
+Thread-1 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 2, time: 09:25:00.081
+Thread-0 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 0, time: 09:25:02.038
+Thread-2 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 1, time: 09:25:06.823
+Thread-7 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 7, time: 09:25:11.144
+Thread-5 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 5, time: 09:25:42.007
+Thread-6 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 6, time: 09:26:14.673
+Thread-3 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 3, time: 09:28:14.339
+Creating results/CloudCDN_f201603b100/referenceFronts
+Experiment - Quality indicator: EPSILON
+File results/CloudCDN_f201603b100/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/EPSILON does NOT exist.
+Experiment - Quality indicator: SPREAD
+File results/CloudCDN_f201603b100/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/SPREAD does NOT exist.
+Experiment - Quality indicator: HV
+File results/CloudCDN_f201603b100/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/HV does NOT exist.
