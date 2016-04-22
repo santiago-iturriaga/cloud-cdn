@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package jmetal.experiments.settings.cloudcdn;
 
+import java.util.ArrayList;
 import jmetal.experiments.settings.*;
 import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
@@ -35,6 +36,8 @@ import jmetal.util.JMException;
 
 import java.util.HashMap;
 import java.util.Properties;
+import jmetal.core.Solution;
+import jmetal.problems.cloudcdn.f201603.CloudCDN_MP;
 
 /**
  * Settings class of algorithm NSGA-II (real encoding)
@@ -117,6 +120,11 @@ public class NSGAII_f201603_Settings extends Settings {
         algorithm.addOperator("crossover", crossover);
         algorithm.addOperator("mutation", mutation);
         algorithm.addOperator("selection", selection);
+
+        ArrayList<Solution> startingPopulation = new ArrayList<>();
+        startingPopulation.add(new Solution(problem_, ((CloudCDN_MP) problem_).solutionTypeCustom_.createOneMaxVariables()));
+        startingPopulation.add(new Solution(problem_, ((CloudCDN_MP) problem_).solutionTypeCustom_.createZeroMaxVariables()));
+        algorithm.setInputParameter("startingPopulation", startingPopulation);
 
         return algorithm;
     } // configure

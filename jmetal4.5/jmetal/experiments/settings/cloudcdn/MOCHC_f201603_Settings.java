@@ -20,6 +20,7 @@
 //
 package jmetal.experiments.settings.cloudcdn;
 
+import java.util.ArrayList;
 import jmetal.experiments.settings.*;
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
@@ -33,6 +34,8 @@ import jmetal.util.JMException;
 
 import java.util.HashMap;
 import java.util.Properties;
+import jmetal.core.Solution;
+import jmetal.problems.cloudcdn.f201603.CloudCDN_MP;
 
 /**
  * Created with IntelliJ IDEA. User: antelverde Date: 17/06/13 Time: 23:40 To
@@ -121,6 +124,11 @@ public class MOCHC_f201603_Settings extends Settings {
         algorithm.addOperator("cataclysmicMutation", mutation);
         algorithm.addOperator("parentSelection", parentsSelection);
         algorithm.addOperator("newGenerationSelection", newGenerationSelection);
+
+        ArrayList<Solution> startingPopulation = new ArrayList<>();
+        startingPopulation.add(new Solution(problem_, ((CloudCDN_MP) problem_).solutionTypeCustom_.createOneMaxVariables()));
+        startingPopulation.add(new Solution(problem_, ((CloudCDN_MP) problem_).solutionTypeCustom_.createZeroMaxVariables()));
+        algorithm.setInputParameter("startingPopulation", startingPopulation);
 
         return algorithm;
     } // configure

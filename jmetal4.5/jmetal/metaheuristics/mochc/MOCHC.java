@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package jmetal.metaheuristics.mochc;
 
+import java.util.ArrayList;
 import jmetal.core.*;
 import jmetal.encodings.variable.Binary;
 import jmetal.util.JMException;
@@ -141,6 +142,8 @@ public class MOCHC extends Algorithm {
         boolean printHV;
         printHV = (boolean) getInputParameter("printHV");
 
+        ArrayList<Solution> startingPopulation = (ArrayList<Solution>) getInputParameter("startingPopulation");
+
         // Read operators
         crossover = (Operator) getOperator("crossover");
         cataclysmicMutation = (Operator) getOperator("cataclysmicMutation");
@@ -164,20 +167,28 @@ public class MOCHC extends Algorithm {
         archive_ = new CrowdingArchive(populationSize, problem_.getNumberOfObjectives());
 
         solutionSet = new SolutionSet(populationSize);
-        for (int i = 0; i < populationSize; i++) {
+
+        for (int i = 0; i < startingPopulation.size(); i++) {
+            problem_.evaluate(startingPopulation.get(i));
+            problem_.evaluateConstraints(startingPopulation.get(i));
+            evaluations++;
+            solutionSet.add(startingPopulation.get(i));
+
+            System.out.print(solutionSet.size() + " ");
+        }
+
+        while (solutionSet.size() < populationSize) {
             Solution solution = new Solution(problem_);
             problem_.evaluate(solution);
             problem_.evaluateConstraints(solution);
             evaluations++;
             solutionSet.add(solution);
-
-            System.out.print(i + " ");
         }
 
         System.out.println("\nRunning:");
 
         int lastHV = -1;
-        
+
         while (!condition) {
             offspringPopulation = new SolutionSet(populationSize);
             for (int i = 0; i < solutionSet.size() / 2; i++) {
