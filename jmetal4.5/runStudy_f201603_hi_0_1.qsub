@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Nombre del trabajo
-#PBS -N low_0
+#PBS -N high_0_1
 
 # Requerimientos
 # En este caso nuestro trabajo requiere: 16 procesadores, 1 hora de ejecución.
@@ -58,4 +58,4 @@ NPROCS=$(wc -l < $PBS_NODEFILE)
 echo $NPROCS
 echo
 
-/home/siturria/bin/jdk1.8.0_77/bin/java -classpath ../bin jmetal.experiments.studies.CloudCDN_f201603 low 0 86400 30
+/home/siturria/bin/jdk1.8.0_77/bin/java -classpath ../bin jmetal.experiments.studies.CloudCDN_f201603_SMSEMOA high 0 86400 30
