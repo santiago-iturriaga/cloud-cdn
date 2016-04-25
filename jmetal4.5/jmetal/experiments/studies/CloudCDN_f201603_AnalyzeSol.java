@@ -35,8 +35,8 @@ public class CloudCDN_f201603_AnalyzeSol {
     }
 
     public void Analyze(CloudCDN_MP problem, int num_prov, Path varFilePath) throws JMException, IOException {
-        CloudCDNSolutionf201603Type solutionTypeCustom_ = new CloudCDNSolutionf201603Type(problem, 100);
-        
+        CloudCDNSolutionf201603Type solutionTypeCustom_ = problem.solutionTypeCustom_; //new CloudCDNSolutionf201603Type(problem, 25);
+
         Stream<String> s = Files.lines(varFilePath);
         s.forEach((solString) -> {
             String[] parts = solString.trim().split(" ");
@@ -138,7 +138,7 @@ public class CloudCDN_f201603_AnalyzeSol {
 
         varFilePath = Paths.get("results/"
                 + "CloudCDNSimpleStudy_f201603_low_0/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
-        
+
         Analyze(problem, 2, varFilePath);
     }
 
@@ -188,67 +188,54 @@ public class CloudCDN_f201603_AnalyzeSol {
         CloudCDN_MP problem;
         Path varFilePath;
 
-        String basePath = "results/20160414/";
+        String basePath = "results/inst_0/results/";
+        String[] algorithm = new String[3];
+        algorithm[0] = "SMSEMOA";
+        algorithm[1] = "NSGAII";
+        algorithm[2] = "MOCHC";
 
-        System.out.println(" === LOW_43200 ====================================================== ");
-        problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "../Instances/",
-                "../Instances/low/data.0/",
-                "BestQoS",
-                43200);
+        for (int a = 0; a < 3; a++) {
+            System.out.println("********************************************************************* ");
+            System.out.println("*** " + algorithm[a]);
+            System.out.println("********************************************************************* ");
+            System.out.println("********************************************************************* ");
 
-        varFilePath = Paths.get(basePath
-                + "CloudCDN_f201603_low_0_43200/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+            System.out.println(" === LOW_43200 ====================================================== ");
+            problem = new CloudCDN_MP("CloudCDNSolutionf201603b25Type",
+                    "../Instances/",
+                    "../Instances/low/data.0/",
+                    "BestQoS",
+                    43200);
 
-        Analyze(problem, 2, varFilePath);
+            varFilePath = Paths.get(basePath
+                    + "CloudCDN_f201603_low_0_43200/data/" + algorithm[a] + "/cloudcdn.f201603.CloudCDN_MP/VAR.0");
 
-        System.out.println(" === LOW_86400 ======================================================= ");
-        problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "../Instances/",
-                "../Instances/low/data.0/",
-                "BestQoS",
-                86400);
+            Analyze(problem, 2, varFilePath);
 
-        varFilePath = Paths.get(basePath
-                + "CloudCDN_f201603_low_0_86400/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+            System.out.println(" === LOW_86400 ======================================================= ");
+            problem = new CloudCDN_MP("CloudCDNSolutionf201603b25Type",
+                    "../Instances/",
+                    "../Instances/low/data.0/",
+                    "BestQoS",
+                    86400);
 
-        Analyze(problem, 2, varFilePath);
+            varFilePath = Paths.get(basePath
+                    + "CloudCDN_f201603_low_0_86400/data/" + algorithm[a] + "/cloudcdn.f201603.CloudCDN_MP/VAR.0");
 
-        System.out.println(" === LOW_172800 ======================================================= ");
-        problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "../Instances/",
-                "../Instances/low/data.0/",
-                "BestQoS",
-                172800);
+            Analyze(problem, 2, varFilePath);
 
-        varFilePath = Paths.get(basePath
-                + "CloudCDN_f201603_low_0_172800/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
+            System.out.println(" === LOW_172800 ======================================================= ");
+            problem = new CloudCDN_MP("CloudCDNSolutionf201603b25Type",
+                    "../Instances/",
+                    "../Instances/low/data.0/",
+                    "BestQoS",
+                    172800);
 
-        Analyze(problem, 2, varFilePath);
+            varFilePath = Paths.get(basePath
+                    + "CloudCDN_f201603_low_0_172800/data/" + algorithm[a] + "/cloudcdn.f201603.CloudCDN_MP/VAR.0");
 
-        System.out.println(" === LOW_259200 ======================================================= ");
-        problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "../Instances/",
-                "../Instances/low/data.0/",
-                "BestQoS",
-                259200);
-
-        varFilePath = Paths.get(basePath
-                + "CloudCDN_f201603_low_0_172800/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
-
-        Analyze(problem, 2, varFilePath);
-
-        System.out.println(" === LOW_345600 ====================================================== ");
-        problem = new CloudCDN_MP("CloudCDNSolutionf201603Type",
-                "../Instances/",
-                "../Instances/low/data.0/",
-                "BestQoS",
-                345600);
-
-        varFilePath = Paths.get(basePath
-                + "CloudCDN_f201603_low_0_345600/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/VAR.0");
-
-        Analyze(problem, 2, varFilePath);
+            Analyze(problem, 2, varFilePath);
+        }
     }
 
     public static void main(String[] args) {

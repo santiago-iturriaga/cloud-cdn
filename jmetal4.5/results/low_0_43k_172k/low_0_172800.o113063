@@ -1,0 +1,2740 @@
+Job Name: low_0_172800
+Working directory: /home/siturria/github/cloud-cdn/jmetal4.5
+Queue: quick_jobs
+Cantidad de tasks: 1
+Home: /home/siturria
+Puerto del MOM: 15003
+Nombre del usuario: siturria
+Idioma: en_US.UTF-8
+Cookie: A8C1D6DF3457C59B1D811AB5FFE1F372
+Offset de numero de nodos: 0
+Shell: /bin/bash
+Host: rocks-cluster.fing.edu.uy
+Cola de ejecucion: quick_jobs
+Archivo de nodos: /var/spool/torque/aux//113063.rocks-cluster.fing.edu.uy
+Path: /opt/openmpi/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/bio/ncbi/bin:/opt/bio/mpiblast/bin:/opt/bio/EMBOSS/bin:/opt/bio/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/hmmer/bin:/opt/bio/phylip/exe:/opt/bio/mrbayes:/opt/bio/fasta:/opt/bio/glimmer/bin:/opt/bio/glimmer/scripts:/opt/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodocksuite/bin:/opt/bio/wgs/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/usr/java/latest/bin:/opt/maui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/pdsh/bin:/opt/rocks/bin:/opt/rocks/sbin:/opt/gridengine/bin/linux-x64:/opt/dell/srvadmin/bin:/home/siturria/bin/hwloc-1.9.1/bin:/home/siturria/bin/mc-4.8.13/bin:/home/siturria/bin/valgrind-3.9.0/bin:/home/siturria/intel/bin
+
+Current path:
+/home/siturria/github/cloud-cdn/jmetal4.5
+
+Nodos:
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+node40
+
+Cantidad de nodos:
+30
+
+Instance Type  : low
+Instance Number: 0
+Time Horizon   : 172800
+Num Threads    : 30
+Experiment directory does NOT exist. Creating
+Experiment directory: results/CloudCDN_f201603_low_0_172800
+Experiment: Name: CloudCDN_f201603_low_0_172800
+Experiment: creating 30 threads
+Experiment: Number of algorithms: 3
+Experiment: Number of problems: 1
+Experiment: runs: 30
+Experiment: Experiment directory: results/CloudCDN_f201603_low_0_172800
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Total documents: 1000
+Total documents: 1000
+Total requests: 7380
+Total documents: 1000
+Total requests: 7380
+Total documents: 1000
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total documents: 1000
+Total requests: 7380
+Number of buckets: 25
+Total documents: 1000
+Total requests: 7380
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Total documents: 1000
+Total requests: 7380
+Number of buckets: 25
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Total storage: 945.4199414062497 GB
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Greedy routing: BestQoSSecure
+Number of buckets: 25
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total storage: 945.4199414062497 GB
+Greedy routing: BestQoSSecure
+Number of buckets: 25
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total documents: 1000
+Total traffic: 6759.0478515625 GB
+Total requests: 7380
+Number of buckets: 25
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Greedy routing: BestQoSSecure
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+Greedy routing: BestQoSSecure
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+Total documents: 1000
+Total requests: 7380
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total documents: 1000
+Total requests: 7380
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Total traffic: 6759.0478515625 GB
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Number of buckets: 25
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Greedy routing: BestQoSSecure
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+Total documents: 1000
+Total requests: 7380
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Greedy routing: BestQoSSecure
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Greedy routing: BestQoSSecure
+Number of buckets: 25
+Total documents: 1000
+Total requests: 7380
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Greedy routing: BestQoSSecure
+Total traffic: 6759.0478515625 GB
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Greedy routing: BestQoSSecure
+Creating results/CloudCDN_f201603_low_0_172800/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP
+Total documents: 1000
+Total requests: 7380
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Creating results/CloudCDN_f201603_low_0_172800/data/NSGAII/cloudcdn.f201603.CloudCDN_MP
+Number of buckets: 25
+Creating results/CloudCDN_f201603_low_0_172800/data/NSGAII/cloudcdn.f201603.CloudCDN_MP
+Creating results/CloudCDN_f201603_low_0_172800/data/MOCHC/cloudcdn.f201603.CloudCDN_MP
+Greedy routing: BestQoSSecure
+Creating results/CloudCDN_f201603_low_0_172800/data/MOCHC/cloudcdn.f201603.CloudCDN_MP
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Greedy routing: BestQoSSecure
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+Greedy routing: BestQoSSecure
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Greedy routing: BestQoSSecure
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+Greedy routing: BestQoSSecure
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Total documents: 1000
+Total requests: 7380
+Number of buckets: 25
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Greedy routing: BestQoSSecure
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-11 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 3, time: 14:54:49.694
+Thread-18 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 6, time: 14:54:49.694
+Thread-22 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 7, time: 14:54:49.695
+Thread-4 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 1, time: 14:54:49.695
+Thread-5 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 1, time: 14:54:49.695
+Thread-27 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 9, time: 14:54:49.695
+Thread-7 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 2, time: 14:54:49.700
+Thread-3 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 1, time: 14:54:49.702
+Thread-8 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 2, time: 14:54:49.702
+Thread-19 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 6, time: 14:54:49.703
+Thread-10 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 3, time: 14:54:49.704
+Thread-23 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 7, time: 14:54:49.704
+Thread-15 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 5, time: 14:54:49.704
+Thread-9 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 3, time: 14:54:49.704
+Thread-13 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 4, time: 14:54:49.705
+Thread-6 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 2, time: 14:54:49.705
+Thread-20 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 6, time: 14:54:49.705
+Thread-1 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 0, time: 14:54:49.705
+Thread-29 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 9, time: 14:54:49.706
+Thread-21 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 7, time: 14:54:49.706
+Thread-12 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 4, time: 14:54:49.706
+Thread-25 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 8, time: 14:54:49.706
+Thread-28 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 9, time: 14:54:49.706
+Thread-0 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 0, time: 14:54:49.707
+Thread-17 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 5, time: 14:54:49.707
+Thread-26 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 8, time: 14:54:49.707
+Thread-2 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 0, time: 14:54:49.707
+Thread-14 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 4, time: 14:54:49.707
+Thread-24 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 8, time: 14:54:49.707
+Thread-16 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 5, time: 14:54:49.819
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 2 2 3 3 3 2 2 4 3 2 4 2 4 2 2 3 5 4 2 4 5 2 2 2 5 2 6 2 3 5 4 6 3 5 3 3 6 7 6 7 4 4 4 5 7 8 6 4 8 7 5 5 9 8 5 6 9 8 7 5 6 6 10 9 10 9 6 7 7 7 8 11 6 11 10 10 8 8 12 7 12 9 8 11 7 11 9 13 9 13 12 8 10 12 10 14 9 10 8 14 13 11 13 15 9 11 11 15 10 9 12 14 14 16 12 16 10 13 15 12 17 15 11 10 13 17 14 18 16 16 11 13 14 18 12 15 11 19 17 17 19 15 12 16 14 20 18 13 18 12 20 16 17 21 13 19 19 15 21 14 17 18 13 22 20 20 22 14 19 18 16 23 15 14 21 21 23 20 19 24 15 17 22 24 22 16 21 15 25 20 25 16 23 23 22 18 26 21 17 16 26 24 24 23 27 17 22 19 27 25 25 24 18 28 17 23 18 28 25 29 20 26 26 24 19 18 29 26 30 27 27 19 21 25 30 27 31 20 19 28 28 20 26 31 28 32 22 29 29 21 20 32 27 33 29 21 30 30 23 33 28 34 30 22 21 31 31 22 34 35 29 24 31 32 32 23 22 35 36 32 30 23 25 33 33 36 37 33 31 24 23 24 34 37 34 38 26 34 32 25 24 38 35 35 39 35 25 33 27 39 36 40 36 36 26 25 34 26 40 41 28 37 37 37 35 41 27 26 42 38 38 27 38 29 36 42 43 39 39 39 27 28 28 37 43 44 30 40 40 40 38 44 45 28 29 41 29 41 41 31 45 39 46 42 42 29 30 42 30 46 47 32 40 43 43 43 47 48 30 31 41 44 31 33 44 44 48 49 45 42 31 32 32 45 45 50 49 34 46 43 46 51 46 50 32 33 33 47 44 35 52 47 51 47 48 45 33 34 34 53 36 52 48 48 49 46 54 53 49 35 34 50 49 35 37 47 55 54 50 51 50 36 35 48 36 56 38 55 52 51 51 49 57 56 37 36 53 37 52 39 52 58 50 57 54 53 53 38 37 38 59 40 58 51 55 54 54 60 59 52 39 56 38 39 41 55 55 61 60 53 57 40 56 39 56 62 42 40 61 58 54 57 63 57 62 41 59 40 55 43 41 64 58 58 63 60 56 42 65 41 44 59 42 64 59 61 57 66 60 65 43 60 62 45 42 43 58 67 66 61 63 61 44 59 68 46 43 67 44 62 64 62 69 60 45 68 63 65 47 63 44 45 70 61 69 66 64 46 64 71 48 45 62 70 46 67 65 72 65 47 71 63 68 49 66 46 73 47 72 64 69 66 48 67 74 50 47 73 48 65 70 68 75 67 49 74 71 51 66 48 76 69 49 75 72 68 67 50 77 70 52 76 49 50 73 78 68 69 71 51 77 53 74 50 79 51 72 70 78 69 75 52 80 54 73 79 51 76 52 71 81 70 53 80 74 55 77 82 52 72 53 71 81 75 78 54 83 56 82 53 76 79 73 54 72 84 55 83 57 80 77 85 54 74 55 73 84 81 78 56 86 58 85 55 75 82 56 74 87 79 57 86 59 83 88 80 56 76 75 57 87 84 89 58 60 81 88 57 77 85 76 58 90 82 59 89 61 86 91 58 78 83 77 59 90 87 92 60 62 84 91 59 79 88 78 93 60 61 85 63 92 89 94 80 60 79 61 86 93 90 95 62 64 81 94 61 87 80 91 96 62 63 65 95 88 92 97 82 62 81 63 96 89 93 98 64 66 83 97 63 82 94 90 99 64 65 67 98 95 100 
+Running:
+91 84 64 83 65 99 96 66 68 92 85 65 100 
+Running:
+84 97 66 93 67 69 98 86 66 85 94 67 99 
+Running:
+68 70 68 71 67 100 
+Running:
+87 
+Running:
+86 95 69 
+Running:
+69 72 70 68 73 70 71 88 87 96 69 74 71 72 89 97 88 70 98 75 72 90 73 89 99 71 76 73 91 74 90 100 
+Running:
+72 77 92 74 75 91 73 
+Running:
+78 93 75 76 92 
+Running:
+
+Running:
+74 79 94 76 77 93 75 80 95 78 77 94 76 81 96 79 78 95 77 
+Running:
+82 97 80 79 96 78 83 98 81 80 97 79 84 99 82 81 98 80 85 100 
+Running:
+83 82 99 81 86 84 83 100 
+Running:
+
+Running:
+82 87 85 84 83 88 86 85 
+Running:
+84 89 87 86 
+Running:
+85 90 
+Running:
+88 87 
+Running:
+86 91 89 88 87 92 90 89 88 93 91 90 89 94 92 91 90 
+Running:
+95 93 92 
+Running:
+
+Running:
+91 96 94 93 92 97 95 94 93 98 96 95 94 99 97 
+Running:
+96 95 100 
+Running:
+98 97 96 99 98 97 
+Running:
+100 
+Running:
+99 98 
+Running:
+100 
+Running:
+99 100 
+Running:
+
+Running:
+
+Running:
+Total evaluations 60020
+Thread-20 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 6, time: 15:20:02.621
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-20 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 10, time: 15:20:03.795
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Total evaluations 60048
+Thread-8 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 2, time: 15:20:21.814
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-8 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 10, time: 15:20:22.660
+1 2 
+Running:
+Thread-6 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 2, time: 15:20:29.423
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total evaluations 60040
+Thread-14 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 4, time: 15:20:29.774
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-6 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 10, time: 15:20:30.263
+1 2 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-14 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 11, time: 15:20:30.618
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 Total evaluations 60020
+Thread-2 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 0, time: 15:20:32.036
+56 Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+57 58 59 60 61 62 63 64 65 66 67 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+68 69 70 71 72 73 74 75 76 77 78 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+79 80 81 82 83 84 85 
+Running:
+86 87 88 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-2 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 11, time: 15:20:32.886
+89 1 90 2 91 92 93 94 95 96 97 98 99 100 
+Running:
+Total evaluations 60050
+Thread-17 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 5, time: 15:20:35.147
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+
+Running:
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Thread-1 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 0, time: 15:20:35.794
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-17 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 11, time: 15:20:35.964
+1 2 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-1 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 12, time: 15:20:36.619
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 
+Running:
+74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-4 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 1, time: 15:20:39.759
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-4 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 12, time: 15:20:40.691
+1 2 
+Running:
+Thread-16 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 5, time: 15:20:47.439
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-16 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 12, time: 15:20:48.286
+1 2 
+Running:
+Total evaluations 60024
+Thread-29 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 9, time: 15:20:52.022
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-29 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 13, time: 15:20:52.860
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 Total evaluations 60014
+Thread-5 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 1, time: 15:20:54.457
+63 64 Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+65 66 67 68 69 70 71 72 73 74 75 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+76 77 78 79 80 81 82 83 84 85 86 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+87 88 89 90 91 92 93 94 95 96 97 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-5 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 13, time: 15:20:55.339
+98 1 99 2 100 
+Running:
+Total evaluations 60004
+Thread-23 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 7, time: 15:20:55.405
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-23 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 13, time: 15:20:56.247
+1 2 Total evaluations 60054
+Thread-11 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 3, time: 15:20:57.701
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+
+Running:
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-11 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 14, time: 15:20:58.541
+1 2 3 4 5 6 7 8 9 10 
+Running:
+11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-25 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 8, time: 15:21:13.700
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-25 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 14, time: 15:21:14.693
+1 2 
+Running:
+Thread-28 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 9, time: 15:21:19.025
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-28 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 14, time: 15:21:19.881
+1 2 
+Running:
+Thread-10 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 3, time: 15:21:25.028
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Thread-22 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 7, time: 15:21:25.655
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-10 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 15, time: 15:21:25.858
+1 2 3 4 5 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+6 7 8 9 10 11 12 13 14 15 16 17 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+18 19 20 21 22 23 24 25 26 27 28 29 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-22 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 15, time: 15:21:26.609
+30 1 31 32 2 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 Thread-13 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 4, time: 15:21:28.120
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-13 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 15, time: 15:21:28.966
+1 2 
+Running:
+
+Running:
+Thread-19 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 6, time: 15:21:43.421
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-19 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 16, time: 15:21:44.252
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-24 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 8, time: 15:21:47.950
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-24 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 16, time: 15:21:48.779
+1 2 
+Running:
+Total evaluations 60024
+Thread-26 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 8, time: 15:22:00.455
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-26 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 16, time: 15:22:01.290
+1 2 Thread-3 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 1, time: 15:22:03.624
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+
+Running:
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-3 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 17, time: 15:22:04.459
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-9 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 3, time: 15:22:11.717
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-9 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 17, time: 15:22:12.549
+1 2 
+Running:
+Thread-7 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 2, time: 15:22:15.443
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-7 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 17, time: 15:22:16.448
+1 2 
+Running:
+Thread-21 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 7, time: 15:22:21.346
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-21 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 18, time: 15:22:22.203
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-15 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 5, time: 15:22:30.195
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-15 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 18, time: 15:22:31.086
+1 2 
+Running:
+Thread-12 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 4, time: 15:22:45.560
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-12 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 18, time: 15:22:46.513
+1 2 
+Running:
+Thread-0 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 0, time: 15:22:53.977
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-0 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 19, time: 15:22:54.820
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-18 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 6, time: 15:23:00.793
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-18 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 19, time: 15:23:01.624
+1 2 
+Running:
+Thread-27 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 9, time: 15:23:07.907
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-27 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 19, time: 15:23:08.798
+1 2 
+Running:
+Total evaluations 60038
+Thread-6 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 10, time: 15:45:27.700
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-6 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 20, time: 15:45:28.778
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-4 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 12, time: 15:45:36.459
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-4 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 20, time: 15:45:37.291
+1 2 
+Running:
+Thread-8 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 10, time: 15:45:47.965
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-8 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 20, time: 15:45:48.853
+1 2 
+Running:
+Total evaluations 60038
+Thread-17 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 11, time: 15:45:56.436
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Thread-5 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 13, time: 15:45:57.103
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-17 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 21, time: 15:45:57.262
+1 2 3 4 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+5 6 7 8 9 10 11 12 13 14 15 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+16 17 18 19 20 21 22 23 24 25 26 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-5 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 21, time: 15:45:57.934
+27 1 28 2 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+
+Running:
+Total evaluations 60042
+Thread-23 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 13, time: 15:46:01.590
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-23 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 21, time: 15:46:02.423
+1 2 
+Running:
+Total evaluations 60046
+Thread-16 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 12, time: 15:46:06.251
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-16 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 22, time: 15:46:07.075
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-2 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 11, time: 15:46:26.608
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-2 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 22, time: 15:46:27.455
+1 2 
+Running:
+Thread-25 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 14, time: 15:46:35.290
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-25 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 22, time: 15:46:36.129
+1 2 
+Running:
+Thread-20 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 10, time: 15:46:39.634
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-20 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 23, time: 15:46:40.492
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-1 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 12, time: 15:47:01.266
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-1 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 23, time: 15:47:02.097
+1 2 
+Running:
+Total evaluations 60026
+Thread-28 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 14, time: 15:47:07.665
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-28 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 23, time: 15:47:08.497
+1 2 
+Running:
+Total evaluations 60040
+Thread-13 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 15, time: 15:47:16.157
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-13 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 24, time: 15:47:17.109
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 Total evaluations 60006
+Thread-26 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 16, time: 15:47:18.598
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+58 59 60 61 62 63 64 65 66 67 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+68 69 70 71 72 73 74 75 Thread-22 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 15, time: 15:47:19.065
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+76 77 78 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+79 80 81 82 83 84 85 86 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+87 88 89 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-26 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 24, time: 15:47:19.432
+90 1 91 2 92 93 94 95 96 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+97 98 99 100 
+Running:
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-22 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 24, time: 15:47:19.896
+1 2 
+Running:
+
+Running:
+Thread-24 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 16, time: 15:47:23.187
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-24 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 25, time: 15:47:24.015
+1 2 3 Thread-14 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 11, time: 15:47:24.109
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+19 20 21 22 23 24 25 26 27 28 29 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+30 31 32 33 34 35 36 37 38 39 40 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-14 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 25, time: 15:47:25.035
+41 1 42 2 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+
+Running:
+Thread-29 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 13, time: 15:47:37.944
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-29 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 25, time: 15:47:38.779
+1 2 
+Running:
+Thread-11 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 14, time: 15:47:41.997
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-11 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 26, time: 15:47:42.833
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 Total evaluations 60018
+Thread-7 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 17, time: 15:47:43.390
+Num Evaluations: 60000
+22 DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+23 24 25 26 27 28 29 30 31 32 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+33 34 35 36 37 38 39 40 41 42 43 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+44 45 46 47 48 49 50 51 52 53 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-7 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 26, time: 15:47:44.224
+54 1 55 2 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-9 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 17, time: 15:47:45.964
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-9 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 26, time: 15:47:46.797
+1 2 
+Running:
+
+Running:
+Thread-15 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 18, time: 15:48:22.395
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-15 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 27, time: 15:48:23.369
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Total evaluations 60030
+Thread-12 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 18, time: 15:48:35.166
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-12 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 27, time: 15:48:35.994
+1 2 Thread-10 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 15, time: 15:48:38.306
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+
+Running:
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-10 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 27, time: 15:48:39.134
+1 2 Thread-18 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 19, time: 15:48:39.850
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-18 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 28, time: 15:48:40.696
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 
+Running:
+55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-3 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 17, time: 15:48:54.272
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Thread-19 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 16, time: 15:48:54.938
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-3 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 28, time: 15:48:55.116
+1 2 Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-19 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 28, time: 15:48:55.771
+1 2 
+Running:
+
+Running:
+Total evaluations 60022
+Thread-27 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 19, time: 15:49:05.095
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-27 Running algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 29, time: 15:49:05.927
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 
+Running:
+Thread-21 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 18, time: 15:49:31.148
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-21 Running algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 29, time: 15:49:32.084
+1 2 
+Running:
+Thread-0 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 19, time: 15:50:18.612
+Num Evaluations: 60000
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+DIRECTORIO DE ESCENARIO: /home/siturria/github/cloud-cdn/Instances
+DIRECTORIO DE INSTANCIA: /home/siturria/github/cloud-cdn/Instances/low/data.0
+Total documents: 1000
+Total requests: 7380
+Total storage: 945.4199414062497 GB
+Total traffic: 6759.0478515625 GB
+Number of buckets: 25
+Greedy routing: BestQoSSecure
+Thread-0 Running algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 29, time: 15:50:19.436
+1 2 
+Running:
+Thread-4 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 20, time: 16:10:52.096
+Thread-5 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 21, time: 16:11:15.210
+Total evaluations 60024
+Thread-8 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 20, time: 16:11:15.660
+Total evaluations 60024
+Thread-23 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 21, time: 16:11:24.129
+Total evaluations 60030
+Thread-25 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 22, time: 16:12:30.032
+Thread-1 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 23, time: 16:12:43.610
+Thread-2 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 22, time: 16:12:50.872
+Thread-6 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 20, time: 16:12:52.646
+Thread-20 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 23, time: 16:13:02.293
+Thread-14 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 25, time: 16:13:08.350
+Thread-26 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 24, time: 16:13:16.359
+Total evaluations 60060
+Thread-28 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 23, time: 16:13:19.430
+Total evaluations 60052
+Thread-22 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 24, time: 16:13:27.278
+Thread-16 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 22, time: 16:13:29.153
+Thread-17 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 21, time: 16:13:38.303
+Thread-7 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 26, time: 16:13:38.307
+Total evaluations 60008
+Thread-9 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 26, time: 16:13:40.171
+Total evaluations 60006
+Thread-29 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 25, time: 16:13:50.363
+Thread-12 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 27, time: 16:14:10.525
+Total evaluations 60016
+Thread-10 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 27, time: 16:14:17.767
+Thread-11 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 26, time: 16:14:24.583
+Thread-24 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 25, time: 16:14:25.546
+Thread-3 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 28, time: 16:14:42.955
+Thread-13 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 24, time: 16:14:48.378
+Total evaluations 60006
+Thread-19 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 28, time: 16:15:02.595
+Total evaluations 60032
+Thread-0 Finished algorithm: MOCHC, problem: cloudcdn.f201603.CloudCDN_MP, run: 29, time: 16:15:23.869
+Thread-15 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 27, time: 16:15:23.888
+Thread-21 Finished algorithm: NSGAII, problem: cloudcdn.f201603.CloudCDN_MP, run: 29, time: 16:15:26.032
+Thread-18 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 28, time: 16:15:26.559
+Thread-27 Finished algorithm: SMSEMOA, problem: cloudcdn.f201603.CloudCDN_MP, run: 29, time: 16:16:27.046
+Creating results/CloudCDN_f201603_low_0_172800/referenceFronts
+Experiment - Quality indicator: EPSILON
+File results/CloudCDN_f201603_low_0_172800/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/EPSILON does NOT exist.
+Experiment - Quality indicator: SPREAD
+File results/CloudCDN_f201603_low_0_172800/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/SPREAD does NOT exist.
+Experiment - Quality indicator: HV
+File results/CloudCDN_f201603_low_0_172800/data/SMSEMOA/cloudcdn.f201603.CloudCDN_MP/HV does NOT exist.
+Experiment - Quality indicator: EPSILON
+File results/CloudCDN_f201603_low_0_172800/data/NSGAII/cloudcdn.f201603.CloudCDN_MP/EPSILON does NOT exist.
+Experiment - Quality indicator: SPREAD
+File results/CloudCDN_f201603_low_0_172800/data/NSGAII/cloudcdn.f201603.CloudCDN_MP/SPREAD does NOT exist.
+Experiment - Quality indicator: HV
+File results/CloudCDN_f201603_low_0_172800/data/NSGAII/cloudcdn.f201603.CloudCDN_MP/HV does NOT exist.
+Experiment - Quality indicator: EPSILON
+File results/CloudCDN_f201603_low_0_172800/data/MOCHC/cloudcdn.f201603.CloudCDN_MP/EPSILON does NOT exist.
+Experiment - Quality indicator: SPREAD
+File results/CloudCDN_f201603_low_0_172800/data/MOCHC/cloudcdn.f201603.CloudCDN_MP/SPREAD does NOT exist.
+Experiment - Quality indicator: HV
+File results/CloudCDN_f201603_low_0_172800/data/MOCHC/cloudcdn.f201603.CloudCDN_MP/HV does NOT exist.
+latex directory: results/CloudCDN_f201603_low_0_172800/latex
+R    : results/CloudCDN_f201603_low_0_172800/R
+Creating results/CloudCDN_f201603_low_0_172800/R directory
+Indicator: EPSILON
+Indicator: SPREAD
+Indicator: HV
+R    : results/CloudCDN_f201603_low_0_172800/R
+Indicator: EPSILON
+Indicator: SPREAD
+Indicator: HV
