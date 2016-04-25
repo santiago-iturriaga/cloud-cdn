@@ -104,28 +104,28 @@ public class CloudCDN_f201603_SMSEMOA extends Experiment {
         // Run the experiments
         exp.runExperiment(num_threads);
 
-        exp.generateQualityIndicators();
+        //exp.generateQualityIndicators();
 
         // Applying Friedman test
-        Friedman test = new Friedman(exp);
+        /*Friedman test = new Friedman(exp);
         test.executeTest("EPSILON");
         test.executeTest("HV");
-        test.executeTest("SPREAD");
+        test.executeTest("SPREAD");*/
 
         // Generate latex tables
-        exp.generateLatexTables();
+        //exp.generateLatexTables();
 
         // Configure the R scripts to be generated
-        int rows;
+        /*int rows;
         int columns;
         String prefix;
-        String[] problems;
+        String[] problems;*/
 
-        rows = 2;
+        /*rows = 2;
         columns = 2;
         prefix = exp.experimentName_;
         problems = new String[]{"CloudCDN_MO"};
         exp.generateRBoxplotScripts(rows, columns, problems, prefix, false, exp);
-        exp.generateRWilcoxonScripts(problems, prefix, exp);
+        exp.generateRWilcoxonScripts(problems, prefix, exp);*/
     }
 }
