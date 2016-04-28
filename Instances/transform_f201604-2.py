@@ -35,7 +35,7 @@ import os
 NUM_PROV = [2,4,8]
 NUM_INSTANCES = 5
 NAME_DIMS = ['low','medium','high']
-DIMS_SIZE = [1000,4000,12000]
+DIMS_SIZE = [1000,2000,4000]
 
 def get_filename(dim, inst, ftype):
     return '{0}/data.{1}/{2}.video'.format(NAME_DIMS[dim],inst,ftype)

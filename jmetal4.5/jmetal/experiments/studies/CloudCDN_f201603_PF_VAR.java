@@ -41,9 +41,9 @@ public class CloudCDN_f201603_PF_VAR {
 
     public void differentBulk() throws JMException, IOException {
         String[] basePath = new String[3];
-        basePath[0] = "results/med_hi_0/CloudCDN_f201603_low_0_86400";
-        basePath[1] = "results/med_hi_0/CloudCDN_f201603_medium_0_86400";
-        basePath[2] = "results/med_hi_0/CloudCDN_f201603_high_0_86400";
+        basePath[0] = "results/low_med_hi_0/CloudCDN_f201603_low_0_86400";
+        basePath[1] = "results/low_med_hi_0/CloudCDN_f201603_medium_0_86400";
+        basePath[2] = "results/low_med_hi_0/CloudCDN_f201603_high_0_86400";
 
         String[] algorithm = new String[3];
         algorithm[0] = "SMSEMOA";
@@ -262,8 +262,8 @@ public class CloudCDN_f201603_PF_VAR {
             analyzer = new CloudCDN_f201603_PF_VAR();
 
             //analyzer.simple();
-            //analyzer.differentBulk();
-            analyzer.differentIntensity();
+            analyzer.differentBulk();
+            //analyzer.differentIntensity();
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
