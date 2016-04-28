@@ -51,6 +51,10 @@ public class CloudCDN_f201603b500 extends Experiment {
 
             algorithm[0] = new jmetal.experiments.settings.cloudcdn.SMSEMOA_f201603_Settings(
                     problemName, max_evals, false, problemParams).configure();
+            algorithm[1] = new jmetal.experiments.settings.cloudcdn.NSGAII_f201603_Settings(
+                    problemName, max_evals, false, problemParams).configure();
+            algorithm[2] = new jmetal.experiments.settings.cloudcdn.MOCHC_f201603_Settings(
+                    problemName, max_evals, false, problemParams).configure();
         } catch (IllegalArgumentException | JMException ex) {
             Logger.getLogger(CloudCDN_f201603b500.class.getName()).log(
                     Level.SEVERE, null, ex);
@@ -97,12 +101,12 @@ public class CloudCDN_f201603b500 extends Experiment {
         CloudCDN_f201603b500 exp = new CloudCDN_f201603b500(inst_type, inst_number, time_horizon, max_evals);
 
         exp.experimentName_ = exp.getClass().getSimpleName();
-        exp.algorithmNameList_ = new String[]{"SMSEMOA"};
+        exp.algorithmNameList_ = new String[]{"SMSEMOA", "NSGAII", "MOCHC"};
         exp.problemList_ = new String[]{"cloudcdn.f201603.CloudCDN_MP"};
         exp.paretoFrontFile_ = new String[]{"CloudCDN_MP.pf"};
         exp.indicatorList_ = new String[]{"EPSILON", "SPREAD", "HV"};
         exp.experimentBaseDirectory_ = "results/" + exp.experimentName_;
-        exp.paretoFrontDirectory_ = "results/data/paretoFronts";
+        exp.paretoFrontDirectory_ = exp.experimentBaseDirectory_ + "/paretoFronts";
         int numberOfAlgorithms = exp.algorithmNameList_.length;
         exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
         exp.independentRuns_ = num_exec;
