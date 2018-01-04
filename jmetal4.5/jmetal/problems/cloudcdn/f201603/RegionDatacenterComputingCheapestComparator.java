@@ -11,7 +11,7 @@ import java.util.Comparator;
  *
  * @author santiago
  */
-public class RegionDatacenterComptuingCheapestComparator implements Comparator<RegionDatacenter> {
+public class RegionDatacenterComputingCheapestComparator implements Comparator<RegionDatacenter> {
 	@Override
 	public int compare(RegionDatacenter arg0, RegionDatacenter arg1) {
 		if (arg0.vmPrice < arg1.vmPrice) {

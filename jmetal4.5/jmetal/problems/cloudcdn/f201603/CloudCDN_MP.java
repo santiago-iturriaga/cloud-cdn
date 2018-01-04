@@ -22,6 +22,7 @@ import jmetal.problems.cloudcdn.f201603.greedy.BestQoS;
 import jmetal.problems.cloudcdn.f201603.greedy.BestQoSSecure;
 import jmetal.problems.cloudcdn.f201603.greedy.CheapestComputing;
 import jmetal.problems.cloudcdn.f201603.greedy.CheapestNetwork;
+import jmetal.problems.cloudcdn.f201603.greedy.CheapestNetworkSecure;
 import jmetal.problems.cloudcdn.f201603.greedy.IGreedyRouting;
 import jmetal.problems.cloudcdn.f201603.greedy.RoundRobin;
 import jmetal.util.JMException;
@@ -94,6 +95,7 @@ public class CloudCDN_MP extends Problem {
             CANTIDAD_MAXIMA_DE_TRAFICO);
 
     protected ArrayList<ArrayList<QoS>> sortedQoS_ = new ArrayList<>(CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
+    protected ArrayList<RegionDatacenter> sortedNetworkCost_ = new ArrayList<>();
     protected ArrayList<HashMap<Integer, QoS>> qoS_ = new ArrayList<>(CANTIDAD_MAXIMA_DE_REGIONES_USUARIOS);
 
     protected int MAX_TRAFFIC_CONGESTION = 0;
@@ -241,6 +243,9 @@ public class CloudCDN_MP extends Problem {
         } else if (routingAlgorithm.compareTo("BestQoSSecure") == 0) {
             System.out.println("Greedy routing: BestQoSSecure");
             router = new BestQoSSecure(this);
+        } else if (routingAlgorithm.compareTo("CheapestNetworkSecure") == 0) {
+            System.out.println("Greedy routing: CheapestNetworkSecure");
+            router = new CheapestNetworkSecure(this);
         } else {
             throw new JMException("Unknown routing algorithm.");
         }
@@ -282,6 +287,10 @@ public class CloudCDN_MP extends Problem {
         return sortedQoS_.get(regUsr);
     }
 
+    public ArrayList<RegionDatacenter> getSortedNetworkCost() {
+        return sortedNetworkCost_;
+    }
+    
     public double[] GetRILowerLimits() {
         return RILowerLimits_;
     }
@@ -375,25 +384,30 @@ public class CloudCDN_MP extends Problem {
             lineasArchivo = leerArchivo(path.toString());
 
             for (String linea : lineasArchivo) {
-                regionesDatacenters_
-                        .add(new RegionDatacenter(
-                                Integer.valueOf((linea
-                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
-                                String.valueOf((linea
-                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
-                                Integer.valueOf((linea
-                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]),
-                                Double.valueOf((linea
-                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[3]) * STORAGE_COST_FACTOR,
-                                Double.valueOf((linea
-                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[4]),
-                                Double.valueOf((linea
-                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[5]),
-                                Double.valueOf((linea
-                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[6]),
-                                Double.valueOf((linea
-                                        .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[7]) * VM_RENTING_UPFRONT_FACTOR));
+            	RegionDatacenter r;
+                r = new RegionDatacenter(
+                    Integer.valueOf((linea
+                            .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[0]),
+                    String.valueOf((linea
+                            .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[1]),
+                    Integer.valueOf((linea
+                            .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[2]),
+                    Double.valueOf((linea
+                            .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[3]) * STORAGE_COST_FACTOR,
+                    Double.valueOf((linea
+                            .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[4]),
+                    Double.valueOf((linea
+                            .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[5]),
+                    Double.valueOf((linea
+                            .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[6]),
+                    Double.valueOf((linea
+                            .split(SEPARADOR_DE_COLUMNAS_EN_ARCHIVOS))[7]) * VM_RENTING_UPFRONT_FACTOR);
+
+                regionesDatacenters_.add(r);
+                sortedNetworkCost_.add(r);
             }
+            
+            sortedNetworkCost_.sort(new RegionDatacenterNetworkCheapestComparator());
 
             /*
             if (DEBUG) {

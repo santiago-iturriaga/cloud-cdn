@@ -14,7 +14,7 @@ import jmetal.core.Solution;
 import jmetal.encodings.solutionType.cloudcdn.CloudCDNSolutionf201603Type;
 import jmetal.problems.cloudcdn.f201603.CloudCDN_MP;
 import jmetal.problems.cloudcdn.f201603.RegionDatacenter;
-import jmetal.problems.cloudcdn.f201603.RegionDatacenterComptuingCheapestComparator;
+import jmetal.problems.cloudcdn.f201603.RegionDatacenterComputingCheapestComparator;
 import jmetal.problems.cloudcdn.f201603.RegionDatacenterNetworkCheapestComparator;
 import jmetal.problems.cloudcdn.f201603.Trafico;
 import jmetal.util.JMException;
@@ -41,7 +41,7 @@ public class CheapestComputing implements IGreedyRouting {
         double totalQoS = 0.0;
 
         ArrayList<RegionDatacenter> sortedDC = new ArrayList<>(problem_.getRegionesDatacenters());
-        sortedDC.sort(new RegionDatacenterComptuingCheapestComparator());
+        sortedDC.sort(new RegionDatacenterComputingCheapestComparator());
 
         int[][] vmNeeded;
         vmNeeded = new int[problem_.getRegionesDatacenters().size()][problem_.VM_RENTING_STEPS];
@@ -143,7 +143,7 @@ public class CheapestComputing implements IGreedyRouting {
         cache = new HashMap<>();
 
         ArrayList<RegionDatacenter> sortedDC = new ArrayList<>(problem_.getRegionesDatacenters());
-        sortedDC.sort(new RegionDatacenterComptuingCheapestComparator());
+        sortedDC.sort(new RegionDatacenterComputingCheapestComparator());
 
         for (int i = 0; i < problem_.getTrafico().size(); i++) {
             int docId;
