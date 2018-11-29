@@ -1,4 +1,5 @@
-postscript("CloudCDN_f201603_low_0_86400.HV.Boxplot.eps", horizontal=FALSE, onefile=FALSE, height=8, width=12, pointsize=10)
+#postscript("CloudCDN_f201603_low_0_86400.HV.Boxplot.eps", horizontal=FALSE, onefile=FALSE, height=8, width=12, pointsize=10)
+png("CloudCDN_f201603_low_0_86400.HV.Boxplot.png", height=512, width=512, pointsize=20)
 resultDirectory<-"../data/"
 qIndicator <- function(indicator, problem)
 {
@@ -17,11 +18,11 @@ fileMOCHC<-paste(fileMOCHC, problem, sep="/")
 fileMOCHC<-paste(fileMOCHC, indicator, sep="/")
 MOCHC<-scan(fileMOCHC)
 
-algs<-c("SMSEMOA","NSGAII","MOCHC")
+algs<-c("SMS-EMOA","NSGA-II","MOCHC")
 boxplot(SMSEMOA,NSGAII,MOCHC,names=algs, notch = FALSE)
 titulo <-paste(indicator, problem, sep=":")
-title(main=titulo)
+#title(main=titulo)
 }
-par(mfrow=c(2,2))
+#par(mfrow=c(2,2))
 indicator<-"HV"
-qIndicator(indicator, "CloudCDN_MO")
+qIndicator(indicator, "cloudcdn.f201603.CloudCDN_MP")
